@@ -13,7 +13,7 @@
     molestiae tempora culpa,omnis reiciendis ut aliquid eius sunt excepturi quod delectus laudantium. Voluptates.</p>
   <a target="_blank" href="https://www.jd.com/"><u>在新窗口打开京东</u></a>
   <a href="Mailto:222@qq.com">点我发邮件</a>
-  <a href="#bottom"><u>跳到页面底部</u></a>
+  <a href="#bm"><u>跳到页面底部</u></a>
   <a href="FOO.js" download="FOO.js"><u>点我下载文件</u></a>
   <div>
     <img
@@ -29,38 +29,111 @@
   &lt;!-- 这段注释需要出现在页面里面 --&gt;
 
   <p>下面是一段javascript代码，最合适用何种标签表示呢？</p>
-  <font color="red" size="2" face="微软雅黑">
-    <pre>
+  <pre>
+    <code>
+      function a(){
+        return 8
+      }
+    </code>
+  </pre>
+  <hr>
+  <ul>
+    <li>小学
+      <ol>1.一年级
+        <ol>1.上学期</ol>
+        <ol>2.下学期</ol>
+      </ol>
+      <ol>2.二年级</ol>
+      <ol>3.三年级</ol>
+    </li>
+    <li>中学</li>
+    <li>大学</li>
+  </ul>
+  <hr>
+  <dt>
+    <dl>班级
+      <dd>三年二班</dd>
+    老师
+      <dd>张老师</dd>
+      <dd>李老师</dd>
+      <dd>王老师</dd>
+    学生
+      <dd>小明</dd>
+      <dd>豆豆</dd>
+    </dl>
+  </dt>
+  <hr>
+  <h3>Google搜索</h3>
+  <form action="https://www.google.com.hk/search">
+    <input type="text" name=q>
+    <button target="_blank" submit>在新窗口打开搜索结果</button>
+  </form>
+  <hr>
 
-    function a(){
-      return 8
-    }
-    </pre>
-  </font>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-
-  <span id="bottom">123123123</span>
+  <form action="?">
+    <p>个人信息调查表</p>
+    <dl>
+      <dt>性别
+        <dd><input type="radio" name="gender" value="男"> 男
+        <input type="radio" name="gender" value="女"> 女</dd>
+      </dt>
+      <dt>年龄
+        <dd>
+          <select name="" id="">
+            <option value="" hidden>请选择</option>
+            <optgroup label="少年">
+              <option value="">1到6岁</option>
+              <option value="">6到12岁</option>
+            </optgroup>
+            <optgroup label="青年">
+              <option value="">13到15岁</option>
+              <option value="">16到18岁</option>
+            </optgroup>
+            <optgroup label="壮年">
+              <option value="">19到21岁</option>
+              <option value="">22到24岁</option>
+            </optgroup>
+          </select>
+        </dd>
+      </dt>
+      <dt>生日
+        <dd>
+          <input type="date">
+        </dd>
+      </dt>
+      <dt>生辰
+        <dd>
+          <input type="time" name="" id="">
+        </dd>
+      </dt>
+      <dt>照片
+        <dd><label for="img">点我上传照片，我比文件上传按钮好看
+            <input type="file" accept=".png,.jpg,.bmp" name="" id="img" hidden>
+          </label>
+        </dd>
+      </dt>
+      <dt>肤色
+        <dd>
+          <input type="color" name="" id="">
+        </dd>
+      </dt>
+      <dt>自我介绍
+        <dd>
+          <textarea name="" id="" cols="30" rows="10">&lt;/textarea>
+          </textarea>
+        </dd>
+      </dt>
+    </dl>
+    <fieldset>
+      <legend>这里面的全都禁用了</legend>
+          <input type="text" disabled> <input type="text" disabled>
+          <input type="text" disabled> <input type="text" disabled>
+    </fieldset>
+    <button type="submit" name=op>提交</button>
+    <button type="reset">重置</button>
+  </form>
+  <hr>
+  <span id="bm">
+    <a href="#lorem"><u>点我回顶部</u></a>
+  </span>
 </body>
