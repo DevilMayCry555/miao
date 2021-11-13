@@ -23,18 +23,28 @@
       border-color: DodgerBlue;
       background-image: url("https://jpgames.de/wp-content/uploads/2020/12/The-Legend-of-Heroes-Kuro-no-Kiseki_12-17-20_004.jpg");
     }
+    hr + h3 {
+      background-color: MediumSeaGreen;
+    }
+    button[name="123"] {
+      background-color: lightGray;
+    }
+    div > h1 {
+      color: red
+    }
+    div.stu {
+      background-image: url("https://cdn.trails-game.com/wp-content/uploads/2020/08/trista.jpg");
+      color: white;
+    }
   </style>
 </head>
 
 <body id="lorem">
   <div>
     <img src="https://cdn.trails-game.com/wp-content/uploads/2021/01/logo-2021-108x108-1.png" width="100" height="100" align="right" alt="123">
-    <a href="https://www.bilibili.com/bangumi/play/ss2882/?from=search&seid=11090768356670085978&spm_id_from=333.337.0.0">
-      <img src="trails-in-the-sky.gif" width="300" height="156" align="left" alt="QAQ">
-    </a>
-    <h1>lorem</h1>
-    <h2>Lorem, ipsum.</h2>
-    <h3>Lorem, ipsum dolor.</h3>
+    <h1>Falcom</h1>
+    <h2>The Legend of Heroes</h2>
+    <h3>Kuro no kiseki</h3>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.Quo, sint aut.Blanditiis eveniet labore quis tempore rem
     facilis,veritatis laboriosam aliquid quasi corporis quam nobis pariatur ab faugiat. Harum architecto.</p>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt fuga maxime vel quam itaque facilis dolor
@@ -67,54 +77,57 @@
     </pre>
   </p>
   <hr>
+  <div class="stu">
+    <ul>
+      <li>小学
+        <ol>
+          <li>一年级
+            <ol>
+              <li>上学期</li>
+              <li>下学期</li>
+            </ol>
+          </li>
+          <li>二年级</li>
+          <li>三年级</li>
+        </ol>
+      </li>
+      <li>中学</li>
+      <li>大学</li>
+    </ul>
+    <hr>
 
-  <ul>
-    <li>小学
-      <ol>
-        <li>一年级
-          <ol>
-            <li>上学期</li>
-            <li>下学期</li>
-          </ol>
-        </li>
-        <li>二年级</li>
-        <li>三年级</li>
-      </ol>
-    </li>
-    <li>中学</li>
-    <li>大学</li>
-  </ul>
-  <hr>
-
-  <dt>
-    <dl>班级
-      <dd>三年二班</dd>
-    老师
-      <dd>张老师</dd>
-      <dd>李老师</dd>
-      <dd>王老师</dd>
-    学生
-      <dd>小明</dd>
-      <dd>豆豆</dd>
-    </dl>
-  </dt>
+    <dt>
+      <dl>班级
+        <dd>三年二班</dd>
+      老师
+        <dd>张老师</dd>
+        <dd>李老师</dd>
+        <dd>王老师</dd>
+      学生
+        <dd>小明</dd>
+        <dd>豆豆</dd>
+      </dl>
+    </dt>
+  </div>
   <hr>
 
   <h3>Google搜索</h3>
   <form action="https://www.google.com.hk/search">
     <input type="text" name=q>
-    <button target="_blank" submit>在新窗口打开搜索结果</button>
+    <button name="123" target="_blank" submit>在新窗口打开搜索结果</button>
   </form>
   <hr>
 
   <form action="?">
-    <img src="https://cdn.trails-game.com/wp-content/uploads/2021/03/agnes_kuro.png" width="200" height="200" align="right" alt="123">
-    <img src="https://cdn.trails-game.com/wp-content/uploads/2021/03/van_kuro.png" width="200" height="200" align="right" alt="123">
     <p>个人信息调查表</p>
     <dl>
       <dt>性别
-        <dd><input type="radio" name="gender" value="male"> 男
-        <input type="radio" name="gender" value="female"> 女</dd>
+        <dd>
+          <input type="radio" name="gender" value="male">
+            <img src="https://cdn.trails-game.com/wp-content/uploads/2021/03/van_kuro.png" width="70" height="70" alt="123">
+          <input type="radio" name="gender" value="female">
+            <img src="https://cdn.trails-game.com/wp-content/uploads/2021/03/agnes_kuro.png" width="70" height="70" alt="123">
+        </dd>
       </dt>
       <dt>年龄
         <dd>
@@ -168,61 +181,67 @@
           <input type="text" disabled> <input type="text" disabled>
           <input type="text" disabled> <input type="text" disabled>
     </fieldset>
-    <button type="submit" name=op>提交</button>
+    <button type="submit" name="up">提交</button>
     <button type="reset">重置</button>
   </form>
   <hr>
-
-  <table border="1">
-    <thead>
-      <th>编号</th>
-      <th bgcolor="red">品名</th>
-      <th>进价</th>
-      <th>出价</th>
-    </thead>
-    <tbody>
-      <tr>
-        <th>aaa</th>
-        <td bgcolor="red">aaa</td>
-        <td rowspan="2">5</td>
-        <td>aaa</td>
-      </tr>
-      <tr>
-        <th>aaa</th>
-        <td bgcolor="red">aaa</td>
-        <td>8</td>
-      </tr>
-      <tr>
-        <th>aaa</th>
-        <td bgcolor="red">aaa</td>
-        <td>aaa</td>
-        <td>aaa</td>
-      </tr>
-      <tr>
-        <th>aaa</th>
-        <td bgcolor="red">aaa</td>
-        <td>aaa</td>
-        <td>aaa</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="aaa">
+    <table border="1">
+      <thead>
+        <th>编号</th>
+        <th bgcolor="red">品名</th>
+        <th>进价</th>
+        <th>出价</th>
+      </thead>
+      <tbody>
+        <tr>
+          <th>aaa</th>
+          <td bgcolor="red">aaa</td>
+          <td rowspan="2">5</td>
+          <td>aaa</td>
+        </tr>
+        <tr>
+          <th>aaa</th>
+          <td bgcolor="red">aaa</td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <th>aaa</th>
+          <td bgcolor="red">aaa</td>
+          <td>aaa</td>
+          <td>aaa</td>
+        </tr>
+        <tr>
+          <th>aaa</th>
+          <td bgcolor="red">aaa</td>
+          <td>aaa</td>
+          <td>aaa</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <hr>
+  <div class="sss">
+    <img src="https://cdn.trails-game.com/wp-content/uploads/2020/06/uroboros.png" usemap="#snake" width="260" height="260" alt="she">
+    <map name="snake">
+      <area shape="poly" coords="125 65 111 91 114 103 125 109 139 103 140 91" href="https://trails-game.com/org/ouroboros/">
+    </map>
+  </div>
   <hr>
 
-  <img src="https://cdn.trails-game.com/wp-content/uploads/2020/06/uroboros.png" usemap="#snake" width="260" height="260" alt="she">
-  <map name="snake">
-    <area shape="poly" coords="125 65 111 91 114 103 125 109 139 103 140 91" href="https://trails-game.com/org/ouroboros/">
-  </map>
-  <hr>
-
-  <a target="iframe_01" href="https://falcom.trails-game.com/">Falcom株式会社</a><br>
-    <iframe name="iframe_01" src="https://nodejs.org/en/" frameborder="1"></iframe>
+  <a target="iframe_01" href="https://falcom.trails-game.com/">Falcom株式会社</a>
+  <br>
+  <iframe name="iframe_01" src="https://nodejs.org/en/" frameborder="1"></iframe>
+  <a href="https://www.bilibili.com/bangumi/play/ss2882/?from=search&seid=11090768356670085978&spm_id_from=333.337.0.0">
+     <img src="trails-in-the-sky.gif" width="300" height="156" align="right" alt="QAQ">
+  </a>
   <p>aaa&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bbbbb</p>
   <pre>aaa           bbbb</pre>
   <p>>>>>>>>>>>>>>>>>><<<<<<<<<<&#160;&lt;span>&lt;/span></p>
 
   <span id="bm">
     <a href="#lorem">
-      <img src="https://lh3.googleusercontent.com/proxy/VDsnRrib3f5E9P834DKL9qGWOt9KECJ8oe_xHnNmmQmjhBm7RneW1R-S2165R038kEhstrE6YNR12qQfuahqyUngaAfD2i75Tacj6g" width="50" height="50" alt="top">
+      <p>TOP</p>
     </a>
   </span>
 </body>
