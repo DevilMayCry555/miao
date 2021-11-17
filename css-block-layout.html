@@ -7,120 +7,112 @@
   <title>JS Bin</title>
   <style>
     body {
-      margin: -16px 0px 0px 0px;
-    }
+  margin: 0;
+}
+main {
+  width: 600px;
+  margin: auto;
+}
+div.h {
+  background-color:black;
+  color:white;
+}
+div.h p {
+  width: 600px;
+  background-color: black;
+  margin: auto;
+}
+ul {
+  padding: 0px;
+  list-style: none;
+}
+ul.t li {
+  width: 180px;
+  height: 40px;
+  background-color: lightpink;
+  box-sizing: border-box;
+  border: 3px solid;
+  margin: 15px 0px;
+  text-align: center;
+  line-height: 32px;
+}
+ul.t li:nth-child(n + 5){
+  margin: 15px 210px;
+}
+ul.t li:nth-child(n + 9){
+  margin: 15px 420px;
+}
+ul.t li:nth-child(4n + 5){
+  margin-top: -220px;
+}
+ul.t li:hover {
+  background-color: red;
+}
 
-    div.a {
-      display: block;
-      width: 100%;
-      background-color: RGB(0, 0, 0)
-    }
 
-    div.a p {
-      color: white;
-    }
+ul.l {
+  margin: auto;
+  overflow: hidden;
+}
+ul.l li {
+  border-bottom: 1px dotted;
+  margin-bottom: -1px;
+  padding-top: 1px;
+}
 
-    p {
-      width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+div.foot {
+  background-color: rgb(255,86,255);
+}
+p.b {
+  margin-bottom: 0px;
+}
+p.c {
+  margin-top: 0px;
+}
+p.b, p.c {
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  background-color: rgb(255,86,255);
+}
 
-    table {
-      width: 660px;
-      margin-left: auto;
-      margin-right: auto;
-      border-collapse: separate;
-      border-spacing: 30px 15px;
-      margin-top: -15px;
-    }
-
-    td {
-      width: 174px;
-      height: 32px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-      border: 3px rgb(0, 0, 0) solid;
-      background-color: pink;
-    }
-
-    td:hover {
-      background-color: red;
-    }
-
-    div.b p {
-      border-bottom: .5px dotted;
-      margin-top: -15px;
-    }
-
-    div.b {
-      margin-top: 21px;
-      padding-left: 2px;
-    }
-
-    div.b p.d {
-      border-bottom: none;
-    }
-
-    div.foot {
-      width: 100%;
-      background-color: rgb(255, 80, 200);
-    }
-
-    div.foot p:last-child {
-      margin-top: -16px
-    }
-
-    div.foot p {
-      text-align: center;
-      background-color: rgb(255, 80, 200);
-    }
   </style>
 </head>
 
 <body>
-  <div class="a">
+  <div class="h">
     <p>hello world 请调整浏览器窗口大小查看效果</p>
   </div>
-  <p>页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体
-    宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体
-    宽度600px</p>
-  <div>
-    <table class="a">
-      <tr>
-        <td>宽180高40(包含边框)</td>
-        <td>产品</td>
-        <td>产品</td>
-      </tr>
-      <tr>
-        <td>水平间隙30px</td>
-        <td class="a">产品</td>
-        <td>产品</td>
-      </tr>
-      <tr>
-        <td>垂直间隙15px</td>
-        <td class="a">产品</td>
-        <td>产品</td>
-      </tr>
-      <tr>
-        <td>边框宽度3px</td>
-        <td class="a">产品</td>
-        <td>产品</td>
-      </tr>
-    </table>
-    <div class="b">
-      <p class="c">link</p>
-      <p>link</p>
-      <p>link</p>
-      <p>link</p>
-      <p class="d">link</p>
-    </div>
-    <div class="foot">
-      <p>&copy;版权所有</p>
-      <p>本页所有布局均使用块状元素</p>
-    </div>
+  <main>
+    <p class="a">页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px
+      页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px
+      页面主体 宽度600px</p>
+    <ul class="t">
+      <li>宽180高40(包含边框)</li>
+      <li>水平间隙30px</li>
+      <li>垂直间隙15px</li>
+      <li>边框宽度3px</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li class="last">产品</li>
+    </ul>
+    <ul class="l">
+      <li>link</li>
+      <li>link</li>
+      <li>link</li>
+      <li>link</li>
+      <li>link</li>
+    </ul>
+  </main>
+  <div class="foot">
+    <p class="b">&copy;版权所有</p>
+    <p class="c">本页所有布局均使用块元素</p>
   </div>
 </body>
-
 </html>
