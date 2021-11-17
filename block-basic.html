@@ -5,78 +5,53 @@
   <meta name="viewport" content="width=device-width">
   <title>JS Bin</title>
   <style>
-    body {
-      margin: 20px 20px 20px 20px;
-    }
+body {
+  margin: 20px 20px;
+}
+div.a {
+  max-width: 100%;
+  background-color: red;
+  color: white
+}
+div.a p {
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: red;
+}
 
-    div.aaa {
-      display: block;
-      width: 100%;
-      background-color: red;
-      margin-left: auto;
-      margin-right: auto;
-    }
+div.lorem {
+  max-width: 600px;
+  margin: auto;
+  box-sizing: border-box;
+  border: 2px solid;
+  padding: 0px 0.5em;
+}
+div.lorem p {
+  height:4em;
+  overflow-y: scroll;
+}
+section {
+  height: 50px;
+  background-color: rgb(232,93,250);
+}
+section:hover {
+  margin: 0px -0.5em;
+}
 
-    p.a {
-      width: 635px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    div.lorem {
-      border: 2px solid;
-      width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-
-    p.b {
-      width: 100%;
-      height: 4em;
-      overflow-y: scroll;
-    }
-
-    p.c {
-      width: 100%;
-      height: 4em;
-      overflow-y: scroll;
-    }
-
-    hr {
-      display: block;
-      background-color: RGB(255, 0, 255);
-      border-color: RGB(0, 0, 0, 0);
-      width: 600px;
-      height: 50px;
-    }
-
-    hr:hover {
-      background-color: RGB(255, 0, 255);
-      border-color: RGB(0, 0, 0, 0);
-      width: 628px;
-      margin-left: -15px;
-      margin-right: 13px;
-    }
-
-    div.sanjiao {
-      display: block;
-      height: 1px;
-      width: 1px;
-      margin-left: auto;
-      margin-right: auto;
-      border: 50px solid;
-      border-color: RGB(0, 0, 0, 0);
-      border-bottom: 100px solid orange;
-      border-style: dashed;
-    }
+div.s {
+  width: 0px;
+  height: 0px;
+  margin: auto;
+  border: 100px solid transparent;
+  border-bottom: 50px solid yellow;
+}
   </style>
 </head>
 
 <body>
-  <div class="aaa">
-    <p class="a">aaaaa</p>
+  <div class="a">
+    <p>aaaaa</p>
   </div>
   <div class="lorem">
     <p class="b">
@@ -84,14 +59,14 @@
       expedita voluptatibus provident maxime laudantium iste qui aliquid recusandae, a rerum soluta obcaecati cupiditate
       deserunt commodi?
     </p>
-    <hr>
+    <section></section>
     <p class="c">
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse voluptates voluptate harum vitae at reprehenderit,
       doloremque quas impedit dolorum laboriosam ullam tenetur optio quibusdam commodi, rem quod temporibus ex officiis!
     </p>
   </div>
   <br>
-  <div class="sanjiao"></div>
+  <div class="s"></div>
 </body>
 
 </html>
