@@ -76,6 +76,21 @@ p.b, p.c {
   text-align: center;
   background-color: rgb(255,86,255);
 }
+ul.t2 li{
+  display: inline-block;
+  box-sizing: border-box;
+  border: 3px solid;
+  width: 180px;
+  height: 40px;
+  text-align: center;
+  line-height: 34px;
+}
+ul.t2 li:nth-child(-3n + 7){
+  margin-bottom: 15px;
+}
+ul.t2 li:not(:nth-child(3n)){
+  margin-right: 30px;
+}
 
   </style>
 </head>
@@ -101,6 +116,13 @@ p.b, p.c {
       <li>产品</li>
       <li>产品</li>
       <li class="last">产品</li>
+    </ul>
+    <!-- 下面是用inline-block制作同款，需要注意的是空格的存在，应为是行内元素，空格不会被无视 -->
+    <ul class="t2">
+      <li>宽180高40(包含边框)</li><li>产品</li><li>产品</li>
+      <li>水平间隙30px</li><li>产品</li><li>产品</li>
+      <li>垂直间隙15px</li><li>产品</li><li>产品</li>
+      <li>边框宽度3px</li><li>产品</li><li>产品</li>
     </ul>
     <ul class="l">
       <li>link</li>
