@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+body {
+  margin: auto;
+  padding: 120px 120px;
+  background-image: url(https://github.com/YangLiu-stu/miao/blob/main/glassy-bg.jpg?raw=true);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #fff;
+  
+}
+main {
+  margin :auto;
+  padding: 0px 10px;
+  border: solid rgb(153,102,51);
+}
+div.a h1{
+  background: rgb(204,204,204) url(https://github.com/YangLiu-stu/miao/blob/main/glassy-gray.jpg?raw=true) 0 0 no-repeat fixed;
+  letter-spacing: 8px;
+  padding-left: 2em;
+  
+}
+h2{
+  color: white;
+  background: rgb(203,177,150) url(https://github.com/YangLiu-stu/miao/blob/main/glassy-tan.jpg?raw=true) 0 0 no-repeat fixed;
+  padding-left: 1em;
+}
+p{
+  padding: 0px 35px;
+}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="a">
+      <h1>complexspiral distorted</h1>
+      <p>The page you are viewing right now exists to show off what can be accomplished with pure <a href="https://www.w3.org/TR/REC-CSS1/">CSS1</a>, 
+        and that's all. This variant on <a href="https://meyerweb.com/eric/css/edge/complexspiral/demo.html">complexspiral</a> 
+        doesn't even use any CSS2 to accomplish its magic. Remember: as you look this demo over, there is <em>no</em> 
+        Javascript here, nor are <em>any</em> PNGs being used, nor do I employ any proprietary extensions to CSS or any other language. It's all done using straight W3C-recommended markup and styling, all validated, plus a total of four (4) images.</p>
+      <p>Unfortunately, not every browser supports all of CSS1, and only those browsers which fully and completely support CSS1 will get this right. Despite some claims to the contrary, IE6/Win's rendering of this page is <strong>not</strong> 
+        correct, as it (as well as some other browsers) doesn't correctly support <code>background-attachment: fixed</code> for any element other than the <code>body.</code> 
+        That makes it impossible to pull off the intended effect. Other browsers may or may not get the effect right.</p>
+    </div>
+    <div class="b">
+      <h2>Hands-on: Things to Examine</h2>
+      <p>Before you start, make sure you're viewing this page in one of the browsers mentioned above. Otherwise the descriptions to follow won't match what you see.</p>
+      <p>The first, easiest thing to do is scroll the page vertically. Make sure you scroll all the way to the very end of the page and back. Notice how the various areas with colored backgrounds also appear to distort the background image as if through mottled glass. Try changing the text size and notice how the compositing effect remains consistent. Then make your browser window really narrow and scroll horizontally. Again, everything should remain seamless and consistent.</p>
+      <p>The demonstrated effect, that of having various elements backed with translucent rippled glass of varying hues, is only possible using fixed-attachment backgrounds in CSS. (Okay, maybe it could be done in Flash; I don't know.) I don't think it's even possible with IE's proprietary filters, but even if this effect is possible with filters, I could easily enough devise one that isn't.</p>
+    </div>
+    <div class="c">
+      <h2>I missed the original complexspiral demo-- how does this work?!?</h2>
+      <p>Glad you asked. The effect demonstrated here is achieved by using fixed background images, nothing more. For example, the main-content area (the blue part here) uses the following styles for the default spiral-shell background:</p>
+      <pre><code>div#content {background: white url(glassy-ripple.jpg) 0 0 no-repeat fixed;}</code></pre>
+      <p>The above is equivalent to these styles:</p>
+      <pre><code>
+div#content { 
+   background-color: white;
+   background-image: url(glassy-ripple.jpg);
+   background-position: 0 0;
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+   }
+      </code></pre>
+      <p>The effect of these longer rules is exactly the same; they're just split out into individual background properties for more detailed consideration by you, gentle reader.</p>
+      <p>First, check out the rippled-shell image found here: <a href="https://meyerweb.com/eric/css/edge/complexspiral/glassy-ripple.jpg">url(glassy-ripple.jpg).</a>
+        Then come back to this page and I'll continue with the explanation. All done? Great.</p>
+      <p>According to CSS, any background image that is "fixed" using <code>background-attachment: fixed;</code> 
+        is fixed with respect to the <strong>viewport--</strong><em>not</em>the element with which the image is associated. So I set the rippled-shell background image to be aligned with the top left corner of the browser window (the viewport) with the values given for <code>background-position.</code>
+        However, the image will only be visible wherever is intersects with the element to which it's been assigned. Therefore, even though the top left corner of the rippled-shell image is aligned with the top left corner of the viewport, we can only see it wherever it intersects with a <code>div</code> that has an <code>id</code> with a value of <code>content</code>
+       (which, again, happens to be the one containing this text).</p>
+      <p>So I set a fixed background for the <code>BODY,</code> the content <code>DIV</code>,and <code>H1</code> and <code>H2</code> elements scattered through the document. In any given case of an element's display, we see whatever part of the associated background image intersects with the element. The rest of the background image remains hidden.</p>
+      <p>And <em>that's</em> how it works.</p>
+    </div>
+    <div class="d">
+      <h2>I'm not seeing the compositing!</h2>
+      <p>Then I'm willing to bet that you're using Internet Explorer for Windows (any version), or possibly Opera (version 6 or earlier). Neither of these browsers fully support <code>background-attachment: fixed</code> for elements other than <code>body</code>.
+        <code>fixed</code><a href=""></a>
+      <a href=""></a>
+      <a href=""></a>
+      <a href=""></a></p>
+    </div>
+    <div class="f">
+      <h2>123</h2>
+      <ul>
+        <li>123</li>
+        <strong>JUMP TO</strong>
+        <li><a href=""></a></li>
+        <li><a href=""></a></li>
+        <li><a href=""></a></li>
+      </ul>
+    </div>
+  </main>
+</body>
+</html>
