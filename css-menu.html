@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+ul {
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+.main ul {
+  display: none;
+  position: absolute;
+}
+.main >li {
+  display: inline-block;
+    padding-right: 2em;
+    border: 1px solid;
+}
+li:hover >ul {
+  display: block;
+}
+.main li {
+  position: relative; 
+}
+.main li:hover{
+  background-color: orange;
+}
+ul ul ul{
+  top: 0;
+  left: 100%;
+}
+li li{
+  box-sizing: border-box;
+  border: 1px solid;
+  width: 100px;
+}
+.main >li >ul >li::after{
+  content:'>';
+}
+
+  </style>
+</head>
+<body>
+  <ul class="main">
+    <li>种族
+      <ul>
+        <li>Alliance
+          <ul>
+            <li>Night Elf</li>
+            <li>Human</li>
+            <li>Dwarf</li>
+            <li>Delayne</li>
+            <li>Werewolf</li>
+          </ul>
+        </li>
+        <li>Horde
+          <ul>
+            <li>Blood Elf</li>
+            <li>Orc</li>
+            <li>Goblin</li>
+            <li>Tauren</li>
+            <li>Troll</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>职业
+      <ul>
+        <li>Mage
+          <ul>
+            <li>Arcane</li>
+            <li>Frost</li>
+            <li>Flame</li>
+          </ul>
+        </li>
+        <li>Druid
+          <ul>
+            <li>Recover</li>
+            <li>Guard</li>
+            <li>Swift</li>
+          </ul>
+        </li>
+        <li>Priest
+          <ul>
+            <li>Sacred</li>
+            <li>Precepts</li>
+            <li>Shadow</li>
+          </ul>
+        </li>
+        <li>Warrior
+          <ul>
+            <li>Violent</li>
+            <li>Arms</li>
+            <li>Defense</li>
+          </ul>
+        </li>
+        <li>Thieves
+          <ul>
+            <li>Keen</li>
+            <li>Fanatic</li>
+            <li>Assassin</li>
+          </ul>
+        </li>
+      </ul>
+    </il>
+  </ul>
+</body>
+</html>
