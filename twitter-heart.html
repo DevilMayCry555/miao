@@ -15,6 +15,18 @@ input[type="checkbox"]:checked + label{
   background-position: 100% 50%;
   transition: 2s steps(28, start);
 }
+div.a{
+  background:rgb(159,210,211);
+}
+p{
+      width: 0px;
+      height: 300px;
+      background: url(https://github.com/YangLiu-stu/miao/blob/main/steps/printspreview.png?raw=true) 0 50% repeat;
+    }
+div.a:hover p{
+  width: 6000px;
+  transition: 40s steps(60, start);
+}
   </style>
 </head>
 <body>
@@ -22,5 +34,6 @@ input[type="checkbox"]:checked + label{
   <input type="checkbox" name="my-checkbox" id="opt-in" hidden>
   <label for="opt-in"></label>
 </div>
+  <div class="a"><p></p></div>
 </body>
 </html>
