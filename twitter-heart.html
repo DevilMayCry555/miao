@@ -5,19 +5,22 @@
   <meta name="viewport" content="width=device-width">
   <title>JS Bin</title>
   <style>
-div {
-  width: 100px;
-  height: 100px;
-  background: url(https://github.com/YangLiu-stu/miao/blob/main/web_heart_animation.png?raw=true);
-  
-}
-div:focus{
+label {
+      display: block;
+      width: 100px;
+      height: 100px;
+      background: url(https://github.com/YangLiu-stu/miao/blob/main/web_heart_animation.png?raw=true);
+    }
+input[type="checkbox"]:checked + label{
   background-position: 100% 50%;
   transition: 2s steps(28, start);
 }
   </style>
 </head>
 <body>
-  <div tabindex="1"></div>
+  <div>
+  <input type="checkbox" name="my-checkbox" id="opt-in" hidden>
+  <label for="opt-in"></label>
+</div>
 </body>
 </html>
