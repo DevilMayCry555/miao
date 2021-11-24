@@ -23,7 +23,7 @@ icon.a {
   background-color: #fff;
   top: 25px;
   left: 25px;
-  transition: margin-left 0.9s;
+  transition: margin-left 0.8s;
 }
 icon.main,icon.b,icon.c {
   position: absolute;
@@ -35,35 +35,35 @@ icon.main,icon.b,icon.c {
   background-color: #fff;
 }
 icon.b {
-  transition: margin-left 0.4s;
+  transition: margin-left 0.35s;
 }
 icon.c {
-  transition: margin-left 0.5s;
+  transition: margin-left 0.4s;
 }
 icon.main {
   box-shadow: 3px 2px 4px black;
   box-sizing: border-box;
   border: 1px solid;
-  transition: margin-left 0.3s, box-shadow 1.5s;
+  transition: margin-left 0.3s, box-shadow 0.8s ease-out;
 }
 
 
 input:checked + label icon.main {
   box-shadow: -3px 2px 4px black;
   margin-left: 100px;
-  transition: margin-left 0.3s, box-shadow 1.5s;
+  transition: margin-left 0.3s, box-shadow 0.8s ease-out;
 }
 input:checked + label icon.a {
   margin-left: 100px;
-  transition: margin-left 0.9s;
+  transition: margin-left 0.8s;
 }
 input:checked + label icon.b {
   margin-left: 100px;
-  transition: margin-left 0.4s;
+  transition: margin-left 0.35s;
 }
 input:checked + label icon.c {
   margin-left: 100px;
-  transition: margin-left 0.5s;
+  transition: margin-left 0.4s;
 }
     
 span {
@@ -77,16 +77,19 @@ span {
   left:0;
   right:0;
   margin:auto;
-  transition: width 0.2s ease-out, height 0.2s ease-out;
+  transition: width 0.2s, height 0.2s;
 }
 input:checked + label span{
-  width: 100px;
+  width: 0px;
   height: 0px;
-  transition: width 0.6s ease-out, height 0.6s ease-out;
+  transition: width 0.4s, height 0.6s;
 }
 icon{
   z-index: 1;
 }
+    input:checked + label{
+      border: 2px solid rgb(52,244,81);
+    }
   </style>
 </head>
 <body>
