@@ -34,33 +34,35 @@ icon.main,icon.b,icon.c {
   left: 5px;
   background-color: #fff;
 }
-    icon.b {
-      transition: margin-left 0.4s;
-    }
-    icon.c {
-      transition: margin-left 0.5s;
-    }
-    icon.main {
-      box-shadow: 5px 0px 10px black;
-      transition: margin-left 0.3s, box-shadow 1s;
-    }
+icon.b {
+  transition: margin-left 0.4s;
+}
+icon.c {
+  transition: margin-left 0.5s;
+}
+icon.main {
+  box-shadow: 3px 2px 4px black;
+  box-sizing: border-box;
+  border: 1px solid;
+  transition: margin-left 0.3s, box-shadow 1.5s;
+}
 
 
 input:checked + label icon.main {
-  box-shadow: -5px 0px 10px black;
-  margin-left: 90px;
-  transition: margin-left 0.3s, box-shadow 1s;
+  box-shadow: -3px 2px 4px black;
+  margin-left: 100px;
+  transition: margin-left 0.3s, box-shadow 1.5s;
 }
 input:checked + label icon.a {
   margin-left: 100px;
   transition: margin-left 0.9s;
 }
 input:checked + label icon.b {
-  margin-left: 90px;
+  margin-left: 100px;
   transition: margin-left 0.4s;
 }
 input:checked + label icon.c {
-  margin-left: 90px;
+  margin-left: 100px;
   transition: margin-left 0.5s;
 }
     
@@ -75,12 +77,12 @@ span {
   left:0;
   right:0;
   margin:auto;
-  transition: width 0.7s ease-out, height 0.7s ease-out;
+  transition: width 0.2s ease-out, height 0.2s ease-out;
 }
 input:checked + label span{
   width: 100px;
   height: 0px;
-  transition: width 0.7s ease-out, height 0.7s ease-out;
+  transition: width 0.6s ease-out, height 0.6s ease-out;
 }
 icon{
   z-index: 1;

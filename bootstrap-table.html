@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+      table.black{
+  background-color: rgb(33,37,41);
+  color: white;
+  border-collapse: collapse;
+  width: 500px;
+  height: 150px;
+  table-layout: fixed;
+}
+table.black tr{
+  text-align: left;
+}
+table.black tr:first-child{
+  border-bottom: 2px solid white;
+}
+table.black tr:nth-child(n + 2):hover{
+  background-color: rgb(0,0,0,0.08);
+}
+table.black th:first-child{
+  width: 30px;
+}
+table.black{
+  background-color: rgb(33,37,41);
+  color: white;
+  border-collapse: collapse;
+  width: 500px;
+  height: 150px;
+  table-layout: fixed;
+  text-align: left;
+}
+table.black tr:first-child{
+  border-bottom: 2px solid white;
+}
+table.black tr:nth-child(n + 2):hover{
+  background-color: rgb(0,0,0,0.08);
+}
+table.black th:first-child{
+  width: 30px;
+}
+
+
+table.striped{
+  border-collapse: collapse;
+  width: 500px;
+  height: 150px;
+  table-layout: fixed;
+  text-align: left;
+}
+table.striped tr:first-child{
+  border-bottom: 2px solid black;
+}
+table.striped tr:nth-child(2n){
+  background-color: rgb(236,236,236);
+}
+table.striped tr:nth-child(n + 2):hover{
+  background-color: rgb(236,236,236);
+}
+table.striped th:first-child{
+  width: 30px;
+}
+
+  </style>
+
+</head>
+<body>
+<div class="a">
+  <table class="black">
+    <tr>
+      <th>#</th>
+      <th>First</th>
+      <th>Last</th>
+      <th>Handle</th>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Larry the Bird</td>
+      <td></td>
+      <td>@twitter</td>
+    </tr>
+  </table>
+</div>
+<div class="b">
+    <table class="striped">
+    <tr>
+      <th>#</th>
+      <th>First</th>
+      <th>Last</th>
+      <th>Handle</th>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Larry the Bird</td>
+      <td></td>
+      <td>@twitter</td>
+    </tr>
+  </table>
+  </div>
+</body>
+</html>
