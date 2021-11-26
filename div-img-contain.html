@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width">
   <title>JS Bin</title>
   <style>
-body{
+/* body{
   margin: auto;
 }
 div {
@@ -14,27 +14,27 @@ div {
   margin: 20px auto;
   position: relative;
 }
-img {
+div >*{
+  max-width:100%;
   position: absolute;
-}
-div.a img{
+  max-height:100%;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   margin: auto;
+} */
+    /* 表格居中很方便 */
+img {
+  max-width: 100%;
+  max-height: 100%;
 }
-div.b img{
-  width: 100%;
-  top: 0;
-  bottom: 0;
-  margin: auto 0;
-}
-div.c img{
-  height: 100%;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
+div {
+  display: table-cell;
+  width: 400px;
+  height: 200px;
+  text-align: center;
+  vertical-align: middle;
 }
   </style>
 </head>
@@ -43,7 +43,7 @@ div.c img{
     <img src="https://github.com/YangLiu-stu/miao/blob/main/abs/logo.png?raw=true" alt="">
   </div>
   <div class="b">
-    <img src="https://github.com/YangLiu-stu/miao/blob/main/abs/shizuna_01.jpg?raw=true" alt="">
+    <img src="https://cdn.trails-game.com/wp-content/uploads/2020/08/trista.jpg" alt="">
   </div>
   <div class="c">
     <img src="https://github.com/YangLiu-stu/miao/blob/main/sprite.jpg?raw=true" alt="">
