@@ -13,15 +13,42 @@ Released under the MIT license: http://jsbin.mit-license.org
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>JS Bin</title>
-<style id="jsbin-css">
+  <style>
 div {
   margin: auto;
-  width: 400px;
 }
-dt {
+dd::before{
+  content:'/'
+} 
+/* 第一种方法，最好的方法 */
+dl{
+  overflow: hidden;
+  padding-left: 50px;
+}
+dd{
+  margin: auto;
+  display: inline-block;
+}
+dt{
+  margin-left: -48px;
+  margin-bottom: -22px;
+  padding-top: 8px;
+}
+/* 用padding的间隙配合浮动
+dl{
+  overflow: hidden;
+  position: relative;
+}
+dd{
   float: left;
+  margin: 0;
 }
-  
+dt{
+  float: left;
+  clear: left;
+  padding-bottom: 70px;
+  margin-bottom: -34px;
+} */
 </style>
 </head>
 <body>
