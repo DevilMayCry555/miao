@@ -13,8 +13,8 @@ Released under the MIT license: http://jsbin.mit-license.org
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>JS Bin</title>
-<style id="jsbin-css">
-table {
+<style>
+/* table {
   border-collapse: collapse;
   width: 180px;
   height: 100%;
@@ -55,11 +55,32 @@ td:hover{
   border-color: red rgb(240,0,0);
   z-index: 2;
 }
-
+ */
+table {
+  border-collapse: collapse;
+  width: 180px;
+  height: 100%;
+  text-align: center;
+  float: left;
+  color: green;
+}
+col,tr {
+  box-sizing: border-box;
+  border: 6px solid blue;
+  cursor: pointer;
+  width:60px;
+  height:60px;
+}
+td:hover{
+  border:6px solid red;
+}
 </style>
 </head>
 <body>
   <table>
+    <col>
+    <col>
+    <col>
     <tr>
       <td><span>1</span></td>
       <td><span>2</span></td>

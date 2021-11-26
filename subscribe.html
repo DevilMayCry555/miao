@@ -13,11 +13,7 @@ Released under the MIT license: http://jsbin.mit-license.org
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>JS Bin</title>
-<style id="jsbin-css">
-* {
-  background-color: rgba(0,0,0,0.08);
-  box-shadow: inset 0 0 1px red;
-}
+<style>
 label {
   display: block;
   width: 200px;
@@ -29,24 +25,37 @@ label {
   border-bottom: 3px solid red;
   cursor: pointer;
   transition: background-color 2s;
-}
-span {
-  position: absolute;
-  bottom: 0;
-}
+  }
 label:active{
   background-color: rgb(32,144,48);
   transition: background-color 0.1s;
 }
+/* 自己做的
+  span {
+  position: absolute;
+  bottom: 0;
+}
 input:checked + label span{
   font-size: 3em;
   transition: font-size 2s linear;
-}
+} 
+  下面正解*/
+  label {
+    display: table-cell;
+    vertical-align: bottom;
+  }
+  input:checked + label{
+    font-size: 3em;
+    transition: font-size 2s linear;
+  }
 </style>
 </head>
 <body>
   <div>
-    <span>订阅博客</span>
+    <input type="checkbox" id="subs" hidden>
+    <label for="subs">
+      订阅博客
+    </label>
   </div>
 </body>
 </html>
