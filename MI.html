@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+html{
+  overflow: auto;
+  min-width: 1230px;
+}
+body{
+  margin: auto;
+}
+    
+    /* 顶部 */
+div.header {
+  height: 70px;
+  background-color: rgb(51,51,51);
+}
+main {
+  width: 1230px;
+  margin: auto;
+  overflow: hidden;
+}
+div.header main ul {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+div.header main li{
+  display: inline;
+  line-height: 70px;
+  font-size: 0.8em;
+  color: lightgrey;
+}
+div.header ul a{
+  color: lightgrey;
+  text-decoration: none;
+}
+div.header ul a:hover {
+  color: white;
+}
+div.header ul icon{
+  width: 0px;
+  margin-left: 6px;
+  margin-right: 2px;
+  padding: 0px 0px;
+  border: 0.1px solid rgb(66,66,66);
+}
+div.header ul.b{
+  float: right;
+  margin-right: 20px;
+}
+div.header ul.c{
+  float: right;
+  width: 120px;
+  text-align: center;
+  background-color: rgb(66,66,66);
+}
+    
+    
+    /* 第一上部 */
+div.menu {
+  height: 770px;
+  background-color: #fff;
+}
+div.menu div.a{
+  line-height: 100px;
+}
+div.menu div.a ul{
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  cursor: pointer;
+}
+div.menu div.a ul li:hover,
+div.menu div.a ul li:hover a{
+  color: rgb(255,103,0);
+}
+div.menu div.a li{
+  display: inline-block;
+  line-height: 70px;
+  margin-right: 1em;
+}
+div.menu div.a icon{
+  display: inline-block;
+  width: 233px;
+}
+div.menu div.a ul a{
+  color: black;
+  text-decoration: none;
+}
+div.menu div.a form{
+  display: inline-block;
+  float: right;
+  line-height: 100px;
+}
+div.menu div.a form input{
+  width: 240px;
+  height: 50px;
+  margin-right: -5px;
+  border: 1px solid rgb(224,224,224);
+}
+div.menu div.a form label{
+  display: inline-block;
+  width: 52px;
+  line-height: 52px;
+  vertical-align: middle;
+  border: 1px solid rgb(224,224,224);
+}
+    
+    
+    /* 第一中部 */
+div.menu div.b {
+  height: 460px;
+  overflow: hidden;
+  position: relative;
+}
+div.menu div.b ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 233px;
+  background-color: rgba(0,0,0,0.08);
+  color: white;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  position: absolute;
+}
+div.menu div.b ul li{
+  padding: 0px 30px;
+  line-height: 42px;
+  font-size: 0.8em;
+  cursor: pointer;
+}
+div.menu div.b ul li::after{
+  content: '>';
+  float: right;
+}
+div.menu div.b ul li:hover{
+  background-color: rgb(255,103,0);
+}
+div.menu div.b div.picture {
+  height: 460px;
+  
+}
+label.l{
+  position: absolute;
+  margin-left: 233px;
+  line-height: 70px;
+  top: 195px;
+}
+label.r{
+  position: absolute;
+  right: 0;
+  line-height: 70px;
+  top: 195px;
+}
+div.ooo{
+  position: absolute;
+  bottom: 23px;
+  right: 33px;
+}
+    
+
+    /* 第一下部 */
+div.c{
+  height: 189px;
+  overflow: hidden;
+}
+div.menu div.c table{
+ display: inline-block;
+  width: 233px;
+  margin-top: 14px;
+}
+div.menu div.c table td{
+  width: 80px;
+  height: 80px;
+  text-align: center;
+  vertical-align: bottom;
+}
+div.menu div.c section{
+  display: inline-block;
+  width: 318px;
+  margin-left: 14px;
+  height: 175px;
+  float: right;
+  margin-top: 14px;
+}
+    
+    /* 第二顶部 */
+div.product {
+  background-color: rgb(245,245,245);
+}
+div.product div.head{
+  margin: auto;
+  margin-top: 23px;
+  height: 120px;
+}
+div.product p{
+  overflow: hidden;
+  margin: 0;
+  margin-top: 26px;
+}
+div.product p a{
+  display: inline-block;
+  line-height: 60px;
+  color: black;
+  text-decoration: none;
+  float: right;
+}
+div.product p a span{
+  display: inline-block;
+  border-top: 6px solid grey;
+  border-left: 6px solid grey;
+  border-bottom: 6px solid grey;
+  border-right: 6px solid grey;
+  border-radius: 9999px;
+  width: 6px;
+  height: 6px;
+  vertical-align: middle;
+}
+div.product p >span{
+  line-height: 60px;
+  float: left;
+  font-size: 1.8em;
+}
+div.product p a:hover{
+  color:rgb(255,103,0);
+}
+div.product p a:hover span{
+  border-color: rgb(255,103,0);
+}
+div.product div.a{
+  overflow: hidden;
+}
+div.product div.a section:first-child{
+  height: 616px;
+  width: 233px;
+  float: left;
+}
+div.product div.a section:nth-child(n + 2){
+  width: 235px;
+  height: 301px;
+  float: right;
+  margin-left: 14px;
+}
+div.product div.a section:nth-child(n + 6){
+  margin-top: 14px;
+}
+    
+    /* 第二中 */
+div.product div.b{
+  xoverflow: hidden;
+  position: relative;
+}
+div.product div.b section{
+  height: 616px;
+  width: 233px;
+  float: left;
+}
+
+div.product div.b ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+div.product div.b >ul{
+  width: 997px;
+  position: relative;
+  float: right;
+}
+div.product div.b >ul >li{
+  text-align: right;
+  position: absolute;
+}
+div.product div.b >ul >li span{
+  float: right;
+  margin-top: -39px;
+}
+div.product div.b >ul >li:first-child span{
+  margin-right: 62px;
+}
+div.product div.b >ul >li:first-child{
+  
+  xdisplay: none;
+}
+div.product div.b >ul >li >ul >li{
+  text-align: left;
+  width: 235px;
+  height: 301px;
+  float: left;
+  margin-left: 14px;
+}
+div.product div.b >ul >li >ul >li:nth-child(n + 5){
+  margin-top: 14px;
+}
+  </style>
+</head>
+<body>
+  <div class="header">
+      <main>
+        <ul class="a">
+          <li><a href="">小米商城</a><icon></icon></li>
+          <li><a href="">MIUI</a><icon></icon></li>
+          <li><a href="">loT</a><icon></icon></li>
+          <li><a href="">云服务</a><icon></icon></li>
+          <li><a href="">天星数科</a><icon></icon></li>
+          <li><a href="">有品</a><icon></icon></li>
+          <li><a href="">小爱开放平台</a><icon></icon></li>
+          <li><a href="">企业团购</a><icon></icon></li>
+          <li><a href="">资质证照</a><icon></icon></li>
+          <li><a href="">协议规则</a><icon></icon></li>
+          <li><a href="">下载APP</a><icon></icon></li>
+          <li><a href="">智能生活</a><icon></icon></li>
+          <li><a href="">Select Location</a></li>
+        </ul>
+        <ul class="c">
+          <li><a href="">购物车</a></li>
+          <li>(?)</li>
+        </ul>
+        <ul class="b">
+          <li><a href="">登录</a><icon></icon></li>
+          <li><a href="">注册</a><icon></icon></li>
+          <li><a href="">消息通知</a></li>
+        </ul>
+      </main>
+  </div>
+  <div class="menu">
+    <main>
+      <div class="a">
+        <icon>Mi</icon>
+        <ul>
+          <li>Xiaomi手机</li>
+          <li>Redmi 红米</li>
+          <li>电视</li>
+          <li>笔记本</li>
+          <li>平板</li>
+          <li>家电</li>
+          <li>路由器</li>
+          <li><a href="">服务</a></li>
+          <li><a href="">社区</a></li>
+        </ul>
+        <form action="">
+          <input type="text" name="q">
+          <button submit id="q" hidden></button>
+          <label for="q"><img src="" alt=""></label>
+        </form>
+      </div>
+      <div class="b">
+        <ul>
+          <li>手机</li>
+          <li>电视</li>
+          <li>笔记本 平板</li>
+          <li>家电</li>
+          <li>出行 穿戴</li>
+          <li>智能路由器</li>
+          <li>电源 配件</li>
+          <li>健康 儿童</li>
+          <li>耳机 音箱</li>
+          <li>生活 箱包</li>
+        </ul>
+        <div class="picture">
+          <label class="l" for=""><icon>qwer</icon></label>
+          <label class="r" for=""><icon>wasd</icon></label>
+          <div class="ooo">
+            <input type="radio" name="123" id="img1">
+            <input type="radio" name="123" id="img2">
+            <input type="radio" name="123" id="img3">
+          </div>
+        </div>
+      </div>
+      <div class="c">
+        <table>
+          <tr>
+            <td>
+              <icon></icon>保障服务
+            </td>
+            <td>
+              <icon></icon>企业团购
+            </td>
+            <td>
+              <icon></icon>F码通道
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <icon></icon>米粉卡
+            </td>
+            <td>
+              <icon></icon>以旧换新
+            </td>
+            <td>
+              <icon></icon>话费充值
+            </td>
+          </tr>
+        </table>
+        <section><a href=""><img src="" alt="">123</a></section>
+        <section><a href=""><img src="" alt="">123</a></section>
+        <section><a href=""><img src="" alt="">123</a></section>
+      </div>
+    </main>
+  </div>
+  <div class="product">
+    <main>
+      <div class="head"><img src="" alt=""></div>
+      <p>
+        <span>手机</span>
+        <a href="">查看更多<span class="a"></span></a>
+      </p>
+      <div class="a">
+        <section><img src="" alt="">1</section>
+        <section><img src="" alt="">2</section>
+        <section><img src="" alt="">3</section>
+        <section><img src="" alt="">4</section>
+        <section><img src="" alt="">5</section>
+        <section><img src="" alt="">6</section>
+        <section><img src="" alt="">7</section>
+        <section><img src="" alt="">8</section>
+        <section><img src="" alt="">9</section>
+      </div>
+      <p>
+        <span>智能穿戴</span>
+      </p>
+      <div class="b">
+        <section><img src="" alt="">1</section>
+        <ul>
+          <li><span>热门</span>
+            <ul>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>5</li>
+              <li>6</li>
+              <li>7</li>
+              <li>8</li>
+            </ul>
+          </li>
+          <li><span>穿戴</span>
+            <ul>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>5</li>
+              <li>6</li>
+              <li>7</li>
+            </ul>
+          </li>
+        </ul>
+     
+      </div>
+    </main>
+  </div>
+</body>
+</html>
