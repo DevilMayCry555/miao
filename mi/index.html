@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width">
   <title>JS Bin</title>
   <style>
+* {
+  background-color: rgba(0,0,0,0.08);
+  box-shadow: inset 0 0 1px red;
+}
 html{
   overflow: auto;
   min-width: 1230px;
@@ -61,11 +65,12 @@ div.header ul.c{
 }
     
     
-    /* 第一上部 */
+    /* 第一部分 */
 div.menu {
   height: 770px;
   background-color: #fff;
 }
+    /* 上部 */
 div.menu div.a{
   line-height: 100px;
 }
@@ -111,9 +116,7 @@ div.menu div.a form label{
   vertical-align: middle;
   border: 1px solid rgb(224,224,224);
 }
-    
-    
-    /* 第一中部 */
+    /* 中部 */
 div.menu div.b {
   height: 460px;
   overflow: hidden;
@@ -164,9 +167,7 @@ div.ooo{
   bottom: 23px;
   right: 33px;
 }
-    
-
-    /* 第一下部 */
+    /* 下部 */
 div.c{
   height: 189px;
   overflow: hidden;
@@ -191,7 +192,12 @@ div.menu div.c section{
   margin-top: 14px;
 }
     
-    /* 第二顶部 */
+    
+    
+    
+    
+    
+    /* 第二部分 */
 div.product {
   background-color: rgb(245,245,245);
 }
@@ -200,11 +206,13 @@ div.product div.head{
   margin-top: 23px;
   height: 120px;
 }
+    /* 统一对P做标准 */
 div.product p{
   overflow: hidden;
   margin: 0;
   margin-top: 26px;
 }
+    /* 对p右侧的查看更多作修饰 */
 div.product p a{
   display: inline-block;
   line-height: 60px;
@@ -234,6 +242,7 @@ div.product p a:hover{
 div.product p a:hover span{
   border-color: rgb(255,103,0);
 }
+    /* 手机 */
 div.product div.a{
   overflow: hidden;
 }
@@ -251,18 +260,31 @@ div.product div.a section:nth-child(n + 2){
 div.product div.a section:nth-child(n + 6){
   margin-top: 14px;
 }
-    
-    /* 第二中 */
+    /* 从智能穿戴开始，右侧变为了多拉菜单
+    因为商品设置了浮动，必须闭合浮动，overflow
+    但右边的label必须放在ul内方便选择器选择
+    所以在外面再包一层div设置闭合，内部的div不闭合 */
+div.defend {
+  overflow: hidden;
+}
+div.product div.defend ul label{
+  cursor: pointer;
+  float: right;
+  margin-top: -38px;
+}
+    /* 智能穿戴 */
 div.product div.b{
-  xoverflow: hidden;
   position: relative;
 }
+div.product div.b ul label.rm{
+  margin-right: 48px;
+}
+    /* 布局 */
 div.product div.b section{
   height: 616px;
   width: 233px;
   float: left;
 }
-
 div.product div.b ul{
   margin: 0;
   padding: 0;
@@ -277,17 +299,6 @@ div.product div.b >ul >li{
   text-align: right;
   position: absolute;
 }
-div.product div.b >ul >li span{
-  float: right;
-  margin-top: -39px;
-}
-div.product div.b >ul >li:first-child span{
-  margin-right: 62px;
-}
-div.product div.b >ul >li:first-child{
-  
-  xdisplay: none;
-}
 div.product div.b >ul >li >ul >li{
   text-align: left;
   width: 235px;
@@ -295,9 +306,93 @@ div.product div.b >ul >li >ul >li{
   float: left;
   margin-left: 14px;
 }
+div.product div.b >ul >li >ul >li:last-child{
+  height: 143px;
+}
 div.product div.b >ul >li >ul >li:nth-child(n + 5){
   margin-top: 14px;
 }
+/* 菜单的选取 不能一直hover，应该是radio，可这个又不需要点击？？ */
+div.product div.b >ul >li.cd ul{
+  xvisibility: hidden;
+}
+div.product div.b label:hover{
+  border-bottom: 2px solid rgb(255,103,0);
+  color: rgb(255,103,0);
+}
+div.product div.b label.cd:hover ~ li.cd ul{
+  visibility: visible;
+  color: rgb(255,103,0);
+}
+div.product div.b label.cd:hover ~ li.rm ul{
+  visibility: hidden;
+}
+    
+    /* 家电 */
+div.product div.c{
+  position: relative;
+  display: inline;
+}
+div.product div.c div.sec{
+  height: 616px;
+  width: 233px;
+  float: left;
+  overflow: hidden;
+}
+div.product div.c section{
+  height: 301px;
+  width: 233px;
+  float: left;
+}
+div.product div.c section:nth-child(2){
+  margin-top: 14px;
+  bottom: 0;;
+}
+div.product div.c ul label.rm{
+  margin-right: 80px;;
+}
+div.product div.c ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+div.product div.c >ul{
+  width: 997px;
+  position: relative;
+  float: right;
+}
+div.product div.c >ul >li{
+  text-align: right;
+  position: absolute;
+}
+div.product div.c >ul >li >ul >li{
+  text-align: left;
+  width: 235px;
+  height: 301px;
+  float: left;
+  margin-left: 14px;
+}
+div.product div.c >ul >li >ul >li:nth-child(n + 5){
+  margin-top: 14px;
+}
+div.product div.c >ul >li >ul >li:nth-child(n + 8){
+  height: 143px;
+}
+div.product div.c >ul >li.dsyy ul{
+  visibility: hidden;
+}
+div.product div.c label:hover{
+  border-bottom: 2px solid rgb(255,103,0);
+  color: rgb(255,103,0);
+}
+div.product div.c label.dsyy:hover ~ li.dsyy ul{
+  visibility: visible;
+  color: rgb(255,103,0);
+}
+div.product div.c label.dsyy:hover ~ li.rm ul{
+  visibility: hidden;
+}
+    
   </style>
 </head>
 <body>
@@ -407,52 +502,126 @@ div.product div.b >ul >li >ul >li:nth-child(n + 5){
   <div class="product">
     <main>
       <div class="head"><img src="" alt=""></div>
-      <p>
-        <span>手机</span>
-        <a href="">查看更多<span class="a"></span></a>
-      </p>
-      <div class="a">
-        <section><img src="" alt="">1</section>
-        <section><img src="" alt="">2</section>
-        <section><img src="" alt="">3</section>
-        <section><img src="" alt="">4</section>
-        <section><img src="" alt="">5</section>
-        <section><img src="" alt="">6</section>
-        <section><img src="" alt="">7</section>
-        <section><img src="" alt="">8</section>
-        <section><img src="" alt="">9</section>
+        <p>
+          <span>手机</span>
+          <a href="">查看更多<span class="a"></span></a>
+        </p>
+        <div class="a">
+          <section><img src="" alt="">1</section>
+          <section><img src="" alt="">2</section>
+          <section><img src="" alt="">3</section>
+          <section><img src="" alt="">4</section>
+          <section><img src="" alt="">5</section>
+          <section><img src="" alt="">6</section>
+          <section><img src="" alt="">7</section>
+          <section><img src="" alt="">8</section>
+          <section><img src="" alt="">9</section>
+        </div>
+      <div class="defend">
+        <p>
+          <span>智能穿戴</span>
+        </p>
+        <div class="b">
+          <section><img src="" alt="">1</section>
+          <ul>
+            <label class="rm">热门</label>
+            <label class="cd">穿戴</label>
+            <li class="rm">
+              <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+              </ul>
+            </li>
+            <li class="cd">
+              <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
-      <p>
-        <span>智能穿戴</span>
-      </p>
-      <div class="b">
-        <section><img src="" alt="">1</section>
-        <ul>
-          <li><span>热门</span>
-            <ul>
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
-              <li>4</li>
-              <li>5</li>
-              <li>6</li>
-              <li>7</li>
-              <li>8</li>
-            </ul>
-          </li>
-          <li><span>穿戴</span>
-            <ul>
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
-              <li>4</li>
-              <li>5</li>
-              <li>6</li>
-              <li>7</li>
-            </ul>
-          </li>
-        </ul>
-     
+      <div class="defend">
+        <p>
+          <span>家电</span>
+        </p>
+        <div class="c">
+          <div class="sec">
+            <section><img src="" alt="">1</section>
+            <section><img src="" alt="">2</section>
+          </div>
+          <ul>
+            <label class="rm">热门</label>
+            <label class="dsyy">电视影音</label>
+            <li class="rm">
+              <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>9</li>
+              </ul>
+            </li>
+            <li class="dsyy">
+              <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>9</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="defend">
+        <p>
+          <span>生活电器</span>
+        </p>
+      </div>
+      <div class="defend">
+        <p>
+          <span>厨房电器</span>
+        </p>
+      </div>
+      <div class="defend">
+        <p>
+          <span>智能家居</span>
+        </p>
+      </div>
+      <div class="defend">
+        <p>
+          <span>运动出行</span>
+        </p>
+      </div>
+      <div class="defend">
+        <p>
+          <span>日用百货</span>
+        </p>
+      </div>
+      <div class="defend">
+        <p>
+          <span>视频</span>
+        </p>
       </div>
     </main>
   </div>
