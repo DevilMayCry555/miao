@@ -103,7 +103,7 @@
     text-align: center;
     background-color: #fff;
     overflow: hidden;
-    transition: height 0.5s;
+    transition: height 0.2s, box-shadow 0.2s;
     z-index: 90;
   }
   /* 二级菜单里项目里的内容需要居中 */
@@ -132,18 +132,23 @@
     cursor: pointer;
     padding: 0 10px;
   }
-  /* 选单样式 */
+  /* 动态选单样式 */
   .menu .a >ul .fc:hover >span{
     color: orange;
   }
       /* 父元素ul被hover时所有二级菜单全部出现 */
   .menu .a >ul:hover .fc ul{
+    visibility: hidden;
     height: 230px;
-    transition: height 0.5s;
+    transition: height 0.5s 0.2s;
   }
       /* 特定的二级菜单优先级提高 */
   .menu .a >ul .fc:hover ul{
     z-index: 100;
+    height: 230px;
+    visibility: visible;
+    transition: height 0.5s 0.2s;
+    box-shadow: 0 1px 5px 1px grey;
   }
   /* 服务和社区 */
   .menu .a >span{
@@ -274,6 +279,10 @@
   .menu .b .picture .label-r{
     z-index: 10;
   }
+  .menu .b .picture .label-l label:hover,
+  .menu .b .picture .label-r label:hover{
+    background-color: rgba(0,0,0,0.28);
+  }
   .menu .b .picture .label-l label{
     position: absolute;
     left: 233px;
@@ -282,10 +291,7 @@
     z-index: 2;
     padding-left: 5px;
     cursor: pointer;
-  }
-  .menu .b .picture .label-l label:hover,
-  .menu .b .picture .label-r label:hover{
-    background-color: rgba(0,0,0,0.28);
+    width: 40px;
   }
   .menu .b .picture .label-l icon{
     display: inline-block;
@@ -303,6 +309,7 @@
     z-index: 2;
     padding-right: 5px;
     cursor: pointer;
+    width: 40px;
   }
   .menu .b .picture .label-r icon{
     display: inline-block;
@@ -311,6 +318,10 @@
     border-top: 5px solid grey;
     border-left: 5px solid grey;
     transform: rotate(135deg);
+  }
+  .menu .b .picture .label-l label:hover icon,
+  .menu .b .picture .label-r label:hover icon{
+    border-color: white;
   }
   .menu .b .oooo{
     position: absolute;
@@ -479,9 +490,11 @@
     float: left;
     font-size: 1.8em;
   }
-  .product main >p a:hover,
-  .product main >p a:hover span{
+  .product main >p a:hover{
     color:rgb(255,103,0);
+  }
+  .product main >p a:hover span{
+    border-color: rgb(255,103,0);
   }
 
 
@@ -508,7 +521,6 @@
     float: left;
   }
   .product .phone:first-child img{
-    display: table-cell;
     height: 616px;
   }
   .product .phone:nth-child(n + 2){
@@ -540,6 +552,7 @@
   }
   .product .phone span:nth-child(3){
     line-height: 16px;
+    font-size: 0.5em;
     color: grey;
   }
   .product .phone span:last-child{
@@ -577,6 +590,8 @@
     height: 301px;
     float: left;
     background-color: #fff;
+    display: table-cell;
+    text-align: center;
   }
   /* 格外设置全长选单的高度 */
   .product .content >ul ul li.long{          
@@ -600,7 +615,74 @@
   .product .content >ul ul li:nth-child(n + 10){
     height: 143px;
   }
-
+  /* 选单内图片 */
+  .product .content .tips ul li img{
+    width: 180px;
+  }
+  .product .content .tips ul li.long img{
+    width: 233px;
+    height: 616px;
+  }
+  .product .content .tips li a{
+    color: black;
+    text-decoration: none;
+  }
+  .product .content .tips li span{
+    display: block;
+    line-height: 20px;
+  }
+  .product .content .tips li span:nth-child(3){
+    text-decoration: line-through;
+    line-height: 16px;
+    font-size: 0.5em;
+    color: grey;
+  }
+  .product .content .tips li span:last-child{
+    line-height: 40px;
+    color: red;
+  }
+  /* 查看更多 */
+  .product .content .tips li span.more{
+    font-size: 1.5em;
+    float: left;
+    margin-top: 48px;
+    margin-left: 20px;
+  }
+  .product .content .tips li span.hot{
+    font-size: 0.5em;
+    float: left;
+    clear: left;
+    color: grey;
+    margin-top: 5px;
+    margin-left: 20px;
+  }
+  .product .content .tips li icon.a{
+    width: 70px;
+    height: 70px;
+    border: 5px solid orange;
+    border-radius: 99px;
+    background-color: #fff;
+    float: right;
+    margin-top: -40px;
+  }
+  .product .content .tips li icon.b{
+    width: 40px;
+    height: 0px;
+    border-top: 6px solid orange;
+    float: right;
+    margin-right: -57px;
+    margin-top: -2px;
+  }
+  .product .content .tips li icon.c{
+    width: 25px;
+    height: 25px;
+    border-top: 6px solid orange;
+    border-right: 6px solid orange;
+    transform: rotate(45deg);
+    float: right;
+    margin-right: -55px;
+    margin-top: -15px;
+  }
 
   /* 选单样式 important!!!!!! ！！！！！！！！！！！！！！！！！！！！！！！*/
   /* 分两个hover--父元素ul的hover和tips的hover */
