@@ -71,13 +71,18 @@
     background-color: #fff;
   }
   /* 上部 */
-  .menu .a .icon{
+  .menu .a >.icon{
     width: 233px;
     float: left;
     height: 100px;
   }
-  .menu .a .icon img{
-    height: 100px;
+  .menu .a >.icon img{
+    margin-top: 25px;
+  }
+  .menu .a >.icon img:active{
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
   }
   .menu .a{
     width: 1230px;
@@ -103,7 +108,7 @@
     text-align: center;
     background-color: #fff;
     overflow: hidden;
-    transition: height 0.2s, box-shadow 0.2s;
+    transition: height 0.5s, box-shadow 0s 0.5s;
     z-index: 90;
   }
   /* 二级菜单里项目里的内容需要居中 */
@@ -132,14 +137,15 @@
     cursor: pointer;
     padding: 0 10px;
   }
+
   /* 动态选单样式 */
   .menu .a >ul .fc:hover >span{
     color: orange;
   }
       /* 父元素ul被hover时所有二级菜单全部出现 */
   .menu .a >ul:hover .fc ul{
-    visibility: hidden;
     height: 230px;
+    visibility: hidden;
     transition: height 0.5s 0.2s;
   }
       /* 特定的二级菜单优先级提高 */
@@ -150,6 +156,7 @@
     transition: height 0.5s 0.2s;
     box-shadow: 0 1px 5px 1px grey;
   }
+
   /* 服务和社区 */
   .menu .a >span{
     float: left;
@@ -460,6 +467,10 @@
   .product main >.head img{
     display: table-cell;
     width: 1230px;
+    cursor: pointer;
+  }
+  .product main >.head img:hover{
+    box-shadow: 0 1px 10px 1px grey;
   }
       /* 统一对P做标准 */
   .product main >p{
