@@ -1,0 +1,685 @@
+* {
+    xbackground-color: rgba(0,0,0,0.08);
+    xbox-shadow: inset 0 0 1px red;
+  }
+  html{
+    overflow: auto;
+    min-width: 1230px;
+    width: 100%;
+    height: 100%;
+  }
+  body{
+    margin: auto;
+  }
+  main {
+    width: 1230px;
+    margin: auto;
+    display: flow-root;
+    position: relative;
+  } 
+  /* 单独设置是因为.a里面的选单需要定位全长 */
+  main.top{
+    width: 100%;
+    margin: auto;
+    display: flow-root;
+  }
+      /* 顶部 */
+  div.header {
+    background-color: rgb(51,51,51);
+  }
+  div.header main ul {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  div.header main li{
+    display: inline;
+    line-height: 40px;
+    font-size: 0.8em;
+    color: lightgrey;
+  }
+  div.header ul a{
+    color: lightgrey;
+    text-decoration: none;
+  }
+  div.header ul a:hover {
+    color: white;
+  }
+  div.header ul icon{
+    width: 0px;
+    margin-left: 6px;
+    margin-right: 2px;
+    padding: 0px 0px;
+    border: 0.1px solid rgb(66,66,66);
+  }
+  div.header ul.b{
+    float: right;
+    margin-right: 20px;
+  }
+  div.header ul.c{
+    float: right;
+    width: 120px;
+    text-align: center;
+    background-color: rgb(66,66,66);
+  }
+      
+      
+      /* 第一部分 */
+  .menu {
+    height: 770px;
+    background-color: #fff;
+  }
+  /* 上部 */
+  .menu .a .icon{
+    width: 233px;
+    float: left;
+    height: 100px;
+  }
+  .menu .a .icon img{
+    height: 100px;
+  }
+  .menu .a{
+    width: 1230px;
+    margin: auto;
+    line-height: 100px;
+  }
+  /* 顶部下拉菜单设置 */
+  .menu .a ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .menu .a .fc{
+    float: left;
+  }
+  .menu .a ul ul{
+    position: absolute;
+    left: 0;
+    top: 100px;
+    right: 0;
+    height: 0;
+    padding-left: calc(50% - 615px);
+    text-align: center;
+    background-color: #fff;
+    overflow: hidden;
+    transition: height 0.5s;
+    z-index: 90;
+  }
+  /* 二级菜单里项目里的内容需要居中 */
+  .menu .a ul ul li{
+    float: left;
+    position: relative;
+    width: 205px;
+    text-align: center;
+  }
+  .menu .a ul ul li img{
+    width: 180px;
+    margin-top: 40px;
+    margin-bottom: -40px;
+    cursor: pointer;
+  }
+  .menu .a ul ul li span{
+    display: block;
+    line-height: 16px;
+    cursor: pointer;
+  }
+  .menu .a ul ul li span:last-child{
+    color: red;
+  }
+  /* .fc里面的字被hover才会变色 */
+  .menu .a .fc >span{
+    cursor: pointer;
+    padding: 0 10px;
+  }
+  /* 选单样式 */
+  .menu .a >ul .fc:hover >span{
+    color: orange;
+  }
+      /* 父元素ul被hover时所有二级菜单全部出现 */
+  .menu .a >ul:hover .fc ul{
+    height: 230px;
+    transition: height 0.5s;
+  }
+      /* 特定的二级菜单优先级提高 */
+  .menu .a >ul .fc:hover ul{
+    z-index: 100;
+  }
+  /* 服务和社区 */
+  .menu .a >span{
+    float: left;
+  }
+  .menu .a >span a{
+    color: black;
+    text-decoration: none;
+    padding: 0 10px;
+  }
+  .menu .a >span:hover a{
+    color: orange;
+  }
+  /* 检索框 */
+  .menu .a form{
+    float: right;
+    line-height: 100px;
+  }
+  .menu .a form input{
+    width: 240px;
+    height: 50px;
+    margin-right: -5px;
+    border: 0;
+    outline: 1px solid rgb(224,224,224);
+  }
+  .menu .a form label{
+    display: inline-block;
+    width: 52px;
+    line-height: 52px;
+    vertical-align: middle;
+    border: 0;
+    outline: 1px solid rgb(224,224,224);
+    cursor: pointer;
+  }
+  .menu .a form label img{
+    width: 52px;
+    height: 52px;
+    display: table-cell;
+  }
+  .menu .a form input:focus,
+  .menu .a form input:focus ~ label{
+    outline: 1px solid orange;
+  }
+
+
+      /* 中部 */
+  .menu .b {
+    width: 1230px;
+    height: 460px;
+    display: flow-root;
+    position: relative;
+    margin: auto;
+  }
+  .menu .b >ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 233px;
+    background-color: rgba(0,0,0,0.28);
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    position: absolute;
+    z-index: 10;
+  }
+  .menu .b >ul >li{
+    padding: 0px 30px;
+    line-height: 42px;
+    font-size: 0.8em;
+    cursor: pointer;
+  }
+  .menu .b >ul >li::after{
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-top: 3px solid white;
+    border-left: 3px solid white;
+    transform: rotate(135deg);
+    float: right;
+    margin-top: 13px;
+  }
+  .menu .b >ul >li:hover{
+    background-color: rgb(255,103,0);
+  }
+    /* 子菜单 用flex布局 */
+  .menu .b >ul >li >ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    width: 997px;
+    top: 0;
+    left: 100%;
+    height: 460px;
+    background-color: #fff;
+    z-index: 70;
+    box-shadow: 0px 7px 20px 3px grey;
+  }
+  .menu .b >ul >li >ul{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: start;
+    align-content: start;
+    align-items: center;
+    row-gap: 36px;
+  }
+  .menu .b >ul >li >ul li{
+    width: 233px;
+    background-color: orange;
+  }
+  .menu .b >ul >li >ul{
+    visibility: hidden;
+  }
+  .menu .b >ul >li:hover >ul{
+    visibility: visible;
+  }
+    /* 轮播图 */
+  .menu .b .picture {
+    height: 460px;
+  }
+  .menu .b .picture img{
+    position: absolute;
+    max-width: 100%;
+    z-index: 1;
+    cursor: pointer;
+  }
+  .menu .b .picture .label-l,
+  .menu .b .picture .label-r{
+    z-index: 10;
+  }
+  .menu .b .picture .label-l label{
+    position: absolute;
+    left: 233px;
+    line-height: 70px;
+    top: 195px;
+    z-index: 2;
+    padding-left: 5px;
+    cursor: pointer;
+  }
+  .menu .b .picture .label-l label:hover,
+  .menu .b .picture .label-r label:hover{
+    background-color: rgba(0,0,0,0.28);
+  }
+  .menu .b .picture .label-l icon{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-top: 5px solid grey;
+    border-left: 5px solid grey;
+    transform: rotate(-45deg);
+  }
+  .menu .b .picture .label-r label{
+    position: absolute;
+    right: 0;
+    line-height: 70px;
+    top: 195px;
+    z-index: 2;
+    padding-right: 5px;
+    cursor: pointer;
+  }
+  .menu .b .picture .label-r icon{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-top: 5px solid grey;
+    border-left: 5px solid grey;
+    transform: rotate(135deg);
+  }
+  .menu .b .oooo{
+    position: absolute;
+    bottom: 23px;
+    right: 33px;
+    z-index: 2;
+  }
+  .menu .b .oooo .circle{
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border: 1px solid grey;
+    border-radius: 99px;
+    background-color: grey;
+    cursor: pointer;
+  }
+
+  /* 轮播图效果 全用label就对了 */
+  .menu .b .picture .img img{
+    opacity: 0;
+    transition: 0.5s;
+  }
+  .menu .b .picture .label-l label,
+  .menu .b .picture .label-r label{
+    visibility: hidden;
+  }
+  .menu .b .picture #img1:checked ~ .img img:first-child,
+  .menu .b .picture #img2:checked ~ .img img:nth-child(2),
+  .menu .b .picture #img3:checked ~ .img img:nth-child(3),
+  .menu .b .picture #img4:checked ~ .img img:nth-child(4){
+    opacity: 1;
+    transition: 0.5s;
+  }
+  .menu .b .picture #img1:checked ~ .label-l label:first-child,
+  .menu .b .picture #img1:checked ~ .label-r label:first-child,
+  .menu .b .picture #img2:checked ~ .label-l label:nth-child(2),
+  .menu .b .picture #img2:checked ~ .label-r label:nth-child(2),
+  .menu .b .picture #img3:checked ~ .label-l label:nth-child(3),
+  .menu .b .picture #img3:checked ~ .label-r label:nth-child(3),
+  .menu .b .picture #img4:checked ~ .label-l label:nth-child(4),
+  .menu .b .picture #img4:checked ~ .label-r label:nth-child(4){
+    visibility: visible;
+  }
+  .menu .b .picture #img1:checked ~ .oooo .circle:first-child,
+  .menu .b .picture #img2:checked ~ .oooo .circle:nth-child(2),
+  .menu .b .picture #img3:checked ~ .oooo .circle:nth-child(3),
+  .menu .b .picture #img4:checked ~ .oooo .circle:nth-child(4){
+    background-color: #fff;
+  }
+      /* 下部 */
+  .menu .c{
+    width: 1230px;
+    height: 189px;
+    display: flow-root;
+    margin: auto;
+  }
+  .menu .c table{
+    display: inline-block;
+    width: 233px;
+    margin-top: 14px;
+    background-color: rgb(95,87,80);
+    color: lightgrey;
+  }
+  .menu .c table td{
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 0.5em;
+    position: relative;
+  }
+  .menu .c table td:nth-child(1)::after,
+  .menu .c table td:nth-child(2)::after{
+    content: '';
+    height: 50px;
+    top: 20px;
+    left: 77px;
+    border: 0.01px solid grey;
+    float: right;
+    position: absolute;
+  }
+  .menu .c table tr:first-child td::before,
+  .menu .c table tr:first-child td::before,
+  .menu .c table tr:first-child td::before{
+    content: '';
+    left: 38px;
+    top: 60px;
+    height: 55px;
+    
+    border: 0.01px solid grey;
+    float: left;
+    position: absolute;
+    transform: rotate(90deg);
+
+  }
+  .menu .c table td:hover{
+    color: white;
+    cursor: pointer;
+  }
+  .menu .c table td img{
+    display: table-cell;
+    width: 30px;
+    height: 30px;
+    margin-left: 24px;
+  }
+
+  .menu .c section{
+    width: 318px;
+    margin-left: 14px;
+    height: 175px;
+    float: right;
+    margin-top: 14px;
+  }
+  .menu .c section img{
+    display: table-cell;
+    width: 318px;
+  }
+  .menu .c section img:hover{
+    box-shadow: 0 1px 10px 1px grey;
+  }
+      
+      
+      
+      
+      
+      
+      /* 第二部分 */
+  .product {
+    background-color: rgb(245,245,245);
+  }
+  .product main >.head{
+    margin: auto;
+    margin-top: 23px;
+    height: 120px;
+  }
+  .product main >.head img{
+    display: table-cell;
+    width: 1230px;
+  }
+      /* 统一对P做标准 */
+  .product main >p{
+    display: flow-root;
+    margin: 0;
+    margin-top: 26px;
+  }
+      /* 对p右侧的查看更多作修饰 */
+  .product main >p a{
+    line-height: 60px;
+    color: black;
+    text-decoration: none;
+    float: right;
+  }
+  .product main >p a span{
+    display: inline-block;
+    border-top: 6px solid grey;
+    border-left: 6px solid grey;
+    border-bottom: 6px solid grey;
+    border-right: 6px solid grey;
+    border-radius: 9999px;
+    width: 6px;
+    height: 6px;
+    vertical-align: middle;
+  }
+  .product main >p >span{
+    line-height: 60px;
+    float: left;
+    font-size: 1.8em;
+  }
+  .product main >p a:hover,
+  .product main >p a:hover span{
+    color:rgb(255,103,0);
+  }
+
+
+
+      /* 总布局   向上移因为二级菜单设置了top38*/
+  .product main .content{
+    display: flow-root;
+    position: relative;
+    width: 1230px;
+    height: 654px;
+    margin-top: -38px;
+  }
+
+      /* 手机 */
+  .product main .sj{
+    display: flow-root;
+    position: relative;
+    width: 1230px;
+    height: 616px;
+  }
+  .product .phone:first-child{
+    height: 616px;
+    width: 233px;
+    float: left;
+  }
+  .product .phone:first-child img{
+    display: table-cell;
+    height: 616px;
+  }
+  .product .phone:nth-child(n + 2){
+    width: 235px;
+    height: 301px;
+    float: left;
+    margin-left: 14px;
+    display: table-cell;
+    text-align: center;
+    background-color: #fff;
+  }
+  .product .phone:nth-child(n + 2) img{
+    width: 180px;
+  }
+  .product .phone:nth-child(n + 6){
+    margin-top: 14px;
+  }
+  .product .phone:hover{
+    box-shadow: 0 1px 10px 1px grey;
+    cursor: pointer;
+  }
+  .product .phone a{
+    color: black;
+    text-decoration: none;
+  }
+  .product .phone span{
+    display: block;
+    line-height: 20px;
+  }
+  .product .phone span:nth-child(3){
+    line-height: 16px;
+    color: grey;
+  }
+  .product .phone span:last-child{
+    line-height: 40px;
+    color: red;
+  }
+
+
+
+  /* 浮动，必须闭合浮动 */
+  /* 选单统一设置 */
+  .product .content ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  /* 这里需要注意，确保父元素ul
+  也就是一级ul的高度为0，为后面动态选单做准备 */
+  .product .content >ul >li{
+    float: right;
+    margin-left: 30px;
+  }
+  /* 为什么不给tip负margintop，而是加二级菜单的top？ */
+  /* 因为tips的margin区脱离布局框的话float会重叠 */
+  .product .content >ul ul{
+    position: absolute;
+    top: 38px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+  .product .content >ul ul li{
+    text-align: left;
+    width: 235px;
+    height: 301px;
+    float: left;
+    background-color: #fff;
+  }
+  /* 格外设置全长选单的高度 */
+  .product .content >ul ul li.long{          
+    height: 616px;
+  }
+  .product .content .tips ul li:nth-child(n + 2){
+    margin-left: 13px;
+  }
+  /* 当都是半长选单时，第六个选单不需要右移 */
+  .product .content .tips ul li.noml{
+    margin-left: 0;
+  }
+  /* 处在下部分的选单要下移一点 */
+  .product .content >ul ul li:nth-child(n + 6){
+    margin-top: 14px;
+  }
+  /* 如果选单全满，最多放11个，最后两个为1/4长，但不管怎么样，最后一个肯定为1/4长*/
+  .product .content >ul ul li:last-child{
+    height: 143px;
+  }
+  .product .content >ul ul li:nth-child(n + 10){
+    height: 143px;
+  }
+
+
+  /* 选单样式 important!!!!!! ！！！！！！！！！！！！！！！！！！！！！！！*/
+  /* 分两个hover--父元素ul的hover和tips的hover */
+  /* 需要注意选择器优先级保持一致 */
+  /* 第一tip开始就要亮 */
+  .content >ul >li:last-child{
+    border-bottom: 2px solid rgb(255,103,0);
+    color: rgb(255,103,0);
+  }
+  .content >ul >li:last-child ul{
+    visibility: visible;
+  }
+  /* 父元素ul--hover的时候内部的所有tip样式归零 */
+  .content >ul:hover >li{
+    border-bottom: none;
+    color: black;
+    transition: none;
+  }
+  .content >ul:hover >li ul{
+    visibility: hidden;
+    transition: none;
+  }
+  /* 本体hover的时候显示效果 */
+  .product .content >ul >li:hover{
+    border-bottom: 2px solid rgb(255,103,0);
+    color: rgb(255,103,0);
+    cursor: pointer;
+    transition: none;
+  }
+  .product .content >ul li:hover ul{
+    visibility: visible;
+    transition: none;
+  }
+  .product .content >ul ul:hover{
+    cursor: auto;
+  }
+  .product .content >ul ul li:hover{
+    box-shadow: 0px 1px 10px 1px grey;
+    cursor: pointer;
+  }
+  /* 本体默认有延迟  border的变化体现在颜色上
+  要在长度长体现！！！要在长度上体现！！！
+  优先级要设置最低！！！！！*/
+  .content >ul >li{
+    border-bottom: 0px solid rgb(255,103,0);
+    color: black;
+    transition: border-bottom 0s 9999s, color 0s 9999s;
+  }
+  .content >ul >li ul{
+    visibility: hidden;
+    transition: visibility 0s 9999s;
+  }
+  
+  
+  /* 视频 */
+  div.product .sp{
+    display: flow-root;
+  }
+  div.product .sp section{
+    float: left;
+    width: 297px;
+    height: 288px;
+    margin-bottom: 27px;
+  }
+  div.product .sp section:nth-child(n + 2){
+    margin-left: 14px;
+  }
+  div.product .sp p{
+    margin: 0;
+    display: table-cell;
+    width: 297px;
+    float: left;
+    text-align: center;
+  }
+  div.product .sp p:first-child{
+    height: 180px;
+    background-color: saddlebrown;
+  }
+  div.product .sp p:last-child{
+    height: 108px;
+    background-color: sandybrown;
+  }

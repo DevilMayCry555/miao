@@ -1,1228 +1,595 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>JS Bin</title>
-  <style>
-* {
-  background-color: rgba(0,0,0,0.08);
-  box-shadow: inset 0 0 1px red;
-}
-html{
-  overflow: auto;
-  min-width: 1230px;
-}
-body{
-  margin: auto;
-}
-main {
-  width: 1230px;
-  margin: auto;
-  overflow: hidden;
-} 
-    /* 顶部 */
-div.header {
-  background-color: rgb(51,51,51);
-}
-div.header main ul {
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-div.header main li{
-  display: inline;
-  line-height: 40px;
-  font-size: 0.8em;
-  color: lightgrey;
-}
-div.header ul a{
-  color: lightgrey;
-  text-decoration: none;
-}
-div.header ul a:hover {
-  color: white;
-}
-div.header ul icon{
-  width: 0px;
-  margin-left: 6px;
-  margin-right: 2px;
-  padding: 0px 0px;
-  border: 0.1px solid rgb(66,66,66);
-}
-div.header ul.b{
-  float: right;
-  margin-right: 20px;
-}
-div.header ul.c{
-  float: right;
-  width: 120px;
-  text-align: center;
-  background-color: rgb(66,66,66);
-}
-    
-    
-    /* 第一部分 */
-div.menu {
-  height: 770px;
-  background-color: #fff;
-}
-    /* 上部 */
-div.menu div.a{
-  line-height: 100px;
-}
-div.menu div.a ul{
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  cursor: pointer;
-}
-div.menu div.a ul li:hover,
-div.menu div.a ul li:hover a{
-  color: rgb(255,103,0);
-}
-div.menu div.a li{
-  display: inline-block;
-  line-height: 70px;
-  margin-right: 1em;
-}
-div.menu div.a icon{
-  display: inline-block;
-  width: 233px;
-}
-div.menu div.a ul a{
-  color: black;
-  text-decoration: none;
-}
-div.menu div.a form{
-  display: inline-block;
-  float: right;
-  line-height: 100px;
-}
-div.menu div.a form input{
-  width: 240px;
-  height: 50px;
-  margin-right: -5px;
-  border: 1px solid rgb(224,224,224);
-}
-div.menu div.a form label{
-  display: inline-block;
-  width: 52px;
-  line-height: 52px;
-  vertical-align: middle;
-  border: 1px solid rgb(224,224,224);
-}
-    /* 中部 */
-div.menu div.b {
-  height: 460px;
-  overflow: hidden;
-  position: relative;
-}
-div.menu div.b ul{
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  width: 233px;
-  background-color: rgba(0,0,0,0.08);
-  color: white;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  position: absolute;
-}
-div.menu div.b ul li{
-  padding: 0px 30px;
-  line-height: 42px;
-  font-size: 0.8em;
-  cursor: pointer;
-}
-div.menu div.b ul li::after{
-  content: '>';
-  float: right;
-}
-div.menu div.b ul li:hover{
-  background-color: rgb(255,103,0);
-}
-div.menu div.b div.picture {
-  height: 460px;
-  
-}
-label.l{
-  position: absolute;
-  margin-left: 233px;
-  line-height: 70px;
-  top: 195px;
-}
-label.r{
-  position: absolute;
-  right: 0;
-  line-height: 70px;
-  top: 195px;
-}
-div.ooo{
-  position: absolute;
-  bottom: 23px;
-  right: 33px;
-}
-    /* 下部 */
-div.c{
-  height: 189px;
-  overflow: hidden;
-}
-div.menu div.c table{
- display: inline-block;
-  width: 233px;
-  margin-top: 14px;
-}
-div.menu div.c table td{
-  width: 80px;
-  height: 80px;
-  text-align: center;
-  vertical-align: bottom;
-}
-div.menu div.c section{
-  display: inline-block;
-  width: 318px;
-  margin-left: 14px;
-  height: 175px;
-  float: right;
-  margin-top: 14px;
-}
-    
-    
-    
-    
-    
-    
-    /* 第二部分 */
-div.product {
-  background-color: rgb(245,245,245);
-}
-div.product div.head{
-  margin: auto;
-  margin-top: 23px;
-  height: 120px;
-}
-    /* 统一对P做标准 */
-div.product p{
-  overflow: hidden;
-  margin: 0;
-  margin-top: 26px;
-}
-    /* 对p右侧的查看更多作修饰 */
-div.product p a{
-  display: inline-block;
-  line-height: 60px;
-  color: black;
-  text-decoration: none;
-  float: right;
-}
-div.product p a span{
-  display: inline-block;
-  border-top: 6px solid grey;
-  border-left: 6px solid grey;
-  border-bottom: 6px solid grey;
-  border-right: 6px solid grey;
-  border-radius: 9999px;
-  width: 6px;
-  height: 6px;
-  vertical-align: middle;
-}
-div.product p >span{
-  line-height: 60px;
-  float: left;
-  font-size: 1.8em;
-}
-div.product p a:hover{
-  color:rgb(255,103,0);
-}
-div.product p a:hover span{
-  border-color: rgb(255,103,0);
-}
-    /* 手机 */
-div.product div.a{
-  overflow: hidden;
-}
-div.product div.a section:first-child{
-  height: 616px;
-  width: 233px;
-  float: left;
-}
-div.product div.a section:nth-child(n + 2){
-  width: 235px;
-  height: 301px;
-  float: right;
-  margin-left: 14px;
-}
-div.product div.a section:nth-child(n + 6){
-  margin-top: 14px;
-}
-    /* 从智能穿戴开始，右侧变为了多拉菜单
-    因为商品设置了浮动，必须闭合浮动，overflow
-    但右边的label必须放在ul内方便选择器选择
-    所以在外面再包一层div设置闭合，内部的div不闭合 */
-div.defend {
-  overflow: hidden;
-}
-div.product div.defend ul label{
-  cursor: pointer;
-  float: right;
-  margin-top: -38px;
-}
-    /* 智能穿戴 */
-div.product div.b{
-  position: relative;
-}
-div.product div.b ul label.rm{
-  margin-right: 48px;
-}
-    /* 布局 */
-div.product div.b section{
-  height: 616px;
-  width: 233px;
-  float: left;
-}
-div.product div.b ul{
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-div.product div.b >ul{
-  width: 997px;
-  position: relative;
-  float: right;
-}
-div.product div.b >ul >li{
-  text-align: right;
-  position: absolute;
-}
-div.product div.b >ul >li >ul >li{
-  text-align: left;
-  width: 235px;
-  height: 301px;
-  float: left;
-  margin-left: 14px;
-}
-div.product div.b >ul >li >ul >li:last-child{
-  height: 143px;
-}
-div.product div.b >ul >li >ul >li:nth-child(n + 5){
-  margin-top: 14px;
-}
-/* 菜单的选取 不能一直hover，应该是radio，可这个又不需要点击？？ */
-div.product div.b >ul >li.cd ul{
-  visibility: hidden;
-}
-div.product div.b label:hover{
-  border-bottom: 2px solid rgb(255,103,0);
-  color: rgb(255,103,0);
-}
-div.product div.b label.cd:hover ~ li.cd ul{
-  visibility: visible;
-  color: rgb(255,103,0);
-}
-div.product div.b label.cd:hover ~ li.rm ul{
-  visibility: hidden;
-}
-    
-    /* 家电 */
-div.product div.c{
-  position: relative;
-  display: inline;
-}
-div.product div.c div.sec{
-  height: 616px;
-  width: 233px;
-  float: left;
-  overflow: hidden;
-}
-div.product div.c section{
-  height: 301px;
-  width: 233px;
-  float: left;
-}
-div.product div.c section:nth-child(2){
-  margin-top: 14px;
-  bottom: 0;;
-}
-div.product div.c ul label.rm{
-  margin-right: 80px;;
-}
-div.product div.c ul{
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-div.product div.c >ul{
-  width: 997px;
-  position: relative;
-  float: right;
-}
-div.product div.c >ul >li{
-  text-align: right;
-  position: absolute;
-}
-div.product div.c >ul >li >ul >li{
-  text-align: left;
-  width: 235px;
-  height: 301px;
-  float: left;
-  margin-left: 14px;
-}
-div.product div.c >ul >li >ul >li:nth-child(n + 5){
-  margin-top: 14px;
-}
-div.product div.c >ul >li >ul >li:nth-child(n + 8){
-  height: 143px;
-}
-div.product div.c >ul >li.dsyy ul{
-  visibility: hidden;
-}
-div.product div.c label:hover{
-  border-bottom: 2px solid rgb(255,103,0);
-  color: rgb(255,103,0);
-}
-div.product div.c label.dsyy:hover ~ li.dsyy ul{
-  visibility: visible;
-  color: rgb(255,103,0);
-}
-div.product div.c label.dsyy:hover ~ li.rm ul{
-  visibility: hidden;
-}
-
-    /* 通过家电演化来的总括版本*/
-    /* 也可以应用于下面 */
-div.product div.d{
-  position: relative;
-  display: inline;
-}
-div.product >main >div.defend >div >div.sec{
-  height: 616px;
-  width: 233px;
-  float: left;
-  overflow: hidden;
-}
-div.product >main >div.defend >div >div.sec section{
-  height: 301px;
-  width: 233px;
-  float: left;
-}
-div.product >main >div.defend >div >div.sec section:nth-child(2){
-  margin-top: 14px;
-  bottom: 0;;
-}
-    
-div.product >main >div.defend >div ul{
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-div.product >main >div.defend >div >ul{
-  width: 997px;
-  position: relative;
-  float: right;
-}
-div.product >main >div.defend >div >ul >li{
-  text-align: right;
-  position: absolute;
-}
-div.product >main >div.defend >div >ul >li >ul >li{
-  text-align: left;
-  width: 235px;
-  height: 301px;
-  float: left;
-  margin-left: 14px;
-}
-div.product >main >div.defend >div >ul >li >ul >li:nth-child(n + 5){
-  margin-top: 14px;
-}
-div.product >main >div.defend >div >ul >li >ul >li:nth-child(n + 8){
-  height: 143px;
-}
-div.product >main >div.defend >div >ul >li >ul >li:last-child{
-  height: 143px;
-}
-div.product >main >div.defend >div label:hover{
-  border-bottom: 2px solid rgb(255,103,0);
-  color: rgb(255,103,0);
-}
-    
-    
-        /* 单独设置的项目  生活电器
-主要是选单数量的不同导致的label的设定不同*/
-div.product div.d >ul >li:not(li.dsj) ul{
-  visibility: hidden;
-} 
-div.product div.d ul label.dsj{
-  margin-right: 186px;
-} 
-div.product div.d ul label.kj{
-  margin-right: 126px;
-}
-div.product div.d ul label.qj{
-  margin-right: 66px;
-}
-div.product div.d label.kj:hover ~ li:not(li.kj) ul{
-  visibility: hidden;
-}
-div.product div.d label.kj:hover ~ li.kj ul{
-  visibility: visible;
-  color: rgb(255,103,0);
-} 
-div.product div.d label.qj:hover ~ li:not(li.qj) ul{
-  visibility: hidden;
-}
-div.product div.d label.qj:hover ~ li.qj ul{
-  visibility: visible;
-  color: pink;
-} 
-div.product div.d label.fs:hover ~ li:not(li.fs) ul{
-  visibility: hidden;
-}
-div.product div.d label.fs:hover ~ li.fs ul{
-  visibility: visible;
-  color: orange;
-} 
-    
-    
-        /* 单独设置的项目  厨房电器
-主要是选单数量的不同导致的label的设定不同 */
-div.product div.e >ul >li:not(li.jsq) ul{
-  visibility: hidden;
-} 
-div.product div.e ul label.jsq{
-  margin-right: 186px;
-} 
-div.product div.e ul label.yz{
-  margin-right: 134px;
-}
-div.product div.e ul label.dfb{
-  margin-right: 66px;
-}
-div.product div.e label.yz:hover ~ li:not(li.yz) ul{
-  visibility: hidden;
-}
-div.product div.e label.yz:hover ~ li.yz ul{
-  visibility: visible;
-  color: rgb(255,103,0);
-} 
-div.product div.e label.dfb:hover ~ li:not(li.dfb) ul{
-  visibility: hidden;
-}
-div.product div.e label.dfb:hover ~ li.dfb ul{
-  visibility: visible;
-  color: pink;
-} 
-div.product div.e label.wzk:hover ~ li:not(li.wzk) ul{
-  visibility: hidden;
-}
-div.product div.e label.wzk:hover ~ li.wzk ul{
-  visibility: visible;
-  color: orange;
-} 
-    
-    
-        /* 单独设置的项目  智能家居
-主要是选单数量的不同导致的label的设定不同 */
-div.product div.zzjj >ul >li:not(li.xayx) ul{
-  visibility: hidden;
-} 
-div.product div.zzjj ul label.xayx{
-  margin-right: 246px;
-} 
-div.product div.zzjj ul label.ms{
-  margin-right: 178px;
-}
-div.product div.zzjj ul label.lyq{
-  margin-right: 96px;
-}
-div.product div.zzjj label.ms:hover ~ li:not(li.ms) ul{
-  visibility: hidden;
-}
-div.product div.zzjj label.ms:hover ~ li.ms ul{
-  visibility: visible;
-  color: rgb(255,103,0);
-} 
-div.product div.zzjj label.lyq:hover ~ li:not(li.lyq) ul{
-  visibility: hidden;
-}
-div.product div.zzjj label.lyq:hover ~ li.lyq ul{
-  visibility: visible;
-  color: pink;
-} 
-div.product div.zzjj label.zzsb:hover ~ li:not(li.zzsb) ul{
-  visibility: hidden;
-}
-div.product div.zzjj label.zzsb:hover ~ li.zzsb ul{
-  visibility: visible;
-  color: orange;
-} 
-    
-    
-        /* 单独设置的项目  运动出行
-主要是选单数量的不同导致的label的设定不同 */
-div.product div.ydcx >ul >li:not(li.phc) ul{
-  visibility: hidden;
-} 
-div.product div.ydcx ul label.phc{
-  margin-right: 246px;
-} 
-div.product div.ydcx ul label.ydjs{
-  margin-right: 164px;
-}
-div.product div.ydcx ul label.xbps{
-  margin-right: 80px;
-}
-div.product div.ydcx label.ydjs:hover ~ li:not(li.ydjs) ul{
-  visibility: hidden;
-}
-div.product div.ydcx label.ydjs:hover ~ li.ydjs ul{
-  visibility: visible;
-  color: rgb(255,103,0);
-} 
-div.product div.ydcx label.xbps:hover ~ li:not(li.xbps) ul{
-  visibility: hidden;
-}
-div.product div.ydcx label.xbps:hover ~ li.xbps ul{
-  visibility: visible;
-  color: pink;
-} 
-div.product div.ydcx label.cxgj:hover ~ li:not(li.cxgj) ul{
-  visibility: hidden;
-}
-div.product div.ydcx label.cxgj:hover ~ li.cxgj ul{
-  visibility: visible;
-  color: orange;
-} 
-    
-    
-        /* 单独设置的项目  日用百货
-主要是选单数量的不同导致的label的设定不同 */
-div.product div.rybh >ul >li:not(li.ghjc) ul{
-  visibility: hidden;
-} 
-div.product div.rybh ul label.ghjc{
-  margin-right: 250px;
-} 
-div.product div.rybh ul label.dy{
-  margin-right: 160px;
-}
-div.product div.rybh ul label.etyp{
-  margin-right: 80px;
-}
-div.product div.rybh label.dy:hover ~ li:not(li.dy) ul{
-  visibility: hidden;
-}
-div.product div.rybh label.dy:hover ~ li.dy ul{
-  visibility: visible;
-  color: rgb(255,103,0);
-} 
-div.product div.rybh label.etyp:hover ~ li:not(li.etyp) ul{
-  visibility: hidden;
-}
-div.product div.rybh label.etyp:hover ~ li.etyp ul{
-  visibility: visible;
-  color: pink;
-} 
-div.product div.rybh label.jjcp:hover ~ li:not(li.jjcp) ul{
-  visibility: hidden;
-}
-div.product div.rybh label.jjcp:hover ~ li.jjcp ul{
-  visibility: visible;
-  color: orange;
-} 
-    
-    
-        /* 视频 */
-div.product div.sp section{
-  float: left;
-  width: 297px;
-  height: 288px;
-  margin-bottom: 27px;
-}
-div.product div.sp section:nth-child(n + 2){
-  margin-left: 14px;
-}
-div.product div.sp section p{
-  margin: 0;
-  display: table-cell;
-  width: 297px;
-  float: left;
-  text-align: center;
-}
-div.product div.sp section p:first-child{
-  height: 180px;
-}
-div.product div.sp section p:last-child{
-  height: 108px;
-}
-  </style>
+  <link rel="stylesheet" href="hezi.css">
 </head>
+
 <body>
   <div class="header">
-      <main>
-        <ul class="a">
-          <li><a href="">小米商城</a><icon></icon></li>
-          <li><a href="">MIUI</a><icon></icon></li>
-          <li><a href="">loT</a><icon></icon></li>
-          <li><a href="">云服务</a><icon></icon></li>
-          <li><a href="">天星数科</a><icon></icon></li>
-          <li><a href="">有品</a><icon></icon></li>
-          <li><a href="">小爱开放平台</a><icon></icon></li>
-          <li><a href="">企业团购</a><icon></icon></li>
-          <li><a href="">资质证照</a><icon></icon></li>
-          <li><a href="">协议规则</a><icon></icon></li>
-          <li><a href="">下载APP</a><icon></icon></li>
-          <li><a href="">智能生活</a><icon></icon></li>
-          <li><a href="">Select Location</a></li>
+    <main>
+      <ul class="a">
+        <li><a href="">小米商城</a>
+          <icon></icon>
+        </li>
+        <li><a href="">MIUI</a>
+          <icon></icon>
+        </li>
+        <li><a href="">loT</a>
+          <icon></icon>
+        </li>
+        <li><a href="">云服务</a>
+          <icon></icon>
+        </li>
+        <li><a href="">天星数科</a>
+          <icon></icon>
+        </li>
+        <li><a href="">有品</a>
+          <icon></icon>
+        </li>
+        <li><a href="">小爱开放平台</a>
+          <icon></icon>
+        </li>
+        <li><a href="">企业团购</a>
+          <icon></icon>
+        </li>
+        <li><a href="">资质证照</a>
+          <icon></icon>
+        </li>
+        <li><a href="">协议规则</a>
+          <icon></icon>
+        </li>
+        <li><a href="">下载APP</a>
+          <icon></icon>
+        </li>
+        <li><a href="">智能生活</a>
+          <icon></icon>
+        </li>
+        <li><a href="">Select Location</a></li>
         </ul>
         <ul class="c">
           <li><a href="">购物车</a></li>
           <li>(?)</li>
         </ul>
         <ul class="b">
-          <li><a href="">登录</a><icon></icon></li>
-          <li><a href="">注册</a><icon></icon></li>
-          <li><a href="">消息通知</a></li>
+        <li><a href="">登录</a>
+          <icon></icon>
+        </li>
+        <li><a href="">注册</a>
+          <icon></icon>
+        </li>
+        <li><a href="">消息通知</a></li>
         </ul>
-      </main>
+        </main>
   </div>
-  
-  
-  
+
+
   <div class="menu">
-    <main>
+    <main class="top">
       <div class="a">
-        <icon>Mi</icon>
+        <icon class="icon"><a href=""><img src="第一部分/mi.png" alt=""></a></icon>
         <ul>
-          <li>Xiaomi手机</li>
-          <li>Redmi 红米</li>
-          <li>电视</li>
-          <li>笔记本</li>
-          <li>平板</li>
-          <li>家电</li>
-          <li>路由器</li>
-          <li><a href="">服务</a></li>
-          <li><a href="">社区</a></li>
-        </ul>
+          <li class="fc">
+            <span>Xiaomi手机</span>
+            <ul>
+              <li><img src="第一部分/Xiaomi手机/1.webp" alt=""><span>Xiaomi Civi</span><span>2599元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/2.webp" alt=""><span>Xiaomi MIX 4</span><span>4999元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/3.webp" alt=""><span>Xiaomi MIX FOLD</span><span>7999元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/4.webp" alt=""><span>Xiaomi 11 Ultra</span><span>5499元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/5.webp" alt=""><span>Xiaomi 11 PRO</span><span>4499元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/6.webp" alt=""><span>Xiaomi 11 青春版</span><span>1999元起</span></li>
+            </ul>
+              </li>
+              <li class="fc">
+                <span>Redmi 红米</span>
+                <ul>
+              <li><img src="第一部分/Xiaomi手机/2-1.webp" alt=""><span>Redmi Note 11 Pro系列</span><span>1799元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/2-2.webp" alt=""><span>Redmi Note 11 5G</span><span>1199元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/2-3.webp" alt=""><span>Redmi Note 11 4G</span><span>999元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/2-4.webp" alt=""><span>Redmi Note 10 Pro</span><span>1599元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/2-5.webp" alt=""><span>Redmi Note 10 5G</span><span>1099元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/2-6.webp" alt=""><span>K40 游戏增强版</span><span>1899元起</span></li>
+              </ul>
+              </li>
+              <li class="fc">
+                <span>电视</span>
+                <ul>
+              <li><img src="第一部分/Xiaomi手机/3-1.webp" alt=""><span>Redmi智能电视X55 2022</span><span>2999元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/3-2.webp" alt=""><span>Redmi智能电视X65 2022</span><span>3999元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/3-3.webp" alt=""><span>小米电视6 65* OLED</span><span>6999元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/3-4.webp" alt=""><span>小米电视 大师 77* OLED</span><span>19999元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/3-5.webp" alt=""><span>小米透明电视</span><span>39999元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/3-6.webp" alt=""><span>小米电视 大师 65英寸OLED</span><span>1999元起</span></li>
+              </ul>
+              </li>
+          <li class="fc">
+            <span>笔记本</span>
+            <ul>
+              <li><img src="第一部分/Xiaomi手机/4-1.webp" alt=""><span>小米笔记本 Pro 14 锐龙版</span><span>5499元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/4-2.webp" alt=""><span>RedmiBook Pro 15 增强版</span><span>5299元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/4-3.webp" alt=""><span>小米笔记本Pro X 14</span><span>7999元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/4-4.webp" alt=""><span>Redmi G 2021 Intel版</span><span>6499元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/4-5.webp" alt=""><span>Redmi G 2021 AMD版</span><span>7999元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/4-6.webp" alt=""><span>小米笔记本Pro X 15</span><span>7999元起</span></li>
+              </ul>
+              </li>
+          <li class="fc">
+            <span>平板</span>
+            <ul>
+              <li><img src="第一部分/Xiaomi手机/5-1.webp" alt=""><span>小米平板5</span><span>1999元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/5-2.webp" alt=""><span>小米平板5 Pro</span><span>2499元起</span></li>
+              </ul>
+              </li>
+              <li class="fc">
+                <span>路由器</span>
+                <ul>
+              <li><img src="第一部分/Xiaomi手机/6-1.webp" alt=""><span>米家风冷对开门冰箱 483L</span><span>2399元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/6-2.webp" alt=""><span>米家扫拖机气人1T</span><span>1999元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/6-3.png" alt=""><span>米家互联网洗烘一体机10kg</span><span>1899元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/6-4.webp" alt=""><span>小米净水器S1 800G</span><span>2199元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/6-5.webp" alt=""><span>米家空气净化器3 高效除菌</span><span>799元起</span></li>
+              <li><img src="第一部分/Xiaomi手机/6-6.jpg" alt=""><span>Redmi全自动波轮洗衣机1A</span><span>799元起</span></li>
+              </ul>
+              </li>
+          <li class="fc">
+            <span>家电</span>
+            <ul>
+              <li><img src="第一部分/Xiaomi手机/1.webp" alt=""><span>小米路由器AX6000</span><span>599元</span></li>
+              <li><img src="第一部分/Xiaomi手机/2.webp" alt=""><span>小米路由器AX9000</span><span>1299元</span></li>
+              <li><img src="第一部分/Xiaomi手机/3.webp" alt=""><span>Redmi路由器AC2100</span><span>169元</span></li>
+              <li><img src="第一部分/Xiaomi手机/4.webp" alt=""><span>小米路由器 Mesh</span><span>999元</span></li>
+              <li><img src="第一部分/Xiaomi手机/5.webp" alt=""><span>小米路由器4A 千兆版</span><span>129元</span></li>
+              <li><img src="第一部分/Xiaomi手机/6.webp" alt=""><span>小米路由器 4C</span><span>59元</span></li>
+              </ul>
+              </li>
+              </ul>
+        <span><a href="">服务</a></span>
+        <span><a href="">社区</a></span>
         <form action="">
-          <input type="text" name="q">
+          <input type="text" name="q" placeholder="手机">
           <button submit id="q" hidden></button>
-          <label for="q"><img src="" alt=""></label>
+          <label for="q"><img src="第一部分/搜索.png" alt=""></label>
         </form>
       </div>
       <div class="b">
         <ul>
-          <li>手机</li>
-          <li>电视</li>
-          <li>笔记本 平板</li>
-          <li>家电</li>
-          <li>出行 穿戴</li>
-          <li>智能路由器</li>
-          <li>电源 配件</li>
-          <li>健康 儿童</li>
-          <li>耳机 音箱</li>
-          <li>生活 箱包</li>
+          <li>手机
+            <ul>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>5</li>
+              <li>6</li>
+              <li>7</li>
+              <li>8</li>
+              <li>9</li>
+              <li>10</li>
+              <li>11</li>
+              <li>12</li>
+              <li>13</li>
+              <li>14</li>
+              <li>15</li>
+              <li>16</li>
+              <li>17</li>
+              <li>18</li>
+              <li>19</li>
+              <li>20</li>
+              <li>21</li>
+              <li>22</li>
+              <li>23</li>
+              <li>24</li>
+            </ul>
+            </li>
+          <li>电视
+            <ul>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>5</li>
+              <li>6</li>
+              <li>7</li>
+              <li>8</li>
+              <li>9</li>
+              <li>10</li>
+              <li>11</li>
+              <li>12</li>
+              <li>13</li>
+              <li>14</li>
+              <li>15</li>
+              <li>16</li>
+              <li>17</li>
+              <li>18</li>
+              <li>19</li>
+              <li>20</li>
+              <li>21</li>
+              <li>22</li>
+              <li>23</li>
+              <li>24</li>
+              </ul>
+              </li>
+          <li>笔记本 平板
+            <ul>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>5</li>
+              <li>6</li>
+              <li>7</li>
+              <li>8</li>
+              <li>9</li>
+              <li>10</li>
+              <li>11</li>
+              <li>12</li>
+              <li>13</li>
+              <li>14</li>
+              <li>15</li>
+              <li>16</li>
+              <li>17</li>
+              <li>18</li>
+              <li>19</li>
+              <li>20</li>
+            </ul>
+            </li>
+          <li>家电
+            <ul>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>5</li>
+              <li>6</li>
+              <li>7</li>
+              <li>8</li>
+              <li>9</li>
+              <li>10</li>
+              <li>11</li>
+              <li>12</li>
+              <li>13</li>
+              <li>14</li>
+              <li>15</li>
+              <li>16</li>
+              <li>17</li>
+              <li>18</li>
+              <li>19</li>
+              <li>20</li>
+              <li>21</li>
+              <li>22</li>
+              <li>23</li>
+              <li>24</li>
+            </ul>
+            </li>
+          <li>出行 穿戴
+            <ul>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>5</li>
+              <li>6</li>
+              <li>7</li>
+              <li>8</li>
+              <li>9</li>
+              <li>10</li>
+              <li>11</li>
+              <li>12</li>
+              <li>13</li>
+              <li>14</li>
+            </ul>
+            </li>
+          <li>智能路由器
+            <ul>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>5</li>
+              <li>6</li>
+              <li>7</li>
+              <li>8</li>
+              <li>9</li>
+              <li>10</li>
+              <li>11</li>
+              <li>12</li>
+              <li>13</li>
+              <li>14</li>
+              </ul>
+            </li>
+          <li>电源 配件
+            <ul>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>5</li>
+              <li>6</li>
+              <li>7</li>
+              <li>8</li>
+              <li>9</li>
+              <li>10</li>
+              <li>11</li>
+            </ul>
+            </li>
+          <li>健康 儿童
+            <ul>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>5</li>
+              <li>6</li>
+              <li>7</li>
+              <li>8</li>
+              <li>9</li>
+              <li>10</li>
+              <li>11</li>
+              <li>12</li>
+              <li>13</li>
+              <li>14</li>
+              <li>15</li>
+              <li>16</li>
+            </ul>
+            </li>
+          <li>耳机 音箱
+            <ul>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>5</li>
+              <li>6</li>
+              <li>7</li>
+              <li>8</li>
+              <li>9</li>
+              <li>10</li>
+              <li>11</li>
+              <li>12</li>
+              <li>13</li>
+              <li>14</li>
+              <li>15</li>
+              <li>16</li>
+              <li>17</li>
+              <li>18</li>
+            </ul>
+            </li>
+          <li>生活 箱包
+            <ul>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>5</li>
+              <li>6</li>
+              <li>7</li>
+              <li>8</li>
+              <li>9</li>
+              <li>10</li>
+              <li>11</li>
+              <li>12</li>
+              <li>13</li>
+              <li>14</li>
+            </ul>
+            </li>
         </ul>
         <div class="picture">
-          <label class="l" for=""><icon>qwer</icon></label>
-          <label class="r" for=""><icon>wasd</icon></label>
-          <div class="ooo">
-            <input type="radio" name="123" id="img1">
-            <input type="radio" name="123" id="img2">
-            <input type="radio" name="123" id="img3">
+          <input type="radio" name="carousel" id="img1" checked hidden>
+          <input type="radio" name="carousel" id="img2" hidden>
+          <input type="radio" name="carousel" id="img3" hidden>
+          <input type="radio" name="carousel" id="img4" hidden>
+          <div class="img">
+            <img src="第一部分/轮播图/img1.jpg" alt="">
+            <img src="第一部分/轮播图/img2.webp" alt="">
+            <img src="第一部分/轮播图/img3.webp" alt="">
+            <img src="第一部分/轮播图/img4.webp" alt="">
+          </div>
+          <div class="label-l">
+            <label for="img4">
+              <icon></icon>
+            </label>
+            <label for="img1">
+              <icon></icon>
+            </label>
+            <label for="img2">
+              <icon></icon>
+            </label>
+            <label for="img3">
+              <icon></icon>
+            </label>
+          </div>
+          <div class="label-r">
+            <label for="img2">
+              <icon></icon>
+            </label>
+            <label for="img3">
+              <icon></icon>
+            </label>
+            <label for="img4">
+              <icon></icon>
+            </label>
+            <label for="img1">
+              <icon></icon>
+            </label>
+          </div>
+          <div class="oooo">
+            <label for="img1" class="circle"></label>
+            <label for="img2" class="circle"></label>
+            <label for="img3" class="circle"></label>
+            <label for="img4" class="circle"></label>
           </div>
         </div>
-      </div>
-      <div class="c">
-        <table>
-          <tr>
-            <td>
-              <icon></icon>保障服务
-            </td>
-            <td>
-              <icon></icon>企业团购
-            </td>
-            <td>
-              <icon></icon>F码通道
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <icon></icon>米粉卡
-            </td>
-            <td>
-              <icon></icon>以旧换新
-            </td>
-            <td>
-              <icon></icon>话费充值
-            </td>
-          </tr>
-        </table>
-        <section><a href=""><img src="" alt="">123</a></section>
-        <section><a href=""><img src="" alt="">123</a></section>
-        <section><a href=""><img src="" alt="">123</a></section>
+        </div>
+        <div class="c">
+          <table>
+            <tr>
+              <td>
+                <img src="第一部分/1.png" alt="">保障服务
+              </td>
+              <td>
+                <img src="第一部分/2.png" alt="">企业团购
+              </td>
+              <td>
+                <img src="第一部分/3.png" alt="">F码通道
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <img src="第一部分/4.png" alt="">米粉卡
+              </td>
+              <td>
+                <img src="第一部分/5.png" alt="">以旧换新
+              </td>
+              <td>
+                <img src="第一部分/6.png" alt="">话费充值
+              </td>
+            </tr>
+          </table>
+          <section><a href=""><img src="第一部分/21.jpg" alt=""></a></section>
+          <section><a href=""><img src="第一部分/22.jpg" alt=""></a></section>
+          <section><a href=""><img src="第一部分/23.jpeg" alt=""></a></section>
       </div>
     </main>
   </div>
-  
-  
-  
-  <div class="product">
-    <main>
-      <div class="head"><img src="" alt="">123</div>
-      <p>
+<div class="product">
+  <main>
+    <div class="head"><img src="第二部分/1.webp" alt=""></div>
+    <p>
         <span>手机</span>
         <a href="">查看更多<span class="a"></span></a>
-      </p>
-      <div class="a">
-        <section><img src="" alt="">1</section>
-        <section><img src="" alt="">2</section>
-        <section><img src="" alt="">3</section>
-        <section><img src="" alt="">4</section>
-        <section><img src="" alt="">5</section>
-        <section><img src="" alt="">6</section>
-        <section><img src="" alt="">7</section>
-        <section><img src="" alt="">8</section>
-        <section><img src="" alt="">9</section>
-      </div>
-      <div class="defend">
-        <p>
-          <span>智能穿戴</span>
         </p>
-        <div class="b">
-          <section><img src="" alt="">1</section>
-          <ul>
-            <label class="rm">热门</label>
-            <label class="cd">穿戴</label>
-            <li class="rm">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-              </ul>
-            </li>
-            <li class="cd">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
+      <div class="sj">
+        <section class="phone"><a href=""><img src="第二部分/11.webp" alt=""></a></section>
+        <section class="phone"><a href=""><img src="第二部分/12.webp" alt="">
+            <span>Redmi Note 11 Pro系列</span>
+            <span>Redmi Note 11 Pro</span>
+            <span>1799元起</span></a></section>
+        <section class="phone"><a href=""><img src="第二部分/13.webp" alt="">
+            <span>Redmi Note 11 Pro系列</span>
+            <span>Redmi Note 11 Pro</span>
+            <span>1799元起</span></a></section>
+        <section class="phone"><a href=""><img src="第二部分/14.webp" alt="">
+            <span>Redmi Note 11 Pro系列</span>
+            <span>Redmi Note 11 Pro</span>
+            <span>1799元起</span></a></section>
+        <section class="phone"><a href=""><img src="第二部分/15.webp" alt="">
+            <span>Redmi Note 11 Pro系列</span>
+            <span>Redmi Note 11 Pro</span>
+            <span>1799元起</span></a></section>
+        <section class="phone"><a href=""><img src="第二部分/16.webp" alt="">
+            <span>Redmi Note 11 Pro系列</span>
+            <span>Redmi Note 11 Pro</span>
+            <span>1799元起</span></a></section>
+        <section class="phone"><a href=""><img src="第二部分/17.webp" alt="">
+            <span>Redmi Note 11 Pro系列</span>
+            <span>Redmi Note 11 Pro</span>
+            <span>1799元起</span></a></section>
+        <section class="phone"><a href=""><img src="第二部分/18.webp" alt="">
+            <span>Redmi Note 11 Pro系列</span>
+            <span>Redmi Note 11 Pro</span>
+            <span>1799元起</span></a></section>
+        <section class="phone"><a href=""><img src="第二部分/19.webp" alt="">
+            <span>Redmi Note 11 Pro系列</span>
+            <span>Redmi Note 11 Pro</span>
+            <span>1799元起</span></a></section>
       </div>
-      <div class="defend">
+<p>
+  <span>智能穿戴</span>
+</p>
+<div class="content">
+  <ul>
+          <li class="tips">穿戴
+            <ul>
+              <li class="long"><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              </ul>
+              </li>
+          <li class="tips">热门
+            <ul>
+              <li class="long"><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              </ul>
+              </li>
+              </ul>
+        </div>
+        
         <p>
           <span>家电</span>
         </p>
-        <div class="c">
-          <div class="sec">
-            <section><img src="" alt="">1</section>
-            <section><img src="" alt="">2</section>
-          </div>
+        <div class="content">
           <ul>
-            <label class="rm">热门</label>
-            <label class="dsyy">电视影音</label>
-            <li class="rm">
+            <li class="tips">电视影音
               <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li class="noml"><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
               </ul>
-            </li>
-            <li class="dsyy">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
+              </li>
+          <li class="tips">热门
+            <ul>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li class="noml"><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
+              <li><a href=""><img src="" alt=""></a></li>
               </ul>
-            </li>
-          </ul>
-        </div>
+              </li>
+              </ul>
       </div>
-      <div class="defend">
-        <p>
-          <span>生活电器</span>
-        </p>
-        <div class="d">
-          <div class="sec">
-            <section><img src="" alt="">1</section>
-            <section><img src="" alt="">2</section>
-          </div>
-          <ul>
-            <label class="dsj">订书机</label>
-            <label class="kj">空净</label>
-            <label class="qj">清洁</label>
-            <label class="fs">风扇</label>
-            <li class="dsj">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-              </ul>
-            </li>
-            <li class="kj">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-              </ul>
-            </li>
-            <li class="qj">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-              </ul>
-            </li>
-            <li class="fs">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="head"><img src="" alt="">123</div>
-      <div class="defend">
-        <p>
-          <span>厨房电器</span>
-        </p>
-        <div class="e">
-          <div class="sec">
-            <section><img src="" alt="">1</section>
-            <section><img src="" alt="">2</section>
-          </div>
-          <ul>
-            <label class="jsq">净水器</label>
-            <label class="yz">烟灶</label>
-            <label class="dfb">电饭煲</label>
-            <label class="wzk">微蒸烤</label>
-            <li class="jsq">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-              </ul>
-            </li>
-            <li class="yz">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-              </ul>
-            </li>
-            <li class="dfb">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-              </ul>
-            </li>
-            <li class="wzk">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="defend">
-        <p>
-          <span>智能家居</span>
-        </p>
-        <div class="zzjj">
-          <div class="sec">
-            <section><img src="" alt="">1</section>
-            <section><img src="" alt="">2</section>
-          </div>
-          <ul>
-            <label class="xayx">小爱音箱</label>
-            <label class="ms">门锁</label>
-            <label class="lyq">路由器</label>
-            <label class="zzsb">智能设备</label>
-            <li class="xayx">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-              </ul>
-            </li>
-            <li class="ms">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-              </ul>
-            </li>
-            <li class="lyq">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-              </ul>
-            </li>
-            <li class="zzsb">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="defend">
-        <p>
-          <span>运动出行</span>
-        </p>
-        <div class="ydcx">
-          <div class="sec">
-            <section><img src="" alt="">1</section>
-            <section><img src="" alt="">2</section>
-          </div>
-          <ul>
-            <label class="phc">平衡车/滑板车</label>
-            <label class="ydjs">运动健身</label>
-            <label class="xbps">箱包配饰</label>
-            <label class="cxgj">出行工具</label>
-            <li class="phc">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-              </ul>
-            </li>
-            <li class="ydjs">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-              </ul>
-            </li>
-            <li class="xbps">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-              </ul>
-            </li>
-            <li class="cxgj">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="head"><img src="" alt="">123</div>
-      <div class="defend">
-        <p>
-          <span>日用百货</span>
-        </p>
-        <div class="rybh">
-          <div class="sec">
-            <section><img src="" alt="">1</section>
-            <section><img src="" alt="">2</section>
-          </div>
-          <ul>
-            <label class="ghjc">个护健康</label>
-            <label class="dy">电源/线材</label>
-            <label class="etyp">儿童用品</label>
-            <label class="jjcp">家具床品</label>
-            <li class="ghjc">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-              </ul>
-            </li>
-            <li class="dy">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-              </ul>
-            </li>
-            <li class="etyp">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-              </ul>
-            </li>
-            <li class="jjcp">
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="defend">
-        <p>
-          <span>视频</span>
-          <a href="">查看全部<span class="a"></span></a>
-          <div class="sp">
-            <section>
-              <p>1</p>
-              <p>2</p>
-            </section>
-            <section>
-              <p>1</p>
-              <p>2</p>
-            </section>
-            <section>
-              <p>1</p>
-              <p>2</p>
-            </section>
-            <section>
-              <p>1</p>
-              <p>2</p>
-            </section>
-          </div>
-        </p>
+<p>
+  <span>视频</span>
+  <a href="">查看全部<span class="a"></span></a>
+      </p>
+      <div class="sp">
+        <section>
+          <p></p>
+          <p></p>
+          </section>
+          <section>
+          <p></p>
+          <p></p>
+          </section>
+          <section>
+          <p></p>
+          <p></p>
+          </section>
+          <section>
+          <p></p>
+          <p></p>
+          </section>
       </div>
     </main>
   </div>
 </body>
+
 </html>
