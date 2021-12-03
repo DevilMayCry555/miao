@@ -10,6 +10,8 @@
   }
   body{
     margin: auto;
+    width: 100%;
+    height: 100%;
   }
   main {
     width: 1230px;
@@ -62,6 +64,34 @@
     width: 120px;
     text-align: center;
     background-color: rgb(66,66,66);
+    cursor: pointer;
+    position: relative;
+  }
+  div.header ul.c:hover{
+    background-color: #fff;
+  }
+  div.header ul.c:hover a{
+    color: orange;
+  }
+  div.header ul.c ul{
+    position: absolute;
+    width: 318px;
+    height: 0px;
+    background-color: #fff;
+    top: 100%;
+    right: 0;
+    z-index: 90;
+    overflow: hidden;
+    text-align: center;
+  }
+  div.header ul.c ul li{
+    color: black;
+    line-height: 100px;
+  }
+  div.header ul.c:hover ul{
+    height: 100px;
+    box-shadow: 0px 5px 5px 1px grey;
+    transition: 0.3s;
   }
       
       
@@ -108,7 +138,7 @@
     text-align: center;
     background-color: #fff;
     overflow: hidden;
-    transition: height 0.5s, box-shadow 0s 0.5s;
+    transition: height 0.5s 0.2s, box-shadow 0s 0.5s, z-index 0.5s;
     z-index: 90;
   }
   /* 二级菜单里项目里的内容需要居中 */
@@ -138,23 +168,22 @@
     padding: 0 10px;
   }
 
-  /* 动态选单样式 */
+  /* 动态选单样式!!!!!!!!!! Z-index也可以渐变 */
   .menu .a >ul .fc:hover >span{
     color: orange;
   }
-      /* 父元素ul被hover时所有二级菜单全部出现 */
+      /* 父元素ul被hover时所有二级菜单全部下来 */
   .menu .a >ul:hover .fc ul{
     height: 230px;
-    visibility: hidden;
     transition: height 0.5s 0.2s;
   }
-      /* 特定的二级菜单优先级提高 */
+      /* 特定的二级菜单优先显示，并且把Zindex设置渐变在收回菜单的时候不出错 */
   .menu .a >ul .fc:hover ul{
-    z-index: 100;
+    z-index: 200;
     height: 230px;
     visibility: visible;
-    transition: height 0.5s 0.2s;
     box-shadow: 0 1px 5px 1px grey;
+    transition: height 0.5s 0.2s;
   }
 
   /* 服务和社区 */
@@ -240,30 +269,34 @@
   .menu .b >ul >li:hover{
     background-color: rgb(255,103,0);
   }
-    /* 子菜单 用flex布局 */
   .menu .b >ul >li >ul{
     margin: 0;
-    padding: 0;
+    padding: 21px;
     list-style: none;
     position: absolute;
-    width: 997px;
+    width: 955px;
     top: 0;
     left: 100%;
-    height: 460px;
+    height: 418px;
     background-color: #fff;
     z-index: 70;
     box-shadow: 0px 7px 20px 3px grey;
   }
+  .menu .b >ul >li:nth-child(n + 5) >ul{
+    width: 722px;
+  }
+  /* 子菜单 用flex布局!!!!!! */
   .menu .b >ul >li >ul{
     display: flex;
     flex-flow: column wrap;
-    justify-content: start;
-    align-content: start;
-    align-items: center;
-    row-gap: 36px;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    row-gap: 30px;
   }
   .menu .b >ul >li >ul li{
     width: 233px;
+    height: 40px;
     background-color: orange;
   }
   .menu .b >ul >li >ul{
@@ -695,7 +728,7 @@
     margin-top: -15px;
   }
 
-  /* 选单样式 important!!!!!! ！！！！！！！！！！！！！！！！！！！！！！！*/
+  /* 选单样式 important！！！！！！！！！！！！！*/
   /* 分两个hover--父元素ul的hover和tips的hover */
   /* 需要注意选择器优先级保持一致 */
   /* 第一tip开始就要亮 */
@@ -736,7 +769,7 @@
   }
   /* 本体默认有延迟  border的变化体现在颜色上
   要在长度长体现！！！要在长度上体现！！！
-  优先级要设置最低！！！！！*/
+  优先级要设置要最低，不然打开网页后也会直接延迟演示*/
   .content >ul >li{
     border-bottom: 0px solid rgb(255,103,0);
     color: black;
@@ -752,27 +785,120 @@
   div.product .sp{
     display: flow-root;
   }
-  div.product .sp section{
+  div.product .sp >label{
     float: left;
     width: 297px;
     height: 288px;
     margin-bottom: 27px;
+    cursor: pointer;
   }
-  div.product .sp section:nth-child(n + 2){
+  div.product .sp >label:hover{
+    box-shadow: 0 1px 10px 1px grey;
+  }
+  div.product .sp >:nth-child(n + 6){
     margin-left: 14px;
   }
-  div.product .sp p{
-    margin: 0;
-    display: table-cell;
-    width: 297px;
-    float: left;
-    text-align: center;
+  div.product .sp >label table{
+    background-color: #fff;
   }
-  div.product .sp p:first-child{
+  div.product .sp >label table td{
     height: 180px;
+    width: 292px;
     background-color: saddlebrown;
+    display: flow-root;
+    position: relative;
   }
-  div.product .sp p:last-child{
-    height: 108px;
-    background-color: sandybrown;
+  .product .sp >label table td img{
+    width: 292px;
+    height: 180px;
+  }
+  .product .sp >label table td img:hover + span{
+    border-color: orange;
+    background-color: orange;
+    transition: 0.3s;
+  }
+  .product .sp >label table td span{
+    width: 35px;
+    height: 23px;
+    border-radius: 99px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border: 2px solid white;
+    background-color: rgba(0,0,0,0.28);
+  }
+  .product .sp >label table td span p{
+    width: 0px;
+    height: 0px;
+    border-left: 12px solid white;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    position: absolute;
+    margin-top: 3px;
+    margin-left: 13px;
+  }
+  div.product .sp >label table caption{
+    height: 88px;
+    width: 297px;
+    background-color: white;
+    caption-side: bottom;
+    padding-top: 20px;
+  }
+  .product .sp div.video{
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin-left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.28);
+    z-index: 99;
+    visibility: hidden;
+  }
+  .product .sp div.video table{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 1323px;
+    height: 500px;
+    margin: auto;
+    z-index: 100;
+    background-color: #fff;
+    visibility: hidden;
+  }
+  .product .sp div.video table caption{
+    background-color: #fff;
+    text-align: left;
+    font-size: 1.5em;
+  }
+  .product .sp div.video table caption label{
+    float: right;
+    cursor: pointer;
+  }
+  .product .sp div.video table caption label:hover{
+    color: red;
+  }
+  .product .sp div.video iframe{
+    width: 1323px;
+    height: 500px;
+    margin: auto;
+  }
+  /* 交互效果 */
+  .product .sp #video1:checked ~ div.video,
+  .product .sp #video1:checked ~ div.video table.video1{
+    visibility: visible;
+  }
+  .product .sp #video2:checked ~ div.video,
+  .product .sp #video2:checked ~ div.video table.video2{
+    visibility: visible;
+  }
+  .product .sp #video3:checked ~ div.video,
+  .product .sp #video3:checked ~ div.video table.video3{
+    visibility: visible;
+  }
+  .product .sp #video4:checked ~ div.video,
+  .product .sp #video4:checked ~ div.video table.video4{
+    visibility: visible;
   }
