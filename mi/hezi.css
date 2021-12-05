@@ -146,7 +146,7 @@
     text-align: center;
     background-color: #fff;
     overflow: hidden;
-    transition: height 0.5s 0.2s, box-shadow 0s 0.5s, z-index 0.5s;
+    transition: height 0.5s 0.2s, box-shadow 0.5s 0.2s, z-index 0.5s;
     z-index: 90;
   }
   /* 二级菜单里项目里的内容需要居中 */
@@ -170,13 +170,13 @@
   .menu .a ul ul li span:last-child{
     color: red;
   }
-  /* .fc里面的字被hover才会变色 */
   .menu .a .fc >span{
     cursor: pointer;
     padding: 0 10px;
   }
 
   /* 动态选单样式!!!!!!!!!! Z-index也可以渐变 */
+  /* .fc里面的字被hover才会变色 */
   .menu .a >ul .fc:hover >span{
     color: orange;
   }
@@ -185,12 +185,13 @@
     height: 230px;
     transition: height 0.5s 0.2s;
   }
-      /* 特定的二级菜单优先显示，并且把Zindex设置渐变在收回菜单的时候不出错 */
+      /* 特定的二级菜单优先显示，附带阴影
+      并且把Zindex设置渐变在收回菜单的时候不出错 */
   .menu .a >ul .fc:hover ul{
     z-index: 200;
     height: 230px;
     visibility: visible;
-    box-shadow: 0 1px 5px 1px grey;
+    box-shadow: 0 3px 8px 1px grey;
     transition: height 0.5s 0.2s;
   }
 
@@ -264,6 +265,7 @@
     font-size: 0.8em;
     cursor: pointer;
   }
+  /* 每个选项后面的箭头制作 */
   .menu .b >ul >li::after{
     content: '';
     width: 10px;
@@ -280,17 +282,18 @@
   /* 加了上下的padding，高度要相应的减少 */
   .menu .b >ul >li >ul{
     margin: 0;
-    padding: 21px 0px;
+    padding: 20px 0px;
     list-style: none;
     position: absolute;
     width: 997px;
     top: 0;
     left: 100%;
-    height: 418px;
+    height: 420px;
     background-color: #fff;
     z-index: 70;
-    box-shadow: 0px 7px 20px 3px grey;
+    box-shadow: 2px 5px 10px 1px grey;
   }
+  /* 有的菜单栏不到四列，flex不能自动根据内容变换宽高 */
   .menu .b >ul >li:nth-child(n + 5) >ul{
     width: 740px;
   }
@@ -309,7 +312,16 @@
   .menu .b >ul >li >ul li{
     width: 233px;
     height: 40px;
-    background-color: orange;
+    color: black;
+  }
+  .menu .b >ul >li >ul li:hover{
+    color: coral;
+  }
+  .menu .b >ul >li >ul li img{
+    display: table-cell;
+    height: 40px;
+    float: left;
+    margin-right: 10px;
   }
   .menu .b >ul >li >ul{
     visibility: hidden;
@@ -449,7 +461,7 @@
     height: 50px;
     top: 20px;
     left: 77px;
-    border: 0.01px solid grey;
+    border: 0.01px solid rgb(102,94,87);
     float: right;
     position: absolute;
   }
@@ -460,8 +472,7 @@
     left: 38px;
     top: 60px;
     height: 55px;
-    
-    border: 0.01px solid grey;
+    border: 0.01px solid rgb(102,94,87);
     float: left;
     position: absolute;
     transform: rotate(90deg);
@@ -490,7 +501,7 @@
     width: 318px;
   }
   .menu .c section img:hover{
-    box-shadow: 0 1px 10px 1px grey;
+    box-shadow: 0 1px 5px 1px grey;
   }
       
       
@@ -513,7 +524,7 @@
     cursor: pointer;
   }
   .product main >.head img:hover{
-    box-shadow: 0 1px 10px 1px grey;
+    box-shadow: 0 1px 5px 1px grey;
   }
       /* 统一对P做标准 */
   .product main >p{
@@ -530,14 +541,14 @@
   }
   .product main >p a span{
     display: inline-block;
-    border-top: 6px solid grey;
-    border-left: 6px solid grey;
-    border-bottom: 6px solid grey;
-    border-right: 6px solid grey;
+    border-top: 5px solid grey;
+    border-left: 5px solid grey;
+    border-bottom: 5px solid grey;
+    border-right: 5px solid grey;
     border-radius: 9999px;
-    width: 6px;
-    height: 6px;
-    vertical-align: middle;
+    width: 5px;
+    height: 5px;
+    vertical-align: baseline;
   }
   .product main >p >span{
     line-height: 60px;
@@ -562,7 +573,7 @@
     margin-top: -38px;
   }
 
-      /* 手机 */
+      /* 手机 直接浮动布局*/  
   .product main .sj{
     display: flow-root;
     position: relative;
@@ -677,6 +688,7 @@
     width: 233px;
     height: 616px;
   }
+  /* 最左边的是海报，hover切换选单的时候是不动的 */
   .product .content .tips ul li.lefthead img{
     width: 233px;
   }
