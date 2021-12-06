@@ -898,7 +898,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    width: 882px;
+    width: 700px;
     height: 500px;
     margin: auto;
     z-index: 100;
@@ -919,8 +919,8 @@
     color: red;
   }
   .product .sp div.video video{
-    width: 882px;
-    height: 500px;
+    xwidth: 882px;
+    xheight: 500px;
     margin: auto;
   }
   /* 交互效果 */
