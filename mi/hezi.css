@@ -20,6 +20,10 @@
     display: flow-root;
     position: relative;
   } 
+  a{
+    text-decoration: none;
+    color: black;
+  }
   /* 单独设置是因为.a里面的选单需要定位全长 */
   main.top{
     width: 100%;
@@ -904,6 +908,7 @@
   .product .sp div.video table caption{
     background-color: #fff;
     text-align: left;
+    height: 3em;
     font-size: 1.5em;
   }
   .product .sp div.video table caption label{
@@ -913,7 +918,7 @@
   .product .sp div.video table caption label:hover{
     color: red;
   }
-  .product .sp div.video iframe{
+  .product .sp div.video video{
     width: 882px;
     height: 500px;
     margin: auto;
@@ -991,6 +996,4 @@
   body >table td:hover img.orange{
     opacity: 1;
   }
-  a{
-    text-decoration: none;
-  }
+  
