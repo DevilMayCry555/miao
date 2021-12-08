@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    html{
+  height: 100%;
+}
+main{
+  position: relative;
+  height: 600px;
+  width: 600px;
+  transition: 3s;
+  transform-style: preserve-3d;
+  transform: rotatey(-20deg) rotatex(-20deg);
+  margin: auto;
+  animation: ovo 10s linear infinite;
+  background-color: rgba(0,0,0,0.08);
+}
+div{
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  transition: 1s;
+  top: 200px;
+  left: 200px;
+  text-align: center;
+  font-size: 1em;
+  color: white;
+}
+    @keyframes ovo{
+      from{
+        transform: none;
+      }
+      to{
+        transform: rotatex(720deg) rotatey(360deg);
+      }
+    }
+div.a{
+  transform: translatez(100px);
+  background: radial-gradient(ellipse at top right, rgb(0,0,255), transparent), 
+    radial-gradient(ellipse at bottom right, rgb(0,0,0), transparent),
+    radial-gradient(ellipse at top left, rgb(0,255,255), transparent),
+    radial-gradient(ellipse at bottom left, rgb(0,255,0), transparent);
+} 
+div.b{
+  transform: translatex(0px) translatey(-100px) translatez(0px) rotatex(90deg);
+  background: radial-gradient(ellipse at top right, rgb(255,0,255), transparent), 
+    radial-gradient(ellipse at bottom right, rgb(0,0,255), transparent),
+    radial-gradient(ellipse at top left, rgb(255,255,255), transparent),
+    radial-gradient(ellipse at bottom left, rgb(0,255,255), transparent);
+}
+div.b1{
+  transform: translatex(0px) translatey(100px) translatez(0px) rotatex(-90deg);
+  background: radial-gradient(ellipse at top right, rgb(0,0,0), transparent), 
+    radial-gradient(ellipse at bottom right, rgb(255,0,0), transparent),
+    radial-gradient(ellipse at top left, rgb(0,255,0), transparent),
+    radial-gradient(ellipse at bottom left, rgb(255,255,0), transparent);
+}
+div.a1{
+  transform: translatez(-100px) rotatey(180deg);
+  background: radial-gradient(ellipse at top right, rgb(255,255,255), transparent), 
+    radial-gradient(ellipse at bottom right, rgb(255,255,0), transparent),
+    radial-gradient(ellipse at top left, rgb(255,0,255), transparent),
+    radial-gradient(ellipse at bottom left, rgb(255,0,0), transparent);
+}
+div.c{
+  transform: translatex(100px) translatez(0px) rotatey(90deg);
+  background: radial-gradient(ellipse at top right, rgb(255,0,255), transparent), 
+    radial-gradient(ellipse at bottom right, rgb(255,0,0), transparent),
+    radial-gradient(ellipse at top left, rgb(0,0,255), transparent),
+    radial-gradient(ellipse at bottom left, rgb(0,0,0), transparent);
+}
+div.c1{
+  transform: translatex(-100px) translatez(0px) rotatey(-90deg);
+  background: radial-gradient(ellipse at top right, rgb(0,255,255), transparent), 
+    radial-gradient(ellipse at bottom right, rgb(0,255,0), transparent),
+    radial-gradient(ellipse at top left, rgb(255,255,255), transparent),
+    radial-gradient(ellipse at bottom left, rgb(255,255,0), transparent);
+}
+  </style>
+</head>
+<body>
+  <main>
+  <div class="a">正面</div>
+  <div class="a1">背面</div>
+  <div class="b">上面</div>
+  <div class="b1">下面</div>
+  <div class="c">左面</div>
+  <div class="c1">右面</div>
+  </main>
+</body>
+</html>
