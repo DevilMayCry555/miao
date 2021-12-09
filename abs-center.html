@@ -5,36 +5,56 @@
   <meta name="viewport" content="width=device-width">
   <title>JS Bin</title>
   <style>
-body{
-  margin: auto;
+* {
+  background-color: rgba(0,0,0,0.08);
+  box-shadow: inset 0 0 1px red;
 }
-div {
-  width: 300px;
-  height: 300px;
-  margin: 20px auto;
-  position: relative;
+div{
+      width: 400px;
+      height: 400px;
+      margin: auto;
 }
-div >*{
-  max-width:100%;
-  position: absolute;
-  max-height:100%;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+/* 绝对居中的方法  对象为div内的img元素 */
+/* 子元素比父元素大的时候，高度超出就设置height:100%,宽度就用width: 100%; */
+
+/* 1，父元素div设置为单元格  */
+/* div{
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+  } */
+/* 2,定位 */
+/* div{
+    position: relative;
+  }
+  div >*{
+    max-width:100%;
+    position: absolute;
+    max-height:100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  } */
+/* 3，父元素设置FLEX 子元素margin为auto*/
+/* div{
+  display: flex;
+}
+img{
   margin: auto;
+} */
+/* 4，父元素设置flex，jc/ai都为center，水平垂直居中 比较推荐！*/
+div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
   </style>
 </head>
 <body>
   <div class="a">
     <img src="https://github.com/YangLiu-stu/miao/blob/main/abs/logo.png?raw=true" alt="">
-  </div>
-  <div class="b">
-    <img src="https://github.com/YangLiu-stu/miao/blob/main/abs/shizuna_01.jpg?raw=true" alt="">
-  </div>
-  <div class="c">
-    <img src="https://github.com/YangLiu-stu/miao/blob/main/abs/shizuna_kuro.png?raw=true" alt="">
   </div>
 </body>
 </html>

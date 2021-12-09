@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+@keyframes comeout{
+  from{
+    left: 0;
+  }
+  to{
+    left: 100%;
+  }
+}
+@keyframes ovo{
+  from{
+     transform: scale(1,1) translatey(0);
+  }
+  10%{
+    transform: scale(1.5,0.5) translatey(0);
+  }
+  20%{
+    transform: scale(0.9,1.1) translatey(0);
+  }
+  50%{
+    transform: scale(0.9,1.1) translatey(-100px);
+  }
+  60%{
+     transform: scale(1,1) translatey(-120px);
+  }
+  80%{
+    transform: scale(1,1) translatey(0px);
+  }
+  90%{
+    transform: scale(1,1) translatey(-50px);
+  }
+  to{
+    transform: scale(1,1) translatey(0px);
+  }
+}
+html{
+  min-width: 1300px;
+  overflow: auto;
+}
+main{
+  position: relative;
+}
+div.p{
+  display: flow-root;
+}
+div.l label{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 2px solid;
+  font: 3em monospace;
+  text-align: center;
+  background-color: skyblue;
+  color: white;
+  position: absolute;
+  left: 500px;
+  top: 400px;
+  cursor: pointer;
+  z-index: 100;
+}
+div.l label:nth-child(2){
+  left: 560px;
+}
+div.l label:nth-child(3){
+  left: 620px;
+}
+div.l label:nth-child(4){
+  left: 680px;
+}
+div.p section{
+  width: 307.5px;
+  height: 460px;
+  float: left;
+  overflow: hidden;
+  position: relative;
+}
+main div.p section span{
+  display: block;
+  width: 307.5px;
+  height: 460px;
+  position: absolute;
+  left: -100%;
+}
+div.p section span:first-child{
+  background: no-repeat  url(https://github.com/YangLiu-stu/miao/blob/main/mi/%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/%E8%BD%AE%E6%92%AD%E5%9B%BE/img1.jpg?raw=true);
+}
+div.p section span:nth-child(2){
+  background: no-repeat  url(https://github.com/YangLiu-stu/miao/blob/main/mi/%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/%E8%BD%AE%E6%92%AD%E5%9B%BE/img2.webp?raw=true);
+}
+div.p section span:nth-child(3){
+  background: no-repeat  url(https://github.com/YangLiu-stu/miao/blob/main/mi/%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/%E8%BD%AE%E6%92%AD%E5%9B%BE/img3.webp?raw=true);
+}
+div.p section span:nth-child(4){
+  background: no-repeat  url(https://github.com/YangLiu-stu/miao/blob/main/mi/%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/%E8%BD%AE%E6%92%AD%E5%9B%BE/img4.webp?raw=true);
+}
+div.p section:first-child span{
+  background-size: 1230px 460px;
+  background-position: left bottom 50%;
+}
+div.p section:nth-child(2) span{
+  background-size: 1230px 460px;
+  background-position: left 33.3% bottom 50%;
+}
+div.p section:nth-child(3) span{
+  background-size: 1230px 460px;
+  background-position: left 66.6% bottom 50%;
+}
+div.p section:nth-child(4) span{
+  background-size: 1230px 460px;
+  background-position: right bottom 50%;
+}
+
+/* 效果 */
+/* 动画要在checked和上一个checked目标进行切换，所以对象是两个
+在切换图像的时候，checked身份发生交替，变为unchecked的对象需要往右离去*/
+.p section span{
+  animation: comeout 0.5s linear;
+}
+#img1:checked ~ .p section span:first-child{
+  z-index: 4;
+  animation: none;
+  left: 0;
+  transition: left  0.5s linear;
+}
+#img2:checked ~ .p section span:nth-child(2){
+  z-index: 4;
+  animation: none;
+  left: 0;
+  transition: left  0.5s linear;
+}
+#img3:checked ~ .p section span:nth-child(3){
+  z-index: 4;
+  animation: none;
+  left: 0;
+  transition: left  0.5s linear;
+}
+#img4:checked ~ .p section span:nth-child(4){
+  z-index: 4;
+  animation: none;
+  left: 0;
+  transition: left  0.5s linear;
+}
+#img1:checked ~ .l label:nth-child(1),
+#img2:checked ~ .l label:nth-child(2),
+#img3:checked ~ .l label:nth-child(3),
+#img4:checked ~ .l label:nth-child(4){
+      background-color:  orange;
+    }
+label:hover{
+  animation: ovo 1s 5s infinite;
+}
+  </style>
+</head>
+<body>
+  <main>
+    <input type="radio" name="animation-p" id="img1" hidden checked>
+    <input type="radio" name="animation-p" id="img2" hidden>
+    <input type="radio" name="animation-p" id="img3" hidden>
+    <input type="radio" name="animation-p" id="img4" hidden>
+    <div class="l">
+      <label for="img1">1</label>
+      <label for="img2">2</label>
+      <label for="img3">3</label>
+      <label for="img4">4</label>
+    </div>
+    <div class="p">
+      <section class="a">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </section>
+      <section class="b">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </section>
+      <section class="c">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </section>
+      <section class="d">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+main{
+  width: 400px;
+  height: 400px;
+  margin: auto;
+  margin-top: 100px;
+  border-radius: 50%;
+  border: 5px solid ;
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+}
+main section{
+  width: 400px;
+  height: 400px;
+  position: absolute;
+}
+/* span嵌套 继承实现均分 */
+section.number span{
+  position: absolute;
+  width: 30px;
+  height: 400px;
+  color: white;
+  left: calc(50% - 15px);
+  text-align: center;
+  transform: rotate(30deg);
+}
+section.number span p{
+  display: inline-block;
+  margin: auto;
+  width: 30px;
+  height: 30px;
+  font: 22px monopspace;
+  border-radius: 50%;
+  background-color: black;
+  transform: scale(1.2) translatey(10px);
+}
+section.number span p.x{
+  background-color: red;
+}
+icon.center{
+  width: 20px;
+  height: 20px;
+  background-color: #FFF;
+  box-sizing: border-box;
+  border: 5px solid;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+  z-index: 10;
+}
+/* 时针样式 */
+icon.m{
+  width: 10px;
+  height: 150px;
+  position: absolute;
+  background-color: white;
+  box-shadow: inset 0px 0px 0px 5px black;
+  top: calc(50% - 150px);
+  left: calc(50% - 5px);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  z-index: 2;
+  transform-origin: bottom;
+}
+icon.h{
+  width: 10px;
+  height: 80px;
+  position: absolute;
+  background-color: white;
+  box-shadow: inset 0px 0px 0px 2px black;
+  top: calc(50% - 80px);
+  left: calc(50% - 5px);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  z-index: 1;
+  transform-origin: bottom;
+}
+section.s{
+  z-index: 5;
+}
+icon.s{
+  width: 4px;
+  height: 170px;
+  position: absolute;
+  background-color: red;
+  top: calc(50% - 50px);
+  left: calc(50% - 2px);
+  border-radius: 50%;
+  z-index: 5;
+  transform-origin: center 50px;
+}
+@keyframes point{
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+@keyframes h-point{
+  from{
+    transform: rotate(-90deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+@keyframes tiktok{
+  from{
+    transform: rotate(0deg);
+  }
+  5%{
+    transform: rotate(-2deg);
+  }
+  10%{
+    transform: rotate(0deg);
+  }
+  15%{
+    transform: rotate(2deg);
+  }
+  20%{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(0deg);
+  }
+}
+icon.s{
+  animation: point 60s steps(60, end) infinite;
+}
+section.s{
+  animation: tiktok 1s infinite;
+}
+icon.m{
+  animation: point 3600s linear infinite;
+}
+icon.h{
+  animation: h-point 43200s linear infinite;
+}
+  </style>
+</head>
+<body>
+  <main>
+    <section class="number">
+      <span><p>1</p>
+        <span><p>2</p>
+          <span><p>3</p>
+            <span><p>4</p>
+              <span><p>5</p>
+                <span><p>6</p>
+                  <span><p>7</p>
+                    <span><p>8</p>
+                      <span><p>9</p>
+                        <span><p class="x">X</p>
+                          <span><p>J</p>
+                            <span>
+                              <p>Q</p>
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                  </span>
+                </span>
+              </span>
+            </span>
+          </span>
+        </span>
+      </span>
+    </section>
+    <icon class="center"></icon>
+    <icon class="m"></icon>
+    <icon class="h"></icon>
+    <section class="s">
+      <icon class="s"></icon>
+    </section>
+  </main>
+</body>
+</html>
