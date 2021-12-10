@@ -5,28 +5,17 @@
   <meta name="viewport" content="width=device-width">
   <title>JS Bin</title>
   <style>
-main{
-  width: 400px;
-  height: 400px;
-  margin: auto;
-  margin-top: 100px;
-  border-radius: 50%;
-  border: 5px solid ;
-  position: relative;
-  overflow: hidden;
-  background-color: white;
-}
 main section{
   width: 400px;
   height: 400px;
   position: absolute;
+  z-index: 5;
 }
 /* s利用pan子元素继承 实现表盘均分 */
 section.number span{
   position: absolute;
   width: 30px;
   height: 400px;
-  color: white;
   left: calc(50% - 15px);
   text-align: center;
   transform: rotate(30deg);
@@ -38,65 +27,54 @@ section.number span p{
   height: 30px;
   font: 22px monopspace;
   border-radius: 50%;
-  background-color: black;
-  transform: scale(1.2) translatey(10px);
+  transform: scale(1.2) translatey(16px);
 }
-section.number span p.x{
-  background-color: red;
-}
-icon.center{
+.center{
   width: 20px;
   height: 20px;
-  background-color: #FFF;
+  background-color: white;
   box-sizing: border-box;
-  border: 5px solid;
+  border: 4px solid rgb(227,237,205);
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
+  left: calc(50% - 10px); 
+  top: calc(50% - 10px);
   border-radius: 50%;
   z-index: 10;
+  cursor: pointer;
 }
 /* 时针样式 */
 icon.m{
   width: 10px;
   height: 150px;
   position: absolute;
-  background-color: white;
   box-shadow: inset 0px 0px 0px 5px black;
-  top: calc(50% - 150px);
+  top: calc(50% - 130px);
   left: calc(50% - 5px);
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-radius: 10px;
   z-index: 2;
-  transform-origin: bottom;
+  transform-origin: center 145px;
 }
 icon.h{
   width: 10px;
-  height: 80px;
+  height: 95px;
   position: absolute;
-  background-color: white;
-  box-shadow: inset 0px 0px 0px 2px black;
-  top: calc(50% - 80px);
+  background-color: skyblue;
+  top: calc(50% - 75px);
   left: calc(50% - 5px);
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-radius: 10px;
   z-index: 1;
-  transform-origin: bottom;
-}
-section.s{
-  z-index: 5;
+  transform-origin: center 75px;
 }
 icon.s{
   width: 4px;
   height: 170px;
   position: absolute;
   background-color: red;
-  top: calc(50% - 50px);
+  top: calc(50% - 120px);
   left: calc(50% - 2px);
   border-radius: 50%;
   z-index: 5;
-  transform-origin: center 50px;
+  transform-origin: center 120px;
 }
 @keyframes point{
   from{
@@ -111,7 +89,7 @@ icon.s{
     transform: rotate(-90deg);
   }
   to{
-    transform: rotate(360deg);
+    transform: rotate(450deg);
   }
 }
 @keyframes tiktok{
@@ -142,15 +120,84 @@ section.s{
   animation: tiktok 1s 1s infinite;
 }
 icon.m{
-  animation: point 3600s linear infinite;
+  animation: point 3600s steps(60, end) infinite;
 }
 icon.h{
   animation: h-point 43200s linear infinite;
 }
+* {
+  xbackground-color: rgba(0,0,0,0.08);
+  xbox-shadow: inset 0 0 1px red;
+}
+section.number span p.x{
+  background-color: red;
+  color: white;
+}
+div {
+  transform-style: preserve-3d;
+  position: relative;
+  perspective: 200px;
+  transition: all 0.5s;
+}
+main{
+  width: 400px;
+  height: 400px;
+  margin: auto;
+  margin-top: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+#toki{
+  background-color: rgb(227,237,205);
+  border: 10px double black;
+  background-clip: padding-box;
+  background-image:;
+}
+main.flip{
+  display: flex;
+  text-align: center;
+  vertical-align: middle;
+  background: radial-gradient(ellipse at top left, white, gold);
+  color: white;
+  border: 10px double black;
+  background-clip: padding-box;
+  transform: rotatey(180deg);
+}
+main.flip span{
+  margin: auto;
+  font: 18em monospace;
+}
+#back:checked + div{
+  transform: rotatey(-180deg);
+}
+.kedu span{
+  position: absolute;
+  width: 8px;
+  height: 400px;
+  left: calc(50% - 4px);
+  transform: rotate(6deg);
+}
+.kedu span::before{
+  position: absolute;
+  content: 'I';
+}
+.kedu span::after{
+  position: absolute;
+  bottom: 0;
+  content: 'I';
+}
   </style>
 </head>
 <body>
-  <main>
+  <input type="checkbox" id="back" hidden>
+  <div>
+  <main id="toki">
     <section class="number">
       <span><p>1</p>
         <span><p>2</p>
@@ -162,9 +209,9 @@ icon.h{
                     <span><p>8</p>
                       <span><p>9</p>
                         <span><p class="x">X</p>
-                          <span><p>J</p>
+                          <span><p>XI</p>
                             <span>
-                              <p>Q</p>
+                              <p>XII</p>
                             </span>
                           </span>
                         </span>
@@ -178,12 +225,79 @@ icon.h{
         </span>
       </span>
     </section>
-    <icon class="center"></icon>
+    <section class="kedu">
+      <span>
+        <span>
+          <span>
+            <span>
+              <span>
+                <span>
+                  <span>
+                    <span>
+                      <span>
+                        <span>
+                          <span>
+                            <span>
+                              <span>
+                                <span>
+                                  <span>
+                                    <span>
+                                      <span>
+                                        <span>
+                                          <span>
+                                            <span>
+                                              <span>
+                                                <span>
+                                                  <span>
+                                                    <span>
+                                                      <span>
+                                                        <span>
+                                                          <span>
+                                                            <span>
+                                                              <span>
+                                                                <span>
+                                                                </span>
+                                                              </span>
+                                                            </span>
+                                                          </span>
+                                                        </span>
+                                                      </span>
+                                                    </span>
+                                                  </span>
+                                                </span>
+                                              </span>
+                                            </span>
+                                          </span>
+                                        </span>
+                                      </span>
+                                    </span>
+                                  </span>
+                                </span>
+                              </span>
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                  </span>
+                </span>
+              </span>
+            </span>
+          </span>
+        </span>
+      </span>
+    </section>
+    <label for="back" class="center"></label>
     <icon class="m"></icon>
     <icon class="h"></icon>
     <section class="s">
       <icon class="s"></icon>
     </section>
   </main>
+  <main class="flip">
+    <span>DIO</span>
+    <label for="back" class="center"></label>
+  </main>
+    </div>
 </body>
 </html>
