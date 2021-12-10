@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width">
   <title>JS Bin</title>
   <style>
-main section{
+label section{
   width: 400px;
   height: 400px;
   position: absolute;
@@ -47,18 +47,18 @@ icon.m{
   width: 10px;
   height: 150px;
   position: absolute;
-  box-shadow: inset 0px 0px 0px 5px black;
+  box-shadow: inset 0px 0px 0px 5px rgb(62,66,57);
   top: calc(50% - 130px);
   left: calc(50% - 5px);
   border-radius: 10px;
   z-index: 2;
-  transform-origin: center 145px;
+  transform-origin: center 130px;
 }
 icon.h{
   width: 10px;
   height: 95px;
   position: absolute;
-  background-color: skyblue;
+  background-color: rgb(170,157,57);
   top: calc(50% - 75px);
   left: calc(50% - 5px);
   border-radius: 10px;
@@ -69,14 +69,14 @@ icon.s{
   width: 4px;
   height: 170px;
   position: absolute;
-  background-color: red;
+  background-color: rgb(132,48,44);
   top: calc(50% - 120px);
   left: calc(50% - 2px);
   border-radius: 50%;
   z-index: 5;
   transform-origin: center 120px;
 }
-@keyframes point{
+@keyframes s-point{
   from{
     transform: rotate(0deg);
   }
@@ -84,12 +84,20 @@ icon.s{
     transform: rotate(360deg);
   }
 }
-@keyframes h-point{
+@keyframes m-point{
   from{
-    transform: rotate(-90deg);
+    transform: rotate(90deg);
   }
   to{
     transform: rotate(450deg);
+  }
+}
+@keyframes h-point{
+  from{
+    transform: rotate(157.5deg);
+  }
+  to{
+    transform: rotate(517.5deg);
   }
 }
 @keyframes tiktok{
@@ -114,13 +122,13 @@ icon.s{
 }
 /* 抖动动画打开网页就会先播放一次,所以延迟1s */
 icon.s{
-  animation: point 60s steps(60, end) infinite;
+  animation: s-point 60s steps(60, end) infinite;
 }
 section.s{
   animation: tiktok 1s 1s infinite;
 }
 icon.m{
-  animation: point 3600s steps(60, end) infinite;
+  animation: m-point 3600s steps(60, end) infinite;
 }
 icon.h{
   animation: h-point 43200s linear infinite;
@@ -136,10 +144,10 @@ section.number span p.x{
 div {
   transform-style: preserve-3d;
   position: relative;
-  perspective: 200px;
+  perspective: 600px;
   transition: all 0.5s;
 }
-main{
+label{
   width: 400px;
   height: 400px;
   margin: auto;
@@ -153,25 +161,39 @@ main{
   right: 0;
   z-index: 1;
 }
+label .stand{
+  position: absolute;
+  top: 300px;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font: italic 2em Georgia, serif;
+  color: white;
+}
+label .words{
+  position: absolute;
+  width: 190px;
+  top: 120px;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font: italic 0.5em Georgia, serif;
+  color: white;
+}
+label img{
+  position: absolute;
+  top: 25%;
+  transform: rotate(20deg);
+  left: -10%;
+}
 #toki{
-  background-color: rgb(227,237,205);
+  background-color: rgb(167,187,138);
   border: 10px double black;
   background-clip: padding-box;
-  background-image:;
 }
-main.flip{
-  display: flex;
-  text-align: center;
-  vertical-align: middle;
-  background: radial-gradient(ellipse at top left, white, gold);
-  color: white;
-  border: 10px double black;
+#flip{
+  background: url(https://github.com/YangLiu-stu/miao/blob/main/huahua.jpg?raw=true) no-repeat center/100%;
+  border: 10px double rgb(99,119,72);
   background-clip: padding-box;
   transform: rotatey(180deg);
-}
-main.flip span{
-  margin: auto;
-  font: 18em monospace;
 }
 #back:checked + div{
   transform: rotatey(-180deg);
@@ -186,18 +208,22 @@ main.flip span{
 .kedu span::before{
   position: absolute;
   content: 'I';
+  font-weight: bolder;
+  color: white;
 }
 .kedu span::after{
   position: absolute;
   bottom: 0;
   content: 'I';
+  font-weight: bolder;
+  color: white;
 }
   </style>
 </head>
 <body>
   <input type="checkbox" id="back" hidden>
   <div>
-  <main id="toki">
+  <label for="back" id="toki">
     <section class="number">
       <span><p>1</p>
         <span><p>2</p>
@@ -287,17 +313,18 @@ main.flip span{
         </span>
       </span>
     </section>
-    <label for="back" class="center"></label>
+    <icon class="center"></icon>
     <icon class="m"></icon>
     <icon class="h"></icon>
     <section class="s">
       <icon class="s"></icon>
     </section>
-  </main>
-  <main class="flip">
-    <span>DIO</span>
-    <label for="back" class="center"></label>
-  </main>
+    <span class="words">吾名花京院典明，为吾友阿布德尔雪耻，为身畔吾友波鲁那雷夫之妹之安息——我要你以死谢罪！</span>
+    <span class="stand">Hierophant</span>
+    <img src="hqdefault.png" alt="">
+  </label>
+  <label for="back" id="flip">
+  </label>
     </div>
 </body>
 </html>
