@@ -21,7 +21,7 @@ main section{
   height: 400px;
   position: absolute;
 }
-/* span嵌套 继承实现均分 */
+/* s利用pan子元素继承 实现表盘均分 */
 section.number span{
   position: absolute;
   width: 30px;
@@ -134,11 +134,12 @@ icon.s{
     transform: rotate(0deg);
   }
 }
+/* 抖动动画打开网页就会先播放一次,所以延迟1s */
 icon.s{
   animation: point 60s steps(60, end) infinite;
 }
 section.s{
-  animation: tiktok 1s infinite;
+  animation: tiktok 1s 1s infinite;
 }
 icon.m{
   animation: point 3600s linear infinite;

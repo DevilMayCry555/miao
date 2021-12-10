@@ -1,19 +1,14 @@
 <!DOCTYPE html>
-<!--
-Created using JS Bin
-http://jsbin.com
-
-Copyright (c) 2021 by YangLiu-stu (http://jsbin.com/vavoval/62/edit)
-
-Released under the MIT license: http://jsbin.mit-license.org
--->
-<meta name="robots" content="noindex">
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>JS Bin</title>
   <style>
+* {
+  background-color: rgba(0,0,0,0.08);
+  box-shadow: inset 0 0 1px red;
+}
 div {
   margin: auto;
 }
@@ -21,8 +16,7 @@ dd::before{
   content:'/'
 } 
 /* 第一种方法，最好的方法 */
-dl{
-  overflow: hidden;
+/* dl{
   padding-left: 50px;
 }
 dd{
@@ -30,11 +24,11 @@ dd{
   display: inline-block;
 }
 dt{
-  margin-left: -48px;
+  margin-left: -50px;
   margin-bottom: -22px;
   padding-top: 8px;
-}
-/* 用padding的间隙配合浮动
+} */
+/* 用padding的间隙配合浮动 dt的高度要大于n倍dd高度（n指dd的行数） */
 dl{
   overflow: hidden;
   position: relative;
@@ -48,29 +42,30 @@ dt{
   clear: left;
   padding-bottom: 70px;
   margin-bottom: -34px;
-} */
+} 
 </style>
 </head>
 <body>
   <div>
     <dl>
       <dt>导演：
-        <dd>金子文纪/土井裕泰/石井康晴</dd>
+        <dd>金子文纪</dd>
+        <dd>土井裕泰</dd>
+        <dd>石井康晴</dd>
       </dt>
       <dt>编剧：
-        <dd>野木亚纪子/海野刚弥</dd>
+        <dd>野木亚纪子</dd>
+        <dd>海野刚弥</dd>
       </dt>
       <dt>主演：
-        <dd>新垣结衣/星野源/大谷亮平/藤井隆/真野惠里菜/成田凌/山贺琴子</dd>
-      </dt>
-      <dt></dt>
-      <dt></dt>
-      <dt></dt>
-      <dt></dt>
-      <dt></dt>
-      <dt></dt>
-      <dt></dt>
-      <dt></dt>
+        <dd>新垣结衣</dd>
+        <dd>星野源</dd>
+        <dd>大谷亮平</dd>
+        <dd>藤井隆</dd>
+        <dd>真野惠里菜</dd>
+        <dd>成田凌</dd>
+        <dd>山贺琴子</dd>
+      </dt> 
     </dl>
   </div>
 </body>

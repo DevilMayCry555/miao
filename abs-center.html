@@ -45,11 +45,23 @@ img{
   margin: auto;
 } */
 /* 4，父元素设置flex，jc/ai都为center，水平垂直居中 比较推荐！*/
-div{
+/* div{
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
+/* 5，先top，left各50%，再利用translate百分比对象自身宽度的特性，回调50%达到居中 */
+  div{
+    position: relative;
+  }
+  div >*{
+    max-width:100%;
+    position: absolute;
+    max-height:100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
   </style>
 </head>
 <body>
