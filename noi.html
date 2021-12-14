@@ -1,62 +1,72 @@
+<!-- 加法 -->
 <script id="ch0103/01">
   var A = prompt('A:','') - 0
   var B = prompt('B:','') - 0
   var ANS = A + B
-  alert('A + B =' + ANS)
+  alert(ANS)
 </script>
+<!-- (a+b)*c -->
 <script id="ch0103/02">
   var A = prompt('A:','') - 0
   var B = prompt('B:','') - 0
   var C = prompt('C:','') - 0
   var ANS = (A+B)*C
-  alert('(A+B)*C=' + ANS)
+  alert(ANS)
 </script>
+<!-- (a+b)/c -->
 <script id="ch0103/03">
   var A = prompt('A:','') - 0
   var B = prompt('B:','') - 0
   var C = prompt('C:','') - 0
   var ANS = (A+B)/C
-  alert('(A+B)/C=' + ANS)
+  alert(ANS)
 </script>
+<!-- 带鱼除法 -->
 <script id="ch0103/04">
   var A = prompt('A:','') - 0
   var B = prompt('B:','') - 0
   var quo = A/B
   var rem = A%B
-  alert('QUO:' + parseInt(quo) + ' REM:' + rem)
+  alert(parseInt(quo))
+  alert(rem)
 </script>
+<!-- 计算浮点数值 -->
 <script id="ch0103/05">
   var A = prompt('A:','') - 0
   var B = prompt('B:','') - 0
   var ANS = (A/B).toFixed(9)
   alert(ANS)
 </script>
+<!-- 死亡率 -->
 <script id="ch0103/06">
   var A = prompt('A:','') - 0
   var B = prompt('B:','') - 0
   var ANS = (B/A*100).toFixed(3)
   alert(ANS + '%')
 </script>
+<!-- 多项式的值 ?-->
 <script id="ch0103/07">
   var a = Number( prompt('a:','') )
   var b = Number( prompt('b:','') )
   var c = Number( prompt('c:','') )
   var d = Number( prompt('d:','') )
   var x = Number( prompt('x:','') )
-  var ANS = Number( a*x**3 + b*x**2 + c*x + d )
+  var ANS = a*x*x*x + b*x*x + c*x + d
   alert(ANS.toFixed(7))
 </script>
+<!-- 温度转化 -->
 <script id="ch0103/08">
   var F = Number( prompt('F:','F>=-459.67') )
   var C = Number( 5*(F-32)/9 )
   alert(C.toFixed(5))
 </script>
+<!-- 圆的相关计算 ?-->
 <script id="ch0103/09">
   var r = Number( prompt('R:','') )
   var d = Number( 2*r ).toFixed(4)
-  var c = Number( 3.14*d ).toFixed(4)
-  var s = Number( 3.14*r*r).toFixed(4)
-  alert('d=' + d + ' c=' + c + ' s=' + s)
+  var c = Number( 3.14159*d ).toFixed(4)
+  var s = Number( 3.14159*r*r).toFixed(4)
+  alert( d + ' ' + c + ' ' + s)
 </script>
 <!-- 并联电阻的阻值 -->
 <script id="ch0103/10">
@@ -65,9 +75,9 @@
   var R1 = Number( 1/a ).toFixed(2)
   var R2 = Number( 1/b ).toFixed(2)
   var R = Number(1/(R1 + R2)).toFixed(2)
-  alert('R(并联):' + R)
+  alert( R )
 </script>
-<!-- 浮点数相除的余数 -->
+<!-- 浮点数相除的余数 ?-->
 <script id="ch0103/11">
   var a = Number( prompt('a:','') )
   var b = Number( prompt('b:','') )
@@ -151,3 +161,26 @@
   var ans = Math.pow(2,n)
   alert(ans)
 </script>
+
+<!-- 判断数正负 -->
+<script id="ch0104/01"></script>
+<script id="ch0104/02"></script>
+<script id="ch0104/03"></script>
+<script id="ch0104/04"></script>
+<script id="ch0104/05"></script>
+<script id="ch0104/06"></script>
+<script id="ch0104/07"></script>
+<script id="ch0104/08"></script>
+<script id="ch0104/09"></script>
+<script id="ch0104/10"></script>
+<script id="ch0104/11"></script>
+<script id="ch0104/12"></script>
+<script id="ch0104/13"></script>
+<script id="ch0104/14"></script>
+<script id="ch0104/15"></script>
+<script id="ch0104/16"></script>
+<script id="ch0104/17"></script>
+<script id="ch0104/18"></script>
+<script id="ch0104/19"></script>
+<script id="ch0104/20"></script>
+<script id="ch0104/21"></script>
