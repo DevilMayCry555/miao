@@ -1,37 +1,153 @@
-<script type="xxx" id="ch0103/01">
+<script id="ch0103/01">
   var A = prompt('A:','') - 0
   var B = prompt('B:','') - 0
   var ANS = A + B
   alert('A + B =' + ANS)
 </script>
-<script type="xxx" id="ch0103/02">
+<script id="ch0103/02">
   var A = prompt('A:','') - 0
   var B = prompt('B:','') - 0
   var C = prompt('C:','') - 0
   var ANS = (A+B)*C
   alert('(A+B)*C=' + ANS)
 </script>
-<script type="xxx" id="ch0103/03">
+<script id="ch0103/03">
   var A = prompt('A:','') - 0
   var B = prompt('B:','') - 0
   var C = prompt('C:','') - 0
   var ANS = (A+B)/C
   alert('(A+B)/C=' + ANS)
 </script>
-<script type="xxx" id="ch0103/04">
+<script id="ch0103/04">
   var A = prompt('A:','') - 0
   var B = prompt('B:','') - 0
   var quo = A/B
   var rem = A%B
-  alert('QUO:' + parseInt(quo))
-  alert('REM:' + rem)
+  alert('QUO:' + parseInt(quo) + ' REM:' + rem)
 </script>
-<script type="xxx" id="ch0103/05">
+<script id="ch0103/05">
   var A = prompt('A:','') - 0
   var B = prompt('B:','') - 0
   var ANS = (A/B).toFixed(9)
   alert(ANS)
 </script>
-<script type="xxx" id="ch0103/06">
-  
+<script id="ch0103/06">
+  var A = prompt('A:','') - 0
+  var B = prompt('B:','') - 0
+  var ANS = (B/A*100).toFixed(3)
+  alert(ANS + '%')
+</script>
+<script id="ch0103/07">
+  var a = Number( prompt('a:','') )
+  var b = Number( prompt('b:','') )
+  var c = Number( prompt('c:','') )
+  var d = Number( prompt('d:','') )
+  var x = Number( prompt('x:','') )
+  var ANS = Number( a*x**3 + b*x**2 + c*x + d )
+  alert(ANS.toFixed(7))
+</script>
+<script id="ch0103/08">
+  var F = Number( prompt('F:','F>=-459.67') )
+  var C = Number( 5*(F-32)/9 )
+  alert(C.toFixed(5))
+</script>
+<script id="ch0103/09">
+  var r = Number( prompt('R:','') )
+  var d = Number( 2*r ).toFixed(4)
+  var c = Number( 3.14*d ).toFixed(4)
+  var s = Number( 3.14*r*r).toFixed(4)
+  alert('d=' + d + ' c=' + c + ' s=' + s)
+</script>
+<!-- 并联电阻的阻值 -->
+<script id="ch0103/10">
+  var a = Number( prompt('r1:','') )
+  var b = Number( prompt('r2:','') )
+  var R1 = Number( 1/a ).toFixed(2)
+  var R2 = Number( 1/b ).toFixed(2)
+  var R = Number(1/(R1 + R2)).toFixed(2)
+  alert('R(并联):' + R)
+</script>
+<!-- 浮点数相除的余数 -->
+<script id="ch0103/11">
+  var a = Number( prompt('a:','') )
+  var b = Number( prompt('b:','') )
+  var k = Math.floor( a / b )
+  var r = a - k*b
+  alert(r)
+</script>
+<!-- 球的体积 -->
+<script id="ch0103/12">
+  var r = Number( prompt('r=','') )
+  var v = 4/3*(3.14*r**3)
+  alert(v.toFixed(2))
+</script>
+<!-- 反向输出一个三位数 -->
+<script id="ch0103/13">
+  var r = Number( prompt('r=','') )
+  var h = parseInt( r/100 )
+  var t = parseInt( r%100/10 )
+  var f = parseInt( r%10)
+  alert(''+f+''+t+''+h)
+</script>
+<!-- 大象喝水 -->
+<script id="ch0103/14">
+  var h = Number( prompt('h:','') )
+  var r = Number( prompt('r:','') )
+  var v = (3.14159*r**2*h)/1000
+  var num = Math.ceil( 20/v )
+  alert(num)
+</script>
+<!-- 虫子吃苹果 -->
+<script id="ch0103/15">
+  var n = Number( prompt('n:','') )
+  var x = Number( prompt('x:','') )
+  var y = Number( prompt('y:','') )
+  var ANS = n - Math.ceil( y/x )
+  alert(ANS)
+</script>
+<!-- 两个坐标求线段长度 -->
+<script id="ch0103/16">
+  var xa = Number( prompt('Xa:','不能超过10000') )
+  var ya = Number( prompt('Ya:','不能超过10000') )
+  var xb = Number( prompt('Xb:','不能超过10000') )
+  var yb = Number( prompt('Yb:','不能超过10000') )
+  var ANS = Math.sqrt( (yb-ya)**2 + (xb-xa)**2 )
+  alert(ANS.toFixed(3))
+</script>
+<!-- 三角形面积 海伦公式 知道三边长度求面积-->
+<script id="ch0103/17">
+  var x1 = Number( prompt('X1:','') )
+  var y1 = Number( prompt('Y1:','') )
+  var x2 = Number( prompt('X2:','') )
+  var y2 = Number( prompt('Y2:','') )
+  var x3 = Number( prompt('X3:','') )
+  var y3 = Number( prompt('Y3:','') )
+  var a = Math.sqrt( (y2-y1)**2 + (x2-x1)**2 )
+  var b = Math.sqrt( (y3-y2)**2 + (x3-x2)**2 )
+  var c = Math.sqrt( (y1-y3)**2 + (x1-x3)**2 )
+  var k = (a + b + c)/2
+  var s = Math.sqrt( k*(k-a)*(k-b)*(k-c) )
+  alert(s.toFixed(2))
+</script>
+<!-- 等差数列末项计算 -->
+<script id="ch0103/18">
+  var a1 = Number( prompt('a1:','a1>=-100') )
+  var a2 = Number( prompt('a2:','a2<=100') )
+  var n = Number( prompt('n:','0<n<=1000') )
+  var p = a2 - a1 
+  var ans = a1 + p*(n-1)
+  alert(ans)
+</script>
+<!-- A*B的问题 -->
+<script id="ch0103/19">
+  var a = Number( prompt('A:','A>=1') )
+  var b = Number( prompt('B:','B<=5000') )
+  var ans = a*b
+  alert(ans)
+</script>
+<!-- 2的幂 -->
+<script id="ch0103/20">
+  var n = Number( prompt('n:','0<=n<31') )
+  var ans = Math.pow(2,n)
+  alert(ans)
 </script>
