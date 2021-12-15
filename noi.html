@@ -163,6 +163,8 @@
 </script>
 
 <!-- 逻辑运算 -->
+
+<!-- 判断数值正负 -->
 <script id="ch0104/01">
   var a = Number(prompt())
   if (a > 0){
@@ -173,14 +175,16 @@
     alert('negative')
   }
 </script>
+<!-- 输出绝对值 -->
 <script id="ch0104/02">
   var a = Number(prompt())
-  if (a > 0) {
+  if (a >= 0) {
     alert(a)
   }else{
     alert(-a)
   }
 </script>
+<!-- 奇偶数判断 -->
 <script id="ch0104/03">
   var a = Number(prompt('n>0',''))
   if (a % 2 == 0){
@@ -189,15 +193,17 @@
     alert('odd')
   }
 </script>
+<!-- 奇偶ASCII码判断 -->
 <script id="ch0104/04">
   var a = prompt('')
   var b = a.charCodeAt(0)
-  if ( b % 2 == 0){
-    alert('No')
+  if (b % 2 == 0){
+    alert('NO')
   }else{
-    alert('Yes')
+    alert('YES')
   }
 </script>
+<!-- 整数比大小 -->
 <script id="ch0104/05">
   var a = Number(prompt())
   var b = Number(prompt())
@@ -209,6 +215,7 @@
     alert('<')
   }
 </script>
+<!-- 判断是否为两位数 -->
 <script id="ch0104/06">
   var a = Number(prompt('不超过1000'))
   if (a / 10 < 1) {
@@ -219,6 +226,7 @@
     alert(1)
   }
 </script>
+<!-- 收集瓶盖赢大奖 -->
 <script id="ch0104/07">
   var a = Number(prompt('幸运'))
   var b = Number(prompt('鼓励'))
@@ -230,6 +238,7 @@
     alert(0)
   }
 </script>
+<!-- 同时被3和5整除 -->
 <script id="ch0104/08">
   var a = Number(prompt())
   if (a % 3 !== 0){
@@ -240,23 +249,24 @@
     alert('NO')
   }
 </script>
+<!-- 能否被357整除 -->
 <script id="ch0104/09">
   var a = Number(prompt())
   if (a % 3 == 0){
     if (a % 5 == 0){
       if(a % 7 == 0){
-        alert('3 5 7')
+        alert('3' + ' ' + '5' + ' ' + '7')
       }else{
-        alert('3 5')
+        alert('3' + ' ' + '5')
       }
     }else if (a % 7 == 0){
-      alert('3 7')
+      alert('3' + ' ' + '7')
     }else{
       alert('3')
     }
   }else if (a % 5 == 0){
     if (a % 7 == 0){
-      alert('5 7')
+      alert('5' + ' ' + '7')
     }else{
       alert('5')
     }
@@ -264,6 +274,7 @@
     alert('7')
   }
 </script>
+<!-- 有一门课不及格的学生 -->
 <script id="ch0104/10">
   var a = Number(prompt('语文'))
   var b = Number(prompt('数学'))
@@ -279,6 +290,7 @@
     alert('0')
   }
 </script>
+<!-- 晶晶赴约会 -->
 <script id="ch0104/11">
   var a = Number(prompt('1-7'))
   if (a % 2 == 0){

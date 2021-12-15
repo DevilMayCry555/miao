@@ -1,13 +1,24 @@
 <script>
-  var n = Number( prompt('n:','') )
-  var x = Number( prompt('x:','') )
-  var y = Number( prompt('y:','') )
-  
-  var k = Math.ceil(y / x)
-
-  if (k < n){
-    alert(n - k)
+  var a = Number(prompt())
+  if (a % 3 == 0){
+    if (a % 5 == 0){
+      if(a % 7 == 0){
+        alert('3' + ' ' + '5' + ' ' + '7')
+      }else{
+        alert('3' + ' ' + '5')
+      }
+    }else if (a % 7 == 0){
+      alert('3' + ' ' + '7')
+    }else{
+      alert('3')
+    }
+  }else if (a % 5 == 0){
+    if (a % 7 == 0){
+      alert('5' + ' ' + '7')
+    }else{
+      alert('5')
+    }
   }else{
-    alert(0)
+    alert('7')
   }
 </script>
