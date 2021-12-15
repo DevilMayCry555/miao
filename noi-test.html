@@ -1,7 +1,15 @@
-<script id="ch0103/11">
-  var a = Number( prompt('a:','') )
-  var b = Number( prompt('b:','') )
-  var k = Math.floor( a / b )
-  var r = a - k*b
-  alert(r)
+<script>
+  var a = Number(prompt('语文'))
+  var b = Number(prompt('数学'))
+  if (a < 60){
+    if(b < 60){
+      alert('0')
+    }else{
+      alert('1')
+    }
+  }else if (b < 60){
+    alert('1')
+  }else{
+    alert('0')
+  }
 </script>
