@@ -18,7 +18,7 @@
   var A = prompt('A:','') - 0
   var B = prompt('B:','') - 0
   var C = prompt('C:','') - 0
-  var ANS = (A+B)/C
+  var ANS = parseInt((A+B)/C)
   alert(ANS)
 </script>
 <!-- 带鱼除法 -->
@@ -44,13 +44,13 @@
   var ANS = (B/A*100).toFixed(3)
   alert(ANS + '%')
 </script>
-<!-- 多项式的值 ?-->
+<!-- 多项式的值 -->
 <script id="ch0103/07">
+  var x = Number( prompt('x:','') )
   var a = Number( prompt('a:','') )
   var b = Number( prompt('b:','') )
   var c = Number( prompt('c:','') )
   var d = Number( prompt('d:','') )
-  var x = Number( prompt('x:','') )
   var ANS = a*x*x*x + b*x*x + c*x + d
   alert(ANS.toFixed(7))
 </script>
@@ -60,7 +60,7 @@
   var C = Number( 5*(F-32)/9 )
   alert(C.toFixed(5))
 </script>
-<!-- 圆的相关计算 ?-->
+<!-- 圆的相关计算 -->
 <script id="ch0103/09">
   var r = Number( prompt('R:','') )
   var d = Number( 2*r ).toFixed(4)
@@ -72,10 +72,10 @@
 <script id="ch0103/10">
   var a = Number( prompt('r1:','') )
   var b = Number( prompt('r2:','') )
-  var R1 = Number( 1/a ).toFixed(2)
-  var R2 = Number( 1/b ).toFixed(2)
-  var R = Number(1/(R1 + R2)).toFixed(2)
-  alert( R )
+  var R1 = 1/a
+  var R2 = 1/b
+  var R = (1/(R1 + R2))
+  alert( R.toFixed(2) )
 </script>
 <!-- 浮点数相除的余数 ?-->
 <script id="ch0103/11">
