@@ -353,34 +353,111 @@
   var a = Number(prompt('a'))
   var b = Number(prompt('b'))
   var c = Number(prompt('c'))
-  if (a > b){
-    if (a > c){
-      if (b + c > a){
-        alert('yes')
-      }else{
-        alert('no')
-      }
-    }else if (a + b > c){
+  if (a >= b){
+    if(b >= c && b + c > a && a - c < b){
+      alert('yes')
+    }else if (a >= c && b + c > a && a - b < c){
+    alert('yes')
+    }else if (a <= c && a + b > c && c - b < a){
       alert('yes')
     }else{
       alert('no')
     }
-  }else if (b > c){
-    if (a + c > b){
+  }else {
+    if (a >= c && a + c > b && b - c < a){
       alert('yes')
-    }else{
-      alert('no')
-    }
-  }else{
-    if (a + b > c){
+    }else if (b >= c && a + c > b && b - a < c){
+      alert('yes')
+    }else if (b <= c && a + b > c && c - a < b){
       alert('yes')
     }else{
       alert('no')
     }
   }
 </script>
-<script id="ch0104/17"></script>
-<script id="ch0104/18"></script>
-<script id="ch0104/19"></script>
-<script id="ch0104/20"></script>
-<script id="ch0104/21"></script>
+<script id="ch0104/17">
+  var a = Number(prompt('year'))
+  if (a % 4 == 0){
+    if (a % 3200 == 0){
+      alert('N')
+    }else if (a % 100 == 0 && a % 400 !== 0){
+      alert('N')
+    }else{
+      alert('Y')
+    }
+  }else{
+    alert('N')
+  }
+</script>
+<script id="ch0104/18">
+  var x = Number(prompt('x'))
+  var y = Number(prompt('y'))
+  if (Math.abs(x) <= 1){
+    if (Math.abs(y) <= 1){
+      alert('yes')
+    }else{
+      alert('no')
+    }
+  }else{
+    alert('no')
+  }
+</script>
+<script id="ch0104/19">
+  var x = Number(prompt())
+  var y = Number(prompt())
+  var i = prompt()
+  if (i == '+'){
+    alert(x + y)
+  }else if (i == '-'){
+    alert(x - y)
+  }else if (i == '*'){
+    alert(x * y)
+  }else {
+    if (i == '/'){
+      if (y == 0){
+        alert('Divided by zero!')
+      }else{
+        alert(x / y)
+      }
+    }else{
+      alert('Invalid operator!')
+    }
+  }
+</script>
+<script id="ch0104/20">
+  var a = Number( prompt('a:','') )
+  var b = Number( prompt('b:','') )
+  var c = Number( prompt('c:','') )
+
+  var delta = b * b - 4 * a * c
+
+  if (delta < 0) {
+    var t = (-b) / (2 * a)
+    var nt = Math.sqrt(4 * a * c - b * b) / (2 * a)
+    alert('x1=' + t.toFixed(5) + '+' +  nt.toFixed(5) + 'i' + ';' + 'x2=' + t.toFixed(5) + '-' + nt.toFixed(5) + 'i')
+  }else {
+    if (delta == 0) {
+      var x = (-b) / (2 * a)
+      alert('x1=x2=' + x.toFixed(5))
+    }else {
+    var sqrtDelta = Math.sqrt(delta)
+
+    var x1 = (-b + sqrtDelta) / (2 * a)
+    var x2 = (-b - sqrtDelta) / (2 * a)
+    alert('x1=' + x1.toFixed(5) +';' + 'x2=' + x2.toFixed(5))
+  }
+}
+</script>
+<script id="ch0104/21">
+  var n = Number( prompt('n:','') )
+  var x = Number( prompt('x:','') )
+  var y = Number( prompt('y:','') )
+  
+  var k = Math.ceil(y / x)
+
+  if (k < n){
+    alert(n - k)
+  }else{
+    alert(0)
+  }
+</script>

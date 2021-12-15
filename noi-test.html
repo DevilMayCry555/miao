@@ -1,14 +1,13 @@
 <script>
-  var a = Number(prompt('year'))
-  if (a % 4 !== 0){
-    alert('N')
-  }else if (a % 3200 == 0){
-    alert('N')
-  }else if (a % 100 == 0){
-    if (a % 400 == 0){
-      alert('Y')
-    }else{
-      alert('N')
-    }
+  var n = Number( prompt('n:','') )
+  var x = Number( prompt('x:','') )
+  var y = Number( prompt('y:','') )
+  
+  var k = Math.ceil(y / x)
+
+  if (k < n){
+    alert(n - k)
+  }else{
+    alert(0)
   }
 </script>
