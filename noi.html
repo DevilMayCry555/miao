@@ -83,7 +83,7 @@
   var b = Number( prompt('b:','') )
   var k = Math.floor( a / b )
   var r = a - k*b
-  alert(r)
+  alert(r.toFixed(4))
 </script>
 <!-- 球的体积 -->
 <script id="ch0103/12">
@@ -270,8 +270,10 @@
     }else{
       alert('5')
     }
-  }else{
+  }else if (a % 7 == 0){
     alert('7')
+  }else{
+    alert('n')
   }
 </script>
 <!-- 有一门课不及格的学生 -->
@@ -301,6 +303,7 @@
     alert('NO')
   }
 </script>
+<!-- 骑车与走路 -->
 <script id="ch0104/12">
   var a = Number(prompt('路程'))
   var WT = a / 1.2
@@ -314,6 +317,7 @@
     alert('Bike')
   }
 </script>
+<!-- 分段函数 -->
 <script id="ch0104/13">
   var a = Number(prompt('0<=N<20'))
   if (a < 5){
@@ -327,9 +331,10 @@
     alert(ans.toFixed(3))
   }
 </script>
+<!-- 计算邮资 -->
 <script id="ch0104/14">
   var a = Number(prompt('重量'))
-  var b = prompt('是否加急')
+  var b = prompt('是否加急？ y or n ?')
   var c = 8
   if (a <= 1000){
     if (b == 'y'){
@@ -345,6 +350,7 @@
     alert(c + 4 * k) 
   }
 </script>
+<!-- 最大数输出 -->
 <script id="ch0104/15">
   var a = Number(prompt('a'))
   var b = Number(prompt('b'))
@@ -361,6 +367,7 @@
     alert(c)
   }
 </script>
+<!-- 三角形判断 -->
 <script id="ch0104/16">
   var a = Number(prompt('a'))
   var b = Number(prompt('b'))
@@ -369,7 +376,7 @@
     if(b >= c && b + c > a && a - c < b){
       alert('yes')
     }else if (a >= c && b + c > a && a - b < c){
-    alert('yes')
+      alert('yes')
     }else if (a <= c && a + b > c && c - b < a){
       alert('yes')
     }else{
@@ -387,6 +394,7 @@
     }
   }
 </script>
+<!-- 判断闰年 -->
 <script id="ch0104/17">
   var a = Number(prompt('year'))
   if (a % 4 == 0){
@@ -401,6 +409,7 @@
     alert('N')
   }
 </script>
+<!-- 点和正方形的关系 -->
 <script id="ch0104/18">
   var x = Number(prompt('x'))
   var y = Number(prompt('y'))
@@ -414,6 +423,7 @@
     alert('no')
   }
 </script>
+<!-- 简单计算器 -->
 <script id="ch0104/19">
   var x = Number(prompt())
   var y = Number(prompt())
@@ -436,6 +446,7 @@
     }
   }
 </script>
+<!-- 一元二次方程的根 -->
 <script id="ch0104/20">
   var a = Number( prompt('a:','') )
   var b = Number( prompt('b:','') )
@@ -460,6 +471,7 @@
   }
 }
 </script>
+<!-- 苹果和虫子 -->
 <script id="ch0104/21">
   var n = Number( prompt('n:','') )
   var x = Number( prompt('x:','') )
