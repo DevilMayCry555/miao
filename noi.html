@@ -279,12 +279,106 @@
     alert('0')
   }
 </script>
-<script id="ch0104/11"></script>
-<script id="ch0104/12"></script>
-<script id="ch0104/13"></script>
-<script id="ch0104/14"></script>
-<script id="ch0104/15"></script>
-<script id="ch0104/16"></script>
+<script id="ch0104/11">
+  var a = Number(prompt('1-7'))
+  if (a % 2 == 0){
+    alert('YES')
+  }else if (a == 7){
+    alert('YES')
+  }else{
+    alert('NO')
+  }
+</script>
+<script id="ch0104/12">
+  var a = Number(prompt('路程'))
+  var WT = a / 1.2
+  var BT = a / 3.0
+  var BMT = (27 + 23) * 1.2 / 3
+  if (BT + BMT > WT){
+    alert('Walk')
+  }else if (BT + BMT == WT){
+    alert('All')
+  }else{
+    alert('Bike')
+  }
+</script>
+<script id="ch0104/13">
+  var a = Number(prompt('0<=N<20'))
+  if (a < 5){
+    var ans = -a + 2.5
+    alert(ans.toFixed(3))
+  }else if (a < 10){
+    var ans = 2 - 1.5 * (a - 3)**2
+    alert(ans.toFixed(3))
+  }else{
+    var ans = a / 2 - 1.5
+    alert(ans.toFixed(3))
+  }
+</script>
+<script id="ch0104/14">
+  var a = Number(prompt('重量'))
+  var b = prompt('是否加急')
+  var c = 8
+  if (a <= 1000){
+    if (b == 'y'){
+      alert(c + 5)
+    }else{
+      alert(c)
+    }
+  }else if (b == 'y'){
+    var k = Math.ceil((a - 1000) / 500)
+    alert(c + 4 * k + 5) 
+  }else{
+    var k = Math.ceil((a - 1000) / 500)
+    alert(c + 4 * k) 
+  }
+</script>
+<script id="ch0104/15">
+  var a = Number(prompt('a'))
+  var b = Number(prompt('b'))
+  var c = Number(prompt('c'))
+  if (a > b){
+    if (a > c){
+      alert(a)
+    }else{
+      alert(c)
+    }
+  }else if (b > c){
+    alert(b)
+  }else{
+    alert(c)
+  }
+</script>
+<script id="ch0104/16">
+  var a = Number(prompt('a'))
+  var b = Number(prompt('b'))
+  var c = Number(prompt('c'))
+  if (a > b){
+    if (a > c){
+      if (b + c > a){
+        alert('yes')
+      }else{
+        alert('no')
+      }
+    }else if (a + b > c){
+      alert('yes')
+    }else{
+      alert('no')
+    }
+  }else if (b > c){
+    if (a + c > b){
+      alert('yes')
+    }else{
+      alert('no')
+    }
+  }else{
+    if (a + b > c){
+      alert('yes')
+    }else{
+      alert('no')
+    }
+  }
+</script>
 <script id="ch0104/17"></script>
 <script id="ch0104/18"></script>
 <script id="ch0104/19"></script>
