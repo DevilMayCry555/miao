@@ -252,44 +252,72 @@
 <!-- 能否被357整除 -->
 <script id="ch0104/09">
   var a = Number(prompt())
+  // if (a % 3 == 0){
+  //   if (a % 5 == 0){
+  //     if(a % 7 == 0){
+  //       alert('3' + ' ' + '5' + ' ' + '7')
+  //     }else{
+  //       alert('3' + ' ' + '5')
+  //     }
+  //   }else if (a % 7 == 0){
+  //     alert('3' + ' ' + '7')
+  //   }else{
+  //     alert('3')
+  //   }
+  // }else if (a % 5 == 0){
+  //   if (a % 7 == 0){
+  //     alert('5' + ' ' + '7')
+  //   }else{
+  //     alert('5')
+  //   }
+  // }else if (a % 7 == 0){
+  //   alert('7')
+  // }else{
+  //   alert('n')
+  // }
+  var test = false
   if (a % 3 == 0){
-    if (a % 5 == 0){
-      if(a % 7 == 0){
-        alert('3' + ' ' + '5' + ' ' + '7')
-      }else{
-        alert('3' + ' ' + '5')
-      }
-    }else if (a % 7 == 0){
-      alert('3' + ' ' + '7')
-    }else{
-      alert('3')
-    }
-  }else if (a % 5 == 0){
-    if (a % 7 == 0){
-      alert('5' + ' ' + '7')
-    }else{
-      alert('5')
-    }
-  }else if (a % 7 == 0){
-    alert('7')
-  }else{
-    alert('n')
+    console.log(3)
+    test = true
+  }
+  if (a % 5 == 0){
+    console.log(5)
+    test = true
+  }
+  if (a % 7 == 0){
+    console.log(7)
+    test = true
+  }
+  if (!test){
+    console.log('n')
   }
 </script>
 <!-- 有一门课不及格的学生 -->
 <script id="ch0104/10">
   var a = Number(prompt('语文'))
   var b = Number(prompt('数学'))
+  // if (a < 60){
+  //   if(b < 60){
+  //     alert('0')
+  //   }else{
+  //     alert('1')
+  //   }
+  // }else if (b < 60){
+  //   alert('1')
+  // }else{
+  //   alert('0')
+  // }
+  var test = 0
   if (a < 60){
-    if(b < 60){
-      alert('0')
-    }else{
-      alert('1')
-    }
-  }else if (b < 60){
-    alert('1')
+    test += 1
+  }
+  if (b < 60){
+    test += 1
+  }
+  if (test === 1){
+    console.log(1)
   }else{
-    alert('0')
+    console.log(0)
   }
 </script>
 <!-- 晶晶赴约会 -->
@@ -311,10 +339,10 @@
   var BMT = (27 + 23) * 1.2 / 3
   if (BT + BMT > WT){
     alert('Walk')
-  }else if (BT + BMT == WT){
-    alert('All')
-  }else{
+  }else if (BT + BMT < WT){
     alert('Bike')
+  }else{
+    alert('All')
   }
 </script>
 <!-- 分段函数 -->
@@ -334,64 +362,39 @@
 <!-- 计算邮资 -->
 <script id="ch0104/14">
   var a = Number(prompt('重量'))
-  var b = prompt('是否加急？ y or n ?')
+  var b = prompt('加急5元 y or n ?')
   var c = 8
-  if (a <= 1000){
-    if (b == 'y'){
-      alert(c + 5)
-    }else{
-      alert(c)
-    }
-  }else if (b == 'y'){
+  if (a > 1000){
     var k = Math.ceil((a - 1000) / 500)
-    alert(c + 4 * k + 5) 
-  }else{
-    var k = Math.ceil((a - 1000) / 500)
-    alert(c + 4 * k) 
+    c += 4 * k
   }
+  if (b == 'y'){
+    c += 5
+  }
+  alert(c)
 </script>
 <!-- 最大数输出 -->
 <script id="ch0104/15">
   var a = Number(prompt('a'))
   var b = Number(prompt('b'))
   var c = Number(prompt('c'))
-  if (a > b){
-    if (a > c){
-      alert(a)
-    }else{
-      alert(c)
-    }
-  }else if (b > c){
-    alert(b)
-  }else{
-    alert(c)
+  if (b > a){
+    a = b
   }
+  if (c > a){
+    a = c
+  }
+  alert(a)
 </script>
 <!-- 三角形判断 -->
 <script id="ch0104/16">
   var a = Number(prompt('a'))
   var b = Number(prompt('b'))
   var c = Number(prompt('c'))
-  if (a >= b){
-    if(b >= c && b + c > a && a - c < b){
-      alert('yes')
-    }else if (a >= c && b + c > a && a - b < c){
-      alert('yes')
-    }else if (a <= c && a + b > c && c - b < a){
-      alert('yes')
-    }else{
-      alert('no')
-    }
-  }else {
-    if (a >= c && a + c > b && b - c < a){
-      alert('yes')
-    }else if (b >= c && a + c > b && b - a < c){
-      alert('yes')
-    }else if (b <= c && a + b > c && c - a < b){
-      alert('yes')
-    }else{
-      alert('no')
-    }
+  if (a + b > c && a + c > b && b + c > a){
+    alert('yes')
+  }else{
+    alert('no')
   }
 </script>
 <!-- 判断闰年 -->
@@ -456,7 +459,7 @@
 
   if (delta < 0) {
     var t = (-b) / (2 * a)
-    var nt = Math.sqrt(4 * a * c - b * b) / (2 * a)
+    var nt = Math.sqrt(-delta) / (2 * a)
     alert('x1=' + t.toFixed(5) + '+' +  nt.toFixed(5) + 'i' + ';' + 'x2=' + t.toFixed(5) + '-' + nt.toFixed(5) + 'i')
   }else {
     if (delta == 0) {
@@ -485,3 +488,290 @@
     alert(0)
   }
 </script>
+
+<!-- loops -->
+
+<script id="ch0105/01">
+  var n = Number(prompt('班级人数'))
+  var sum = 0
+  for (var i = 0 ; i < n ; i += 1){
+    var age = Number(prompt())
+    sum += age
+  }
+  var average = sum / n
+  alert(average.toFixed(2))
+</script>
+
+<script id="ch0105/02">
+  var sum = 0
+  for (var i = 0 ; i < 12 ; i += 1){
+  var money = Number(prompt('month:', (i + 1)))
+    sum += money
+  }
+  var average = sum / 12
+  alert(average.toFixed(2) + '$')
+</script>
+
+<script id="ch0105/03">
+  var sum = 0
+  var n = Number(prompt())
+  for (var i = 0 ; i < n ; i += 1){
+    var every = Number(prompt('NO.' + (i + 1)))
+    sum += every
+  }
+  var average = sum / n
+  alert(average.toFixed(4))
+</script>
+
+<script id="ch0105/04">
+  var sum = 0
+  var n = Number(prompt())
+  for (var i = 0 ; i < n ; i += 1){
+    var every = Number(prompt('NO.' + (i + 1)))
+    sum += every
+  }
+  var average = sum / n
+  alert(sum + ' ' + average.toFixed(5))
+</script>
+
+<script id="ch0105/05">
+  var max = 0
+  var n = Number(prompt('1 <= n < 100'))
+  for (var i = 0 ; i < n ; i += 1){
+    var a = Number(prompt('NO.' + (i + 1)))
+    if (a > max){
+      max = a
+    }
+  }
+alert(max)
+</script>
+
+<script id="ch0105/06">
+  var max = 0
+  var min = 100
+  var n = Number(prompt('1 <= n < 100'))
+  for (var i = 0 ; i < n ; i += 1){
+    var a = Number(prompt('NO.' + (i + 1)))
+    if (a > max){
+      max = a
+    }
+    if (a < min){
+      min = a
+    }
+  }
+  alert(max - min)
+</script>
+
+<script id="ch0105/07">
+  var n = Number(prompt())
+  var goldsum = 0
+  var silverSum = 0
+  var bronzeSum = 0
+  for (i = 0 ; i < n ; i ++){
+    var gold = Number(prompt('Day' + (i + 1) + 'gold'))
+    var silver = Number(prompt('Day' + (i + 1) + 'silver'))
+    var bronze = Number(prompt('Day' + (i + 1) + 'bronze'))
+    goldsum += gold
+    silverSum += silver
+    bronzeSum += bronze
+  }
+  alert(goldsum + ' ' + silverSum + ' ' + bronzeSum + ' ' + (goldsum + silverSum + bronzeSum))
+</script>
+
+<script id="ch0105/08">
+  var n = Number(prompt('n>=3'))
+  var last = (n - 2) * 180
+  // 这里求最后一个角的度数，为n - 1次循环，因此i = 1
+  for (i = 1 ; i < n ; i ++){
+    var deg = Number(prompt('NO.' + i))
+    last -= deg
+  }
+  alert(last)
+</script>
+
+<script id="ch0105/09">
+  var m = Number(prompt('0 < m <= n <= 300'))
+  var n = Number(prompt('0 < m <= n <= 300'))
+  var sum = 0
+  if (m % 2 == 0){
+    for (i = m + 1 ; i <= n ; i += 2){
+      sum += i
+    }
+  }else{
+    for (i = m ; i <= n ; i += 2){
+      sum += i
+    } 
+  }
+  alert(sum)
+</script>
+<script id="ch0105/10">
+  var m = Number(prompt('0 < m < n < 1000'))
+  var n = Number(prompt('0 < m < n < 1000'))
+  var sum = 0
+  var a = m - (m % 17) + 17
+  for (i = a ; i <= n ; i += 17){
+    sum += i
+  }
+  alert(sum)
+</script>
+
+<script id="ch0105/11">
+  var k = Number(prompt('0 < k < 100'))
+  var one = 0
+  var five = 0
+  var ten = 0
+  for (i = 0 ; i < k ; i += 1){
+    var n = Number(prompt('NO.' + (i + 1)))
+    if (n == 1){
+      one += 1
+    }
+    if (n == 5){
+      five += 1
+    }
+    if (n == 10){
+      ten += 1
+    }
+  }
+  alert (one)
+  alert (five)
+  alert (ten)
+</script>
+
+<script id="ch0105/12">
+  var N = Number(prompt('0 < N <= 100'))
+  var m = Number(prompt('Ace'))
+  var sum = 0
+  for (i = 0 ; i < N ; i += 1){
+    var number = Number(prompt('NO.' + (i + 1)))
+    if (m == number){
+      sum += 1
+    }
+  }
+  alert (sum)
+</script>
+
+<script id="ch0105/13">
+  var a = Number(prompt('int'))
+  var n = Number(prompt('1 <= n <= 10000'))
+  var pow = 1
+  for (i = 0 ; i < n ; i += 1){
+    pow *= a
+  }
+  alert (pow)
+</script>
+
+<script id="ch0105/14">
+  var x = Number(prompt('人口基数/亿'))
+  var n = Number(prompt('年数'))
+  var py = 0
+  for (i = 0 ; i < n ; i += 1){
+    py = x + x * 0.001
+    x = py
+  }
+  alert(x.toFixed(4))
+</script>
+
+<script id="ch0105/15">
+  var R = Number(prompt('复合年利率0~20'))
+  var M = Number(prompt('本金100~1,000,000'))
+  var Y = Number(prompt('投资年数0~400'))
+  var sum = 0
+  for (i = 0 ; i < Y ; i += 1){
+    sum = M * (R / 100 + 1)
+    M = sum
+  }
+  alert(Math.trunc(M))
+</script>
+
+<script id="ch0105/16">
+
+</script>
+
+<script id="ch0105/17">
+  var a = 1
+  var b = 1
+  var c = 1
+  var k = Number(prompt('1~46'))
+  if (k >= 3){
+    var n = Math.trunc(k / 3)
+    var m = k % 3
+    for (i = 0 ; i < n ; i += 1){
+    c = a + b
+    a = b + c
+    b = c + a
+    }
+    if (m == 0){
+      alert(c)
+    }else if (m == 1){
+      alert(a)
+    }else{
+      alert(b)
+    }
+  }
+  alert(c)
+</script>
+
+<script id="ch0105/18">
+  var n = Number(prompt('项目总数'))
+  var wholeJ = Number(prompt('鸡尾酒-总病例数'))
+  var cureJ = Number(prompt('鸡尾酒-有效数'))
+  for (i = 0 ; i < (n - 1) ; i += 1){
+    var wholepx = Number(prompt('NO.' + (i + 1) + '种疗法-总例数'))
+    var curepx = Number(prompt('NO.' + (i + 1) + '种疗法-有效数'))
+    if ((curepx / wholepx - cureJ / wholeJ).toFixed(2) > 0.05){
+      alert('better')
+    }else{
+      if ((cureJ / wholeJ - curepx / wholepx).toFixed(2) > 0.05){
+        alert('worse')
+      }
+      if ((cureJ / wholeJ - curepx / wholepx).toFixed(2) == 0){
+        alert('same')
+      }
+    }
+  }
+</script>
+
+<script id="ch0105/19">
+  var n = Number(prompt('屋顶数'))
+  var peertime = 1.5
+  var x1 = 0
+  var y1 = 0
+  var sumtime = 0
+  for (i = 0 ; i < n ; i += 1){
+    var x = Number(prompt('NO.' + (i + 1) + '-x'))
+    var y = Number(prompt('NO.' + (i + 1) + '-y'))
+    var N = Number(prompt('NO.' + (i + 1) + '人数'))
+    var waytime = Math.hypot((x - x1) , (y - y1)) * 2 / 50
+    x1 = x
+    y1 = y
+    sumtime += (waytime + N * peertime)
+  }
+  alert(Math.ceil(sumtime))
+</script>
+
+<script id="ch0105/20"></script>
+<script id="ch0105/21"></script>
+<script id="ch0105/22"></script>
+<script id="ch0105/23"></script>
+<script id="ch0105/24"></script>
+<script id="ch0105/25"></script>
+<script id="ch0105/26"></script>
+<script id="ch0105/27"></script>
+<script id="ch0105/28"></script>
+<script id="ch0105/29"></script>
+<script id="ch0105/30"></script>
+<script id="ch0105/31"></script>
+<script id="ch0105/32"></script>
+<script id="ch0105/33"></script>
+<script id="ch0105/34"></script>
+<script id="ch0105/35"></script>
+<script id="ch0105/36"></script>
+<script id="ch0105/37"></script>
+<script id="ch0105/38"></script>
+<script id="ch0105/39"></script>
+<script id="ch0105/40"></script>
+<script id="ch0105/41"></script>
+<script id="ch0105/42"></script>
+<script id="ch0105/43"></script>
+<script id="ch0105/44"></script>
+<script id="ch0105/45"></script>

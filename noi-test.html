@@ -1,24 +1,11 @@
 <script>
-  var a = Number(prompt())
-  if (a % 3 == 0){
-    if (a % 5 == 0){
-      if(a % 7 == 0){
-        alert('3' + ' ' + '5' + ' ' + '7')
-      }else{
-        alert('3' + ' ' + '5')
-      }
-    }else if (a % 7 == 0){
-      alert('3' + ' ' + '7')
-    }else{
-      alert('3')
-    }
-  }else if (a % 5 == 0){
-    if (a % 7 == 0){
-      alert('5' + ' ' + '7')
-    }else{
-      alert('5')
-    }
-  }else{
-    alert('7')
+  var h = Number(prompt('球的初始高度'))
+  var sum = 0
+  var vh = h
+  for (i = 0 ; i < 10 ; i += 1){
+    sum += (vh * 2)
+    vh = vh / 2
   }
+  alert((sum - h).toFixed(4))
+  alert(vh.toFixed(7))
 </script>
