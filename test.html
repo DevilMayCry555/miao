@@ -1,0 +1,10 @@
+<script>
+  var n = Number(prompt('1~10000'))
+  for (i = 1 ; ; i ++){
+    if (n < 10**i){
+      break
+    }
+  }// 知道为几位数
+  var top = Math.trunc(n / (10**(i - 1)) % 10)//n的最高位上的数
+  n = n - n % 10
+</script>
