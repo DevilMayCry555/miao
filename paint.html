@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>画图</title>
+  <style>
+    canvas {
+      border: 2px solid #f0f;
+      display: block;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+  <canvas width="500" height="800"></canvas>
+</body>
+<script>
+  var canvas = document.querySelector('canvas')
+  canvas.style.imageRendering = 'pixelated' //放大时的插帧方式：不插帧，直接放大像素
+  var ctx = canvas.getContext('2d')
+
+  function dot(x, y, color = 'black') {
+    x = Math.round(x)
+    y = Math.round(y)
+    ctx.fillStyle = color
+    ctx.fillRect(x, y, 1, 1)
+  }
+  /**
+   * YOUR TASK
+      * 在 坐标 (42, 42) 画出一个点
+      * 画一条实线
+      * 画一条一个实点一个空点的虚线
+      * 画一条两个实点两个空点的虚线
+      * 画一条三个实点两个空点的虚线
+      * 画一条45度的斜线
+      * 画一条30度的斜线（与x轴或y轴的夹角呈30度）
+      * 画一条跨越画布左上角和右下角的对角线
+      * 画一个空心矩形
+      * 画一个实心矩形
+      * 画两个个空心的圆，居中：
+        * 一个半径为50像素
+        * 一个半径为200像素
+      * 画一个实心的圆，半径至少为100像素
+      * 画一个【大小合适】的sin(x)的图像
+
+      * 画出rgb色彩空间的某一面（尺寸要大于100x100）
+        如果做出上一题后，尝试将其每个点的坐标乘以一个矩阵（如(2,0,0,2)或(1,0.27得到新的位置，即绘制出被线性变幻后的色彩空间某一面
+        可以考虑如下几种矩阵：
+           2 0
+           0 2
+           ------
+           1  0.27
+           0  1
+           ------
+           0.5    0.87
+           -0.87  0.5
+
+   */
+</script>
+<script>
+  // 不可更改上面的代码
+  // 你的代码写在这里
+  // YOUR CODE GOES BELOW
+  //点
+  dot (42, 42, color = 'red')
+  //实线
+  for (i = 3 ; i < 200 ; i ++){
+    dot (i , 3 , color = 'red')
+  }
+  //虚线  一实一空
+  for (i = 3 ; i < 200 ; i += 2){
+    dot (i , 10 , color = 'orange')
+  }
+  //虚线 两实两空
+  for (i = 3 ; i < 200 ; i += 4){
+    dot (i , 20 , color = 'orange')
+    dot (i + 1 , 20 , color = 'orange')
+  }
+  //虚线 3实2空
+  for (i = 3 ; i < 200 ; i += 5){
+    for (k = i ; k <= i + 2 ; k ++){
+      dot (k , 30 , color = 'blue')
+    }
+  }
+  //45度斜线
+  for (i = 3 ; i < 100 ; i ++){
+    dot (i , i + 40 , color = 'green')
+  }
+  //30度斜线
+  for (i = 3 ; i < 100 ; i ++){
+    dot (i , i * Math.tan(Math.PI / 6) + 40 , color = 'green')
+  }
+  //对角线
+  for (i = 1 ; i <= 500 ; i ++){
+    dot (i , i * 4 / 5 , color = 'gold')
+  }
+  //空心矩形
+  var kuan = 40
+  var chang = 100
+  for (x = 3 ; x < chang + 3 ; x ++){  //其实位置为3 ，200
+    dot (x , 150 , color = 'red')
+    dot (x , 150 + kuan , color = 'red')
+  }
+  for (y = 1 ; y <= kuan ; y ++){
+    dot (3 , y + 150 , color = 'red')
+    dot (chang + 2 , y + 150 , color = 'red')
+  }
+  //实心矩形
+  for (x = 3 ; x < chang + 3 ; x ++){  //其实位置为3 ，200
+    for (y = 0 ; y <= kuan ; y ++){
+      dot (x , y + 200 , color = 'red')
+    }
+  }
+  //空心圆 X 2  圆心250 ， 200 
+  for (x = 1 ; x <= 500 ; x ++){
+    for (y = 1 ; y <= 400 ; y ++){
+      if (Math.ceil(Math.hypot((x - 250) , (y - 200))) == 50){
+        dot (x , y , color = 'red')
+      }
+    }
+  }
+  for (x = 1 ; x <= 500 ; x ++){
+    for (y = 1 ; y <= 400 ; y ++){
+      if (Math.ceil(Math.hypot((x - 250) , (y - 200))) == 200){
+        dot (x , y , color = 'black')
+      }
+    }
+  }
+  //实心圆
+  for (x = 1 ; x <= 500 ; x ++){
+    for (y = 1 ; y <= 400 ; y ++){
+      if (Math.ceil(Math.hypot((x - 390) , (y - 110))) < 100){
+        dot (x , y , color = 'pink')
+      }
+    }
+  }
+  //正弦图像  调整周期T和振幅A
+  for (x = 150 ; x < 360 ; x ++){
+    dot (x , Math.sin(x / 10) * 20 + 330 , color = 'purple')
+  }
+  //色彩空间
+  var red = 255
+  var green = 255
+  var blue = 255
+  var l = 256
+  for (x = 550 ; x < 550 + l ; x ++){
+    for (y = 150 ; y < 150 + l ; y ++){
+        dot(0.6*(x-y) , 0.6*(x+y) , color = 'rgb' + '(' + red.toString() + ',' + green.toString() + ',' + blue.toString() + ')')
+        red --
+    }
+    red = 255
+    green --
+  }
+</script>
+</html>
