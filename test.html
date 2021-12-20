@@ -1,22 +1,14 @@
 <script>
-  debugger
-  var hight = Number(prompt('hight 3~10'))
-  var width = Number(prompt('width 5~10'))
-  var at = prompt('符号')
-  var k =   Number(prompt('实心空心 1 ？0'))
-  var icon
-  for (h = 1 ; h <= hight ; h ++){
-    icon = ''
-    for (w = 1 ; w <= width ; w ++){
-      if (h == 1 || h == hight || w == 1 || w == width){
-        icon += at
-      }else if (k == 0){
-        icon += ' '
-      }else{
-        icon += at
-      }
+  var n = Number(prompt('最高次幂'))
+  var csum = ''
+  for (i = n ; i >= 0 ; i --){
+    var c = Number(prompt('C.' + i))
+    if (i == n){
+      csum += (c * i).toString()
+    }else if (i !== 0){
+      csum += ' ' + (c * i).toString()
     }
-    console.log(icon)
   }
+  alert(csum)
 </script>
 

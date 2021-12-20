@@ -731,7 +731,7 @@
     }
   }
 </script>
-
+<!-- 救援 -->
 <script id="ch0105/19">
   var n = Number(prompt('屋顶数'))
   var peertime = 1.5
@@ -752,7 +752,7 @@
 
 <script id="ch0105/20">
   var h = Number(prompt('球的初始高度'))
-  var sum = 0
+  var sum = 0 //假设从0点抛起到h，最后要减去
   var vh = h
   for (var i = 0 ; i < 10 ; i += 1){
     sum += (vh * 2)
@@ -768,15 +768,15 @@
     var a = n
     if (n % 2 == 0){
       n = n / 2
-      alert(a + '/' + 2 + '=' + n)
+      alert(a + '/ 2 =' + n)
     }else{
       n = n * 3 + 1
-      alert(a + '*' + 3 + '+' + 1 + '=' + n)
+      alert(a + '* 3 + 1 =' + n)
     }
   }
   alert('End')
 </script>
-
+<!-- 津津存钱 -->
 <script id="ch0105/22">
   var mom = 0
   var self = 0
@@ -836,24 +836,27 @@
   alert(max)
 </script>
 
-<script id="ch0105/25">// 有问题
-  debugger// 这个数 81 <= x <343 才能保证7进制和9进制都为三位数
-  for (i= 0 ; i < 7 ; i ++){
-    if ((i * 49 + n * 7 + m) !== 0 && (i * 49 + n * 7 + m) == (m * 81 + n * 9 + i)){
-          break
-        }
-    for (n = 0 ; n < 7 ; n ++){
-      if ((i * 49 + n * 7 + m) !== 0 && (i * 49 + n * 7 + m) == (m * 81 + n * 9 + i)){
-          break
-        }
-      for (m = 0 ; m < 7 ; m ++){
-        if ((i * 49 + n * 7 + m) !== 0 && (i * 49 + n * 7 + m) == (m * 81 + n * 9 + i)){
-          break
-        }
+<script id="ch0105/25">
+  for (i = 81 ; i < 343 ; i ++){
+    var x = Number(i.toString(7))
+    var y = Number(i.toString(9))
+    var sum = 0
+    var n = 0
+    for (a = 1 ; ; a ++){
+      if (x < 10**a){
+        break
       }
     }
+    for (b = a ; b > 0 ; b --){
+      var m = Math.trunc(x / (10**(b - 1))) % 10
+      sum += m * (10**n)
+      n ++
+    }
+    if(sum == y){
+      break
+    }
   }
-  alert(i + '/' + n + '/' + m + '/' + (i * 49 + n * 7 + m))
+  alert(i + ' ' + x + ' ' + y)
 </script>
 
 <script id="ch0105/26">
@@ -1039,14 +1042,18 @@
   alert(N)
 </script>
 
-<script id="ch0105/38">//目前没办法做到输入完再输出
+<script id="ch0105/38">
   var n = Number(prompt('最高次幂'))
+  var csum = ''
   for (i = n ; i >= 0 ; i --){
     var c = Number(prompt('C.' + i))
-    if (i !== 0){
-      alert(c * i)
+    if (i == n){
+      csum += (c * i).toString()
+    }else if (i !== 0){
+      csum += ' ' + (c * i).toString()
     }
   }
+  alert(csum)
 </script>
 
 <script id="ch0105/39">
