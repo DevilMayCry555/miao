@@ -1,14 +1,22 @@
 <script>
-  var n = Number(prompt('最高次幂'))
-  var csum = ''
-  for (i = n ; i >= 0 ; i --){
-    var c = Number(prompt('C.' + i))
-    if (i == n){
-      csum += (c * i).toString()
-    }else if (i !== 0){
-      csum += ' ' + (c * i).toString()
+  var N = Number(prompt('灯数'))
+  var M = Number(prompt('人数'))
+  var c = ''
+  for (n = 1 ; n <= N ; n ++){ //第n个灯
+    var k = 1
+    for (m = 1 ; m <= M ; m ++){ //第m个人，若灯的编号为这个人的倍数，即
+      if (n % m == 0){
+        k *= -1
+      }
+    }
+    if (k == -1){
+      if(n == 1){
+        c += n
+      }else{
+        c += ',' + n
+      }
     }
   }
-  alert(csum)
+  alert(c)
 </script>
 

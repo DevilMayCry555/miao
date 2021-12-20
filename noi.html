@@ -768,10 +768,10 @@
     var a = n
     if (n % 2 == 0){
       n = n / 2
-      alert(a + '/ 2 =' + n)
+      alert(a + '/2=' + n)
     }else{
       n = n * 3 + 1
-      alert(a + '* 3 + 1 =' + n)
+      alert(a + '*3+1=' + n)
     }
   }
   alert('End')
@@ -842,12 +842,7 @@
     var y = Number(i.toString(9))
     var sum = 0
     var n = 0
-    for (a = 1 ; ; a ++){
-      if (x < 10**a){
-        break
-      }
-    }
-    for (b = a ; b > 0 ; b --){
+    for (b = 3 ; b > 0 ; b --){      //原题表明一定为3位数
       var m = Math.trunc(x / (10**(b - 1))) % 10
       sum += m * (10**n)
       n ++
@@ -907,19 +902,13 @@
   if(m < 0){
     m *= -1
   }
-  var sum = 0
-  var n = 0
-  for (i = 1 ; ; i ++){
-    if (m < 10**i){
-      break
-    }
+  var r = 0
+  while (m > 0){ //分割每项的标准方法
+    n = m % 10
+    m = (m - m % 10) / 10
+    r = r * 10 + n
   }
-  for (b = i ; b > 0 ; b --){
-    var x = Math.trunc(m / (10**(b - 1))) % 10
-    sum += x * (10**n)
-    n ++
-  }
-  alert(Math.sign(k) * sum)
+  alert(Math.sign(k) * r)
 </script>
 
 <script id="ch0105/30">
@@ -929,6 +918,10 @@
   if (m % 19 !== 0){
     alert('NO')
   }else{
+    while (m > 0){
+      var x = m % 10
+      m = m - m % 10
+    }
     for (i = 0 ; ; i ++){
       if (m >= 10**i){
         var x = Math.trunc(m / 10**i) % 10
@@ -949,6 +942,7 @@
 <script id="ch0105/31">
   var N = Number(prompt('灯数'))
   var M = Number(prompt('人数'))
+  var c = ''
   for (n = 1 ; n <= N ; n ++){ //第n个灯
     var k = 1
     for (m = 1 ; m <= M ; m ++){ //第m个人，若灯的编号为这个人的倍数，即
@@ -958,12 +952,13 @@
     }
     if (k == -1){
       if(n == 1){
-        alert(n)
+        c += n
       }else{
-        alert(',' + n)
+        c += ',' + n
       }
     }
   }
+  alert(c)
 </script>
 
 <script id="ch0105/32">
@@ -1046,13 +1041,13 @@
 
 <script id="ch0105/38">
   var n = Number(prompt('最高次幂'))
-  var csum = ''
+  var csum = '' //字符串加数字会转为字符串，做到拼接
   for (i = n ; i >= 0 ; i --){
     var c = Number(prompt('C.' + i))
     if (i == n){
-      csum += (c * i).toString()
+      csum += c * i
     }else if (i !== 0){
-      csum += ' ' + (c * i).toString()
+      csum += ' ' + c * i
     }
   }
   alert(csum)
