@@ -509,7 +509,7 @@
     sum += money
   }
   var average = sum / 12
-  alert(average.toFixed(2) + '$')
+  alert('$' + average.toFixed(2))
 </script>
 
 <script id="ch0105/03">
@@ -816,24 +816,24 @@
   }
   alert(not)
 </script>
-
+<!-- 正常血压 -->
 <script id="ch0105/24">
   var n = Number(prompt('<100'))
   var cont = 0
-  var dont = 0
+  var max = 0
   for (i = 1 ; i <= n ; i++){
     var sp = Number(prompt('收缩NO.' + i))
     var dp = Number(prompt('舒张NO.' + i))
     if (sp >= 90 && sp <= 140 && dp >= 60 && dp <= 90){
       cont ++
-    }else if (cont > dont){
-      dont = cont
-      cont = 0
+      if (cont > max){
+        max = cont
+      }
     }else {
       cont = 0
     }
   }
-  alert(dont)
+  alert(max)
 </script>
 
 <script id="ch0105/25">// 有问题
@@ -898,22 +898,23 @@
 
 <script id="ch0105/29">
   var k = Number(prompt())
-  if (k < 0){
-    k *= -1
-    alert('-')
+  var m = k
+  if(m < 0){
+    m *= -1
   }
-  for (i = 0 ; ; i ++){
-    if (k >= 10**i){
-      var x = Math.trunc(k / 10**i) % 10
-      if (i == 0 && x == 0){
-      }else{
-        alert(x)
-      }
-    }
-    if (k < 10**(i + 1)){
+  var sum = 0
+  var n = 0
+  for (i = 1 ; ; i ++){
+    if (m < 10**i){
       break
     }
   }
+  for (b = i ; b > 0 ; b --){
+    var x = Math.trunc(m / (10**(b - 1))) % 10
+    sum += x * (10**n)
+    n ++
+  }
+  alert(Math.sign(k) * sum)
 </script>
 
 <script id="ch0105/30">
@@ -1004,7 +1005,7 @@
 
 <script id="ch0105/35">
   var n = Number(prompt('2~15'))
-  var sum = 0
+  var sum = 1
   var kdj = 1
   for (i = 1 ; i <= n ; i ++){
     kdj = 1
@@ -1117,7 +1118,7 @@
       if (h == 1 || h == hight || w == 1 || w == width){
         icon += at
       }else if (k == 0){
-        icon += '  '
+        icon += ' '
       }else{
         icon += at
       }
