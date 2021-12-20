@@ -784,7 +784,7 @@
   for (i = 1 ; i <= 12 ; i += 1){
     var pay = Number(prompt('NO.' + i + '月预算'))
     self += 300 - pay
-    if (self < 0){
+    if (self < 0){ //可以直接break
       self = 0
       if (i < not){
         not = i
@@ -801,11 +801,11 @@
     alert(mom * 1.2 + self)//别忘了加上自己手里留的钱
   }
 </script>
-
+<!-- 药房管理 -->
 <script id="ch0105/23">
   var m = Number(prompt('总库存'))
   var n = Number(prompt('人数1~100'))
-  var not = 0
+  var not = 0    //没取上药的人数计数
   for (i = 0 ; i < n ; i += 1){
     var med = Number(prompt('NO.' + (i + 1)))
     if (med <= m){
@@ -835,7 +835,7 @@
   }
   alert(max)
 </script>
-
+<!-- 求特殊自然数 -->
 <script id="ch0105/25">
   for (i = 81 ; i < 343 ; i ++){
     var x = Number(i.toString(7))
@@ -856,7 +856,9 @@
       break
     }
   }
-  alert(i + ' ' + x + ' ' + y)
+  alert(i)
+  alert(x)
+  alert(y)
 </script>
 
 <script id="ch0105/26">
