@@ -1,22 +1,14 @@
 <script>
-  var N = Number(prompt('灯数'))
-  var M = Number(prompt('人数'))
-  var c = ''
-  for (n = 1 ; n <= N ; n ++){ //第n个灯
-    var k = 1
-    for (m = 1 ; m <= M ; m ++){ //第m个人，若灯的编号为这个人的倍数，即
-      if (n % m == 0){
-        k *= -1
-      }
-    }
-    if (k == -1){
-      if(n == 1){
-        c += n
-      }else{
-        c += ',' + n
-      }
-    }
+  var n = Number(prompt('是否为回文数？'))
+  var r = 0
+  var N = n
+  while(N > 0){
+    var m = N % 10
+    N = (N - m) / 10
+    r = r *   10 + m
   }
-  alert(c)
+  if(r == n){
+    alert('YES')
+  }
 </script>
 
