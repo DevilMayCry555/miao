@@ -1056,9 +1056,9 @@
         csum += ' ' + c * i
       }
     }
-    // if(K !== k){
-    //   csum += '\n'
-    // }
+    if(K !== k){
+      csum += ''
+    }
   }
   alert(csum)
 </script>
@@ -1377,9 +1377,9 @@
   }
   alert(sum)
 </script>
-
 <!-- 将给定的整数转化为字符串，禁止使用相关函数和字符串拼接 -->
 <script id="itoa">
+  var n = Number(prompt('转字符串'))
   function itoa(n){
     var N = n
     var m = 0
@@ -1420,7 +1420,6 @@
     }
     return str
   }
-  var n = Number(prompt('转字符串'))
   alert(itoa(n))
 </script>
 <!-- 求两个给定的数的最大公约数和最小公倍数 -->
