@@ -1056,9 +1056,9 @@
         csum += ' ' + c * i
       }
     }
-    if(K !== k){
-      csum += '\n'
-    }
+    // if(K !== k){
+    //   csum += '\n'
+    // }
   }
   alert(csum)
 </script>
@@ -1267,19 +1267,20 @@
   var year = Number(prompt('年？'))
   var month = Number(prompt('月？'))
   var count = 0
-  var sum = 0
-  for (y = 1 ; y < year ; y ++){
-    if (y % 4 == 0 && y % 100 !== 0){
-      var tyear = 366
-    }else if(y % 400 == 0){
-      tyear = 366
-    }else{
-      tyear = 365
-    }
-    sum += (tyear % 7)
-  }
+  // for (y = 1 ; y < year ; y ++){
+  //   if (y % 4 == 0 && y % 100 !== 0){
+  //     var tyear = 366
+  //   }else if(y % 400 == 0){
+  //     tyear = 366
+  //   }else{
+  //     tyear = 365
+  //   }
+  //   sum += (tyear % 7)
+  // } 可以优化
+  var runnian = Math.trunc((year - 1) / 4) - Math.trunc((year - 1) / 100) + Math.trunc((year - 1) / 400)
+  var sum = (year - 1) * 365 + runnian
   for(m = 1 ; m < month ; m ++){ // 判断每个月的天数
-    if(m == 4 && m == 6 && m == 9 && m == 11){
+    if(m == 4 || m == 6 || m == 9 || m == 11){
       var day = 30
     }else if (m == 2){
       if (year % 4 == 0 && year % 100 !== 0){
@@ -1294,7 +1295,7 @@
     }
     sum += (day % 7)
   }
-  alert(sum + ' ' + (sum % 7 + 1))
+  alert(sum % 7 + 1)
 </script>
 <!-- 完全数 -->
 <script id="complete-number">
@@ -1379,6 +1380,48 @@
 
 <!-- 将给定的整数转化为字符串，禁止使用相关函数和字符串拼接 -->
 <script id="itoa">
+  function itoa(n){
+    var N = n
+    var m = 0
+    var str = ''
+    while (N > 0){
+      m = N % 10
+      if (m == 0){
+        str = '0' + str
+      }
+      if (m == 1){
+        str = '1' + str
+      }
+      if (m == 2){
+        str = '2' + str
+      }
+      if (m == 3){
+        str = '3' + str
+      }
+      if (m == 4){
+        str = '4' + str
+      }
+      if (m == 5){
+        str = '5' + str
+      }
+      if (m == 6){
+        str = '6' + str
+      }
+      if (m == 7){
+        str = '7' + str
+      }
+      if (m == 8){
+        str = '8' + str
+      }
+      if (m == 9){
+        str = '9' + str
+      }
+      N = (N - m) / 10
+    }
+    return str
+  }
+  var n = Number(prompt('转字符串'))
+  alert(itoa(n))
 </script>
 <!-- 求两个给定的数的最大公约数和最小公倍数 -->
 <script id="lcf&lcm">
@@ -1405,20 +1448,23 @@
   alert (icf + ' ' + icm)
 </script>
 <!-- 求给定数的平方根，精确到后三位，禁止用相关函数 -->
+<!-- 主要两种方法，二分法和牛顿迭代求根法  求根法我做成函数放在 /套路函数/ 内了 -->
 <script id="sqrt">
   var x = Number(prompt('求平方根'))
   var i = 1
   var k = 1 / 2
-  while (x > i**2){
+  while (x > i**2){ //平方根介于i-1和i之间
     i ++
   }
-  if (x !== i**2){ //平方根介于i-1和i之间
-    for (n = 2 ; n <= 20 ; n ++){
+  var n = 2
+  if (x !== i**2){  //有二分法的味道但不是纯粹的二分法
+    while (Math.abs(x - (i - 1 + k)**2) > 0.001){  //用差的绝对值进行精度判断
       if (x > (i - 1 + k)**2){
         k += 1 / 2**n 
       }else{
         k -= 1 / 2**n
       }
+      n++
     }
     i = i - 1 + k
     alert(i.toFixed(3))
@@ -1426,5 +1472,8 @@
     alert(i.toFixed(3))
   }
 </script>
+
+
+
 
 
