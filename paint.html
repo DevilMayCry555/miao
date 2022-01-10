@@ -64,40 +64,44 @@
   //点
   dot (42, 42, color = 'red')
   //实线
-  for (i = 3 ; i < 200 ; i ++){
-    dot (i , 3 , color = 'red')
+  for (i = 0 ; i < 200 ; i ++){
+    dot (i + 3, 3 , color = 'red')
   }
-  //虚线  一实一空
-  for (i = 3 ; i < 200 ; i += 2){
-    dot (i , 10 , color = 'orange')
-  }
-  //虚线 两实两空
-  for (i = 3 ; i < 200 ; i += 4){
-    dot (i , 20 , color = 'orange')
-    dot (i + 1 , 20 , color = 'orange')
-  }
-  //虚线 3实2空
-  for (i = 3 ; i < 200 ; i += 5){
-    for (k = i ; k <= i + 2 ; k ++){
-      dot (k , 30 , color = 'blue')
+  //画虚线的函数
+  //当前点数 % 一次循环的总数 若<=一次循环内的实点数则输出实点否则输出虚点
+  //a为实点数，b为虚点
+  function dotted(a , b , length , x0 , y0 , colors){
+    for (i = 0 ; i < length ; i++){
+      if(i % (a + b) + 1 <= a){ //余数为0 ~ (a + b - 1) 。加一就可以和循环对应起来了
+        dot (x0 + i , y0 , color = colors)
+      }
     }
   }
+  //虚线  一实一空
+  dotted (1 , 1 , 200 , 3 , 10 , 'purple')
+  //虚线 两实两空
+  dotted (2 , 2 , 200 , 3 , 20 , 'orange')
+  //虚线 3实2空
+  dotted (3 , 2 , 200 , 3 , 30 , 'blue')
+
+  // 画直线的函数  不能有断点和重复的点  尽量用加减法  配合斜率
+
   //45度斜线
-  for (i = 3 ; i < 100 ; i ++){
-    dot (i , i + 40 , color = 'green')
+  for (i = 0 ; i < 100 ; i ++){
+    dot (i + 3 , i + 40 , color = 'green')
   }
   //30度斜线
-  for (i = 3 ; i < 100 ; i ++){
-    dot (i , i * Math.tan(Math.PI / 6) + 40 , color = 'green')
+  for (i = 0 ; i < 100 ; i ++){
+    dot (i + 3 , i * Math.tan(Math.PI / 6) + 40 , color = 'lightgreen')
   }
   //对角线
-  for (i = 1 ; i <= 500 ; i ++){
+  for (i = 1 ; i < 500 ; i ++){
     dot (i , i * 4 / 5 , color = 'gold')
   }
   //空心矩形
   var kuan = 40
   var chang = 100
-  for (x = 3 ; x < chang + 3 ; x ++){  //其实位置为3 ，200
+  for (x = 3 ; x < chang + 3 ; x ++){  //起始位置为3 ，200
     dot (x , 150 , color = 'red')
     dot (x , 150 + kuan , color = 'red')
   }
@@ -106,7 +110,7 @@
     dot (chang + 2 , y + 150 , color = 'red')
   }
   //实心矩形
-  for (x = 3 ; x < chang + 3 ; x ++){  //其实位置为3 ，200
+  for (x = 3 ; x < chang + 3 ; x ++){  //起始位置为3 ，200
     for (y = 0 ; y <= kuan ; y ++){
       dot (x , y + 200 , color = 'red')
     }
