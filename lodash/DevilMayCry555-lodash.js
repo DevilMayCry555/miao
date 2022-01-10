@@ -179,7 +179,7 @@ var  DevilMayCry555 = {
     var a = []
     for (var n of array) {
       var only = false
-      for (var m of values) {
+      for (var m of [...values]) {
         if (n == m) only = true;
       }
       if (!only) a.push(n);
@@ -206,7 +206,11 @@ var  DevilMayCry555 = {
 }
 var  DevilMayCry555 = {
   every: function (collection, [predicate = _.identity]) {
-    
+    if (collection.length == undefined) { //对象
+      if ([predicate = _.identity].length) {
+        
+      }
+    }
   }
 }
 var  DevilMayCry555 = {
