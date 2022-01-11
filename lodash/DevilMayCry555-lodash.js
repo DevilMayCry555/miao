@@ -118,11 +118,11 @@ var  devilmaycry555 = {
   },
   uniqBy: function (array, size) {
   },
-  without: function (array, [values]) {
+  without: function (array, ...values) {
     var a = []
     for (var n of array) {
       var only = false
-      for (var m of [...values]) {
+      for (var m of values) {
         if (n == m) only = true;
       }
       if (!only) a.push(n);
