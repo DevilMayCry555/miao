@@ -249,7 +249,7 @@ var  devil = {
   max: function (array, size) {
   }
 }
-var  devilmaycry555 = {
+var  devil = {
   maxBy: function (array, size) {
   }
 }
