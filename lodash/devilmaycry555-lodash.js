@@ -144,7 +144,7 @@ var  devilmaycry555 = {
   },
 }
 
-var  devilmaycry555 = {
+var  devil = {
   every: function (collection, [predicate = _.identity]) {
     if (collection.length == undefined) { //对象
       if ([predicate = _.identity].length) {
