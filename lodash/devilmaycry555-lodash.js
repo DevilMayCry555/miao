@@ -1,5 +1,5 @@
 var devilmaycry555 = {
-  // 数组每size个分一组 O
+  // 数组每size个分一组
   chunk: function (array, size) {
     var l = array.length
     var newone = []
@@ -14,7 +14,7 @@ var devilmaycry555 = {
     }
     return newone
   },
-  // 去除无意义项 O
+  // 去除无意义项
   compact: function (array) {
     var a = []
     for (var n of array) {
@@ -22,7 +22,7 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 丢掉前n项 O
+  // 丢掉前n项
   drop: function (array, n = 1) {
     var l = array.length
     if (n >= l) return [];
@@ -32,7 +32,7 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 从后往前丢 O
+  // 从后往前丢
   dropRight: function (array, n = 1) {
     var l = array.length
     if (n >= l) return [];
@@ -46,7 +46,7 @@ var devilmaycry555 = {
   },
   dropWhile: function (array, size) {
   },
-  // 数组从start到end都用value表示 O
+  // 数组从start到end都用value表示
   fill: function (array, value, start = 0, end = array.length) {
     for (i = start; i < end; i++){
       array[i] = value
@@ -82,14 +82,14 @@ var devilmaycry555 = {
       for (i = 0; i < array.length; i++){
         var allin = true
         for (var key in test) {
-          if (!key in array[i]) allin = false;
+          if (!key in array[i] || test[key] !== array[i][key]) allin = false;
         }
         if (allin) passed.push(array[i]);
       }
       return passed
     }
   },
-  reduce: function (ary_obj, combine, start = array[0]) {
+  reduce: function (ary_obj, combine, start = ary_obj[0]) {
     var current = start
     if (Array.isArray(ary_obj)) {
       for (i = 0; i < ary_obj.length; i++){
@@ -97,7 +97,7 @@ var devilmaycry555 = {
       }
     } else if (typeof ary_obj == 'object') {
       for (var k in ary_obj) {
-        current = combine(current, ary_obj[k])
+        current = combine(current, ary_obj[k], k)
       }
     }
     return current
@@ -133,7 +133,7 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 将数组形式的对象转成真正的对象形式 O
+  // 将数组形式的对象转成真正的对象形式
   fromPairs: function (array) {
     var a = {}
     for (var n of array) {
@@ -141,7 +141,7 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 将数组里面的第一个元素提取出来 X
+  // 将数组里面的第一个元素提取出来
   head: function (array) {
     if (array[0] == undefined) return undefined;
     if (array[0].length == undefined) return array[0];
@@ -153,12 +153,12 @@ var devilmaycry555 = {
       if (array[i] == value) return i;
     }
   },
-  // 去掉数组的尾项 O
+  // 去掉数组的尾项
   initial: function (array) {
     if (array.length >= 1) array.length -= 1;
     return array
   },
-  // 用所选符号将数组拼接成字符串 X
+  // 用所选符号将数组拼接成字符串
   join: function (array, separator = ',') {
     var a = array[0]
     for (i = 1; i < array.length; i++){
@@ -166,7 +166,7 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 获取数组的最后一个元素 O
+  // 获取数组的最后一个元素
   last: function (array) {
     var l = array.length
     if (array[l - 1].length == undefined) return array[l - 1];
@@ -177,8 +177,9 @@ var devilmaycry555 = {
     for (i = fromIndex; i >= 0; i--){
       if (array[i] == value) return i;
     }
+    return -1
   },
-  // 数组反转 O
+  // 数组反转
   reverse: function (array) {
     var l = array.length - 1
     for (i = 0; i*2 < l; i++){
@@ -188,7 +189,7 @@ var devilmaycry555 = {
     }
     return array
   },
-  // 去掉重复值 O
+  // 去掉重复值
   uniq: function (array) {
     var a = []
     var map = {}
@@ -202,7 +203,7 @@ var devilmaycry555 = {
   },
   uniqBy: function (array, size) {
   },
-  // 去掉数组中所输入的值 O
+  // 去掉数组中所输入的值
   without: function (array, ...values) {
     var a = []
     for (var n of array) {
@@ -214,7 +215,7 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 数组里面子数组相同index的值放入一个新数组，所有新数组组合成新的母项 O
+  // 数组里面子数组相同index的值放入一个新数组，所有新数组组合成新的母项
   zip: function (...array) {
     var a = []
     for (i = 0; i < array[0].length; i++){
