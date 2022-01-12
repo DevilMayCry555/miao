@@ -1,5 +1,5 @@
 var devilmaycry555 = {
-  // 数组每size个分一组
+  // 数组每size个分一组 O
   chunk: function (array, size) {
     var l = array.length
     var newone = []
@@ -14,7 +14,7 @@ var devilmaycry555 = {
     }
     return newone
   },
-  // 去除无意义项
+  // 去除无意义项 O
   compact: function (array) {
     var a = []
     for (var n of array) {
@@ -22,7 +22,7 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 丢掉前n项
+  // 丢掉前n项 O
   drop: function (array, n = 1) {
     var l = array.length
     if (n >= l) return [];
@@ -32,7 +32,7 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 从后往前丢
+  // 从后往前丢 O
   dropRight: function (array, n = 1) {
     var l = array.length
     if (n >= l) return [];
@@ -46,7 +46,7 @@ var devilmaycry555 = {
   },
   dropWhile: function (array, size) {
   },
-  // 数组从start到end都用value表示
+  // 数组从start到end都用value表示 O
   fill: function (array, value, start = 0, end = array.length) {
     for (i = start; i < end; i++){
       array[i] = value
@@ -57,13 +57,64 @@ var devilmaycry555 = {
   },
   findLastIndex: function (array, [predicate = _.identity], [fromIndex = array.length - 1]) {
   },
+  forEach: function (array, loop) {
+    for (i = 0; i < array.length; i++){
+      loop(array[i])
+    }
+  },
+  map: function (array, transform) {
+    var mapped = []
+    for (i = 0; i < array.length; i++){
+      mapped.push(transform(array[i]))
+    }
+    return mapped
+  },
+  filter: function (array, test) {
+    var passed = []
+    for (i = 0; i < array.length; i++){
+      if (test(array[i])) passed.push(array[i]);
+    }
+    return passed
+  },
+  reduce: function (array, combine, start=array[0]) {
+    var current = start
+    for (i = 0; i < array.length; i++){
+      current = combine(current, array[i])
+    }
+    return current
+  },
+  // 数组内部层级-1
   flatten: function (array) {
+    // var a = []
+    // this.forEach(array, function (n) {
+    //   a = a.concat(n)
+    // })
+    // return a
+    //一句话reduce
+    //return reduce(array, (a,b) => a.concat(b), [])
+    //用flattenDepth表示
+    return this.flattenDepth(array, 1);
   },
-  flattenDeep: function (array, size) {
+  // 数组内部层级递减到底
+  flattenDeep: function (array) {
+    return this.flattenDepth(array, Infinity);
   },
-  flattenDepth: function (array, size) {
+  //数组按给定次数削减层数
+  flattenDepth: function (array, n = 1) {
+    //递归    与数组方法array.flat()实现方式一样
+    //n = 1时等价于flatten，n = inifinity时，等价于flattenDeep
+    if (n == 0) return array.slice();
+    var a = []
+    for (var ary of array) {
+      if (Array.isArray(ary)) {
+        a = a.concat(flattenDepth(ary, n-1))
+      } else {
+        a = a.concat(ary)
+      }
+    }
+    return a
   },
-  // 将数组形式的对象转成真正的对象形式
+  // 将数组形式的对象转成真正的对象形式 O
   fromPairs: function (array) {
     var a = {}
     for (var n of array) {
@@ -71,8 +122,9 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 将数组里面的第一个元素提取出来
+  // 将数组里面的第一个元素提取出来 X
   head: function (array) {
+    if (array[0] == undefined) return undefined;
     if (array[0].length == undefined) return array[0];
     if (array[0].length >= 1) return this.head(array[0]);
   },
@@ -82,32 +134,32 @@ var devilmaycry555 = {
       if (array[i] == value) return i;
     }
   },
-  // 去掉数组的尾项
+  // 去掉数组的尾项 O
   initial: function (array) {
     if (array.length >= 1) array.length -= 1;
     return array
   },
-  // 用所选符号将数组拼接成字符串
+  // 用所选符号将数组拼接成字符串 X
   join: function (array, separator = ',') {
     var a = array[0]
     for (i = 1; i < array.length; i++){
-      a += separator + array[i]
+      a += '' + separator + array[i]
     }
     return a
   },
-  // 获取数组的最后一个元素
+  // 获取数组的最后一个元素 O
   last: function (array) {
     var l = array.length
     if (array[l - 1].length == undefined) return array[l - 1];
     if (array[l-1].length >= 1) return this.last(array[l - 1]);
   },
-  // 倒序找到所选的值的index
-  lastIndexOf: function (array, value, [fromIndex = array.length - 1]) {
+  // 倒序找到所选的值的index X
+  lastIndexOf: function (array, value, fromIndex = array.length - 1) {
     for (i = fromIndex; i >= 0; i--){
       if (array[i] == value) return i;
     }
   },
-  // 数组反转
+  // 数组反转 O
   reverse: function (array) {
     var l = array.length - 1
     for (i = 0; i*2 < l; i++){
@@ -117,7 +169,7 @@ var devilmaycry555 = {
     }
     return array
   },
-  // 去掉重复值
+  // 去掉重复值 O
   uniq: function (array) {
     var a = []
     var map = {}
@@ -131,7 +183,7 @@ var devilmaycry555 = {
   },
   uniqBy: function (array, size) {
   },
-  // 去掉数组中所输入的值
+  // 去掉数组中所输入的值 O
   without: function (array, ...values) {
     var a = []
     for (var n of array) {
@@ -143,7 +195,7 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 数组里面子数组相同index的值放入一个新数组，所有新数组组合成新的母项
+  // 数组里面子数组相同index的值放入一个新数组，所有新数组组合成新的母项 O
   zip: function (...array) {
     var a = []
     for (i = 0; i < array[0].length; i++){
@@ -159,7 +211,9 @@ var devilmaycry555 = {
   },
 }
 
-var  devil = {
+var devil = {
+  // 给定的条件在数组里各个元素都满足，才返回真
+  // 想对的some方法，是任何一个元素能满足就返回真
   every: function (collection, [predicate = _.identity]) {
     if (collection.length == undefined) { //对象
       if ([predicate = _.identity].length) {
@@ -169,15 +223,10 @@ var  devil = {
   }
 }
 var  devil = {
-  filter: function (array, size) {
-  }
+  
 }
 var  devil = {
   find: function (array, size) {
-  }
-}
-var  devil = {
-  forEach: function (array, size) {
   }
 }
 var  devil = {
@@ -189,16 +238,14 @@ var  devil = {
   }
 }
 var  devil = {
-  map: function (array, size) {
-  }
+  
 }
 var  devil = {
   partition: function (array, size) {
   }
 }
 var  devil = {
-  reduce: function (array, size) {
-  }
+  
 }
 var  devil = {
   reduceRight: function (array, size) {
