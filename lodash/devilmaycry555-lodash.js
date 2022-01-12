@@ -70,29 +70,48 @@ var devilmaycry555 = {
     return mapped
   },
   filter: function (array, test) {
-    var passed = []
-    for (i = 0; i < array.length; i++){
-      if (test(array[i])) passed.push(array[i]);
+    if (typeof test == 'function') {
+      var passed = []
+      for (i = 0; i < array.length; i++){
+        if (test(array[i])) passed.push(array[i]);
+      }
+      return passed
     }
-    return passed
+    if (typeof test == 'object') {
+      var passed = []
+      for (i = 0; i < array.length; i++){
+        var allin = true
+        for (var key in test) {
+          if (!key in array[i]) allin = false;
+        }
+        if (allin) passed.push(array[i]);
+      }
+      return passed
+    }
   },
-  reduce: function (array, combine, start=array[0]) {
+  reduce: function (ary_obj, combine, start = array[0]) {
     var current = start
-    for (i = 0; i < array.length; i++){
-      current = combine(current, array[i])
+    if (Array.isArray(ary_obj)) {
+      for (i = 0; i < ary_obj.length; i++){
+        current = combine(current, ary_obj[i])
+      }
+    } else if (typeof ary_obj == 'object') {
+      for (var k in ary_obj) {
+        current = combine(current, ary_obj[k])
+      }
     }
     return current
   },
   // 数组内部层级-1
+  // var a = []
+  // this.forEach(array, function (n) {
+  //   a = a.concat(n)
+  // })
+  // return a
+  // 一句话reduce
+  // return reduce(array, (a,b) => a.concat(b), [])
+  // 用flattenDepth表示
   flatten: function (array) {
-    // var a = []
-    // this.forEach(array, function (n) {
-    //   a = a.concat(n)
-    // })
-    // return a
-    //一句话reduce
-    //return reduce(array, (a,b) => a.concat(b), [])
-    //用flattenDepth表示
     return this.flattenDepth(array, 1);
   },
   // 数组内部层级递减到底
@@ -100,9 +119,9 @@ var devilmaycry555 = {
     return this.flattenDepth(array, Infinity);
   },
   //数组按给定次数削减层数
+  // 递归    与数组方法array.flat()实现方式一样
+  //n = 1时等价于flatten，n = inifinity时，等价于flattenDeep
   flattenDepth: function (array, n = 1) {
-    //递归    与数组方法array.flat()实现方式一样
-    //n = 1时等价于flatten，n = inifinity时，等价于flattenDeep
     if (n == 0) return array.slice();
     var a = []
     for (var ary of array) {
