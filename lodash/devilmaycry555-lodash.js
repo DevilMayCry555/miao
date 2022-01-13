@@ -53,9 +53,46 @@ var devilmaycry555 = {
     }
     return array
   },
-  findIndex: function (array, [predicate = _.identity], [fromIndex = 0]) {
+  // 返回符合条件的对象的下标
+  findIndex: function (array, predicate, fromIndex = 0) {
+    for (i = fromIndex; i < array.length; i++) {
+      if (typeof predicate == 'function') {
+        if(predicate(array[i])) return i
+      } else if (Array.isArray(predicate)) {
+        if (array[i][predicate[0]] && array[i][predicate[0]] == predicate[1]) return i;
+      } else if (typeof predicate == 'object') {
+        var every = true
+        for (var key in predicate) {
+          if(array[i][key] !== predicate[key]) every = false
+        }
+        if (every) return i;
+      } else if(typeof predicate == 'string'){
+        if (array[i][predicate]) return i;
+      } else {
+        if (array[i] == predicate) return i;
+      }
+    }
+    return -1
   },
-  findLastIndex: function (array, [predicate = _.identity], [fromIndex = array.length - 1]) {
+  findLastIndex: function (array, predicate, fromIndex = array.length - 1) {
+    for (i = fromIndex; i >= 0; i--) {
+      if (typeof predicate == 'function') {
+        if(predicate(array[i])) return i
+      } else if (Array.isArray(predicate)) {
+        if (array[i][predicate[0]] && array[i][predicate[0]] == predicate[1]) return i;
+      } else if (typeof predicate == 'object') {
+        var every = true
+        for (var key in predicate) {
+          if(array[i][key] !== predicate[key]) every = false
+        }
+        if (every) return i;
+      } else if(typeof predicate == 'string'){
+        if (array[i][predicate]) return i;
+      } else {
+        if (array[i] == predicate) return i;
+      }
+    }
+    return -1
   },
   forEach: function (array, loop) {
     for (i = 0; i < array.length; i++){
@@ -89,7 +126,7 @@ var devilmaycry555 = {
       return passed
     }
   },
-  reduce: function (ary_obj, combine, start = ary_obj[0]) {
+  reduce: function (ary_obj, combine, start = 0) {
     var current = start
     if (Array.isArray(ary_obj)) {
       for (i = 0; i < ary_obj.length; i++){
@@ -119,14 +156,14 @@ var devilmaycry555 = {
     return this.flattenDepth(array, Infinity);
   },
   //数组按给定次数削减层数
-  // 递归    与数组方法array.flat()实现方式一样
+  //递归    与数组方法array.flat()实现方式一样
   //n = 1时等价于flatten，n = inifinity时，等价于flattenDeep
   flattenDepth: function (array, n = 1) {
     if (n == 0) return array.slice();
     var a = []
     for (var ary of array) {
       if (Array.isArray(ary)) {
-        a = a.concat(flattenDepth(ary, n-1))
+        a = a.concat(this.flattenDepth(ary, n-1))
       } else {
         a = a.concat(ary)
       }
@@ -172,7 +209,7 @@ var devilmaycry555 = {
     if (array[l - 1].length == undefined) return array[l - 1];
     if (array[l-1].length >= 1) return this.last(array[l - 1]);
   },
-  // 倒序找到所选的值的index X
+  // 倒序找到所选的值的index
   lastIndexOf: function (array, value, fromIndex = array.length - 1) {
     for (i = fromIndex; i >= 0; i--){
       if (array[i] == value) return i;
@@ -227,42 +264,93 @@ var devilmaycry555 = {
     }
     return a
   },
-  countBy: function (array, size) {
+  // 根据条件将数组分类计数
+  countBy: function (array, iteratee) {
+    var counted = {}
+    array.forEach(function (ary) {
+      if (typeof iteratee == 'function') {
+        var silters = iteratee(ary)
+      } else if (typeof iteratee == 'string') {
+        var silters = ary[iteratee]
+      }
+      if (!counted[silters]) {
+        counted[silters] = 1
+      } else {
+        counted[silters] ++
+      }
+    })
+    return counted
+  },
+  // 给定的条件在数组里各个元素都满足，才返回真
+  // 想对的some方法，是任何一个元素能满足就返回真
+  every: function (collection, predicate) {
+    for (var n of collection) {
+      if (Array.isArray(predicate)) {
+        if (n[predicate[0]] !== predicate[1]) return false;
+      } else if (typeof predicate == 'object') {
+        if (!n in predicate) return false;  
+      } else if (typeof predicate == 'string') {
+        if (!n[predicate]) return false;
+      } else {
+        if (typeof n !== predicate) return false;
+      }
+    }
+    return true
+  },
+  find: function (array, predicate, fromIndex = 0) {
+    for (i = fromIndex; i < array.length; i++) {
+      if (typeof predicate == 'function') {
+        if(predicate(array[i])) return array[i]
+      } else if (Array.isArray(predicate)) {
+        if (array[i][predicate[0]] && array[i][predicate[0]] == predicate[1]) return array[i];
+      } else if (typeof predicate == 'object') {
+        var every = true
+        for (var key in predicate) {
+          if(array[i][key] !== predicate[key]) every = false
+        }
+        if (every) return array[i];
+      } else if(typeof predicate == 'string'){
+        if (array[i][predicate]) return array[i];
+      } else {
+        if (array[i] == predicate) return array[i];
+      }
+    }
+    return undefined
+  },
+  groupBy: function (array, iteratee) {
+    var grouped = {}
+    array.forEach(function (ary) {
+      if (typeof iteratee == 'function') {
+        var silters = iteratee(ary)
+      } else if (typeof iteratee == 'string') {
+        var silters = ary[iteratee]
+      }
+      if (!grouped[silters]) {
+        grouped[silters] = [ary]
+      } else {
+        grouped[silters].push(ary)
+      }
+    })
+    return grouped
+  },
+  keyBy: function (array, iteratee) {
+    var keyed = {}
+    array.forEach(function (ary) {
+      if (typeof iteratee == 'function') {
+        var silters = iteratee(ary)
+      } else if (typeof iteratee == 'string') {
+        var silters = ary[iteratee]
+      }
+        keyed[silters] = ary
+    })
+    return keyed
+  },
+  partition: function (array, predicate) {
   },
 }
 
-var devil = {
-  // 给定的条件在数组里各个元素都满足，才返回真
-  // 想对的some方法，是任何一个元素能满足就返回真
-  every: function (collection, [predicate = _.identity]) {
-    if (collection.length == undefined) { //对象
-      if ([predicate = _.identity].length) {
-        
-      }
-    }
-  }
-}
 var  devil = {
   
-}
-var  devil = {
-  find: function (array, size) {
-  }
-}
-var  devil = {
-  groupBy: function (array, size) {
-  }
-}
-var  devil = {
-  keyBy: function (array, size) {
-  }
-}
-var  devil = {
-  
-}
-var  devil = {
-  partition: function (array, size) {
-  }
 }
 var  devil = {
   
