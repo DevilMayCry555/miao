@@ -59,7 +59,7 @@ var devilmaycry555 = {
       if (typeof predicate == 'function') {
         if(predicate(array[i])) return i
       } else if (Array.isArray(predicate)) {
-        if (array[i][predicate[0]] && array[i][predicate[0]] == predicate[1]) return i;
+        if (array[i][predicate[0]] == predicate[1]) return i;
       } else if (typeof predicate == 'object') {
         var every = true
         for (var key in predicate) {
@@ -79,7 +79,7 @@ var devilmaycry555 = {
       if (typeof predicate == 'function') {
         if(predicate(array[i])) return i
       } else if (Array.isArray(predicate)) {
-        if (array[i][predicate[0]] && array[i][predicate[0]] == predicate[1]) return i;
+        if (array[i][predicate[0]] == predicate[1]) return i;
       } else if (typeof predicate == 'object') {
         var every = true
         for (var key in predicate) {
@@ -288,7 +288,9 @@ var devilmaycry555 = {
       if (Array.isArray(predicate)) {
         if (n[predicate[0]] !== predicate[1]) return false;
       } else if (typeof predicate == 'object') {
-        if (!n in predicate) return false;  
+        for (var key in n) {
+          if (!key in predicate) return false;  
+        }
       } else if (typeof predicate == 'string') {
         if (!n[predicate]) return false;
       } else {
