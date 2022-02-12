@@ -53,8 +53,103 @@ var devilmaycry555 = {
     }
     return array
   },
-  // 返回符合条件的对象的下标
-  findIndex: function (array, predicate, fromIndex = 0) {
+  //返回收到的第一个参数
+  identity: function (value) {
+    return arguments[0];
+  },
+  //创建一个函数，用创建的函数的参数调用func
+  //若func为属性名，返回所给元素的属性值
+  //若func为数组或者对象，若所给元素含有func相同的属性返回真，否则返回假
+  iteratee: function (func) { 
+    return function (element) {
+      if (typeof func == 'String') {
+        return element.func
+      }
+      if (typeof func == 'Object') {
+        for (var key in func) {
+          if (!this.isMatch(element)) return false;
+        }
+        return true
+      }
+      if (Array.isArray(func)) {
+        var key = func[0]
+        var val = func[1]
+        if (element[key] == val) {
+          return true
+        } else {
+          return false
+        }
+      }
+    }
+  },
+  //返回首字母大写的类型的英文字符串
+  typeSee: function (x) {
+    return Object.prototype.toString.call(x).slice(8, -1);
+  },
+  //比较两个值是否完全一致，例如数组，数字，对象，字符串
+  //深度对比
+  isEqual: function (value, other) {
+    if (value === other) {
+      return true
+    }
+    if (this.typeSee(value) == this.typeSee(other)) {
+      if (this.typeSee(value) == 'Array' && value.length == other.length) {
+        for (i = 0; i < value.length; i++){
+          if (this.isEqual(value[i], other[i]) == false) return false;
+        }
+      }
+      if (this.typeSee(value) == 'Object') {
+        for (var keyValue in value) {
+          if (this.isEqual(value[keyValue], other[keyValue]) == false) return false;
+        }
+        for (var keyOther in other) {
+          if (!keyOther in value) return false;
+        }
+      }
+      return true
+    }
+    return false
+  },
+  //对于给定的对象和来源做一个部分深度对比，若给定的对象所有的属性值，
+  //均能匹配上来源里面的一组，返回真，否则返回假
+  //对于空数组或者空对象源，不会匹配任何属性值
+  isMatch: function (object, source) {
+    for (var key in source) {
+      for (var obj in object) {
+        if (typeof object[obj] == 'object') {
+          if (this.isMatch(object[obj], source) == true) return true;
+        }
+      }
+      if (typeof object[key] == 'object') {
+        if (this.isMatch(object[key], source) == true) return true;
+      } else {
+        if (object[key] == source[key]) {
+          return true
+        }
+      }
+    }
+    return false
+  },
+  matches: function (source) {
+    return this.iteratee(source);
+  },
+  //
+  matchesProperty: function (path, srcValue) {
+    return this.iteratee([path, srcValue]);
+  },
+  //根据路径返回value
+  property: function (path) {
+    if (typeof path == 'string') {
+      path = path.split('.')
+    }
+    return function (element) {
+      for (i = 0; i < path.length; i++){
+        element = element[path[i]]
+      }
+      return element
+    }
+  },
+  findIndex: function (array, predicate, fromIndex) {
     for (i = fromIndex; i < array.length; i++) {
       if (typeof predicate == 'function') {
         if(predicate(array[i])) return i
@@ -282,14 +377,13 @@ var devilmaycry555 = {
     return counted
   },
   // 给定的条件在数组里各个元素都满足，才返回真
-  // 想对的some方法，是任何一个元素能满足就返回真
   every: function (collection, predicate) {
     for (var n of collection) {
       if (Array.isArray(predicate)) {
         if (n[predicate[0]] !== predicate[1]) return false;
       } else if (typeof predicate == 'object') {
         for (var key in n) {
-          if (!key in predicate) return false;  
+          if (!key in predicate || n[key] !== predicate[key]) return false;  
         }
       } else if (typeof predicate == 'string') {
         if (!n[predicate]) return false;
@@ -299,12 +393,31 @@ var devilmaycry555 = {
     }
     return true
   },
+  // 想对的some方法，是任何一个元素能满足就返回真
+  some: function (collection, predicate) {
+    for (var n of collection) {
+      if (Array.isArray(predicate)) {
+        if (n[predicate[0]] == predicate[1]) return true;
+      } else if (typeof predicate == 'object') {
+        var pass = true
+        for (var key in n) {
+          if (!key in predicate || n[key] !== predicate[key]) pass = false;  
+        }
+        if (pass) return true;
+      } else if (typeof predicate == 'string') {
+        if (n[predicate]) return true;
+      } else {
+        if (typeof n == predicate) return true;
+      }
+    }
+    return false
+  },
   find: function (array, predicate, fromIndex = 0) {
     for (i = fromIndex; i < array.length; i++) {
       if (typeof predicate == 'function') {
         if(predicate(array[i])) return array[i]
       } else if (Array.isArray(predicate)) {
-        if (array[i][predicate[0]] && array[i][predicate[0]] == predicate[1]) return array[i];
+        if (array[i][predicate[0]] == predicate[1]) return array[i];
       } else if (typeof predicate == 'object') {
         var every = true
         for (var key in predicate) {
@@ -349,44 +462,75 @@ var devilmaycry555 = {
   },
   partition: function (array, predicate) {
   },
+  //反选
+  reject: function (array, test) {
+    if (typeof test == 'function') {
+      var passed = []
+      for (i = 0; i < array.length; i++){
+        if (!test(array[i])) passed.push(array[i]);
+      }
+      return passed
+    }
+    if (typeof test == 'object') {
+      var passed = []
+      for (i = 0; i < array.length; i++){
+        var allin = true
+        for (var key in test) {
+          if (!key in array[i] || test[key] !== array[i][key]) allin = false;
+        }
+        if (!allin) passed.push(array[i]);
+      }
+      return passed
+    }
+  },
+  //返回一个随机子项
+  sample: function (array) {
+    var l = array.length
+    var r = Math.floor(Math.random() * l)
+    return array[r]
+  },
+  //洗牌返回
+  shuffle: function (array) {
+    var ary = []
+    var l = array.length
+    while (ary.length < l) {
+      var ranidx = Math.floor(Math.random() * l)
+      if (array[ranidx] != null) {
+        ary.push(array[ranidx])
+        array[ranidx] = null
+      }
+    }
+    return ary
+  },
+  //返回类长度
+  size: function (collection) {
+    if (typeof collection == 'object') {
+      var count = 0
+      for (var key in collection) {
+        count++
+      }
+      return count
+    } else {
+      return collection.length
+    }
+  },
+  isBoolean: function (value) {
+  },
+
 }
 
-var  devil = {
-  
-}
-var  devil = {
-  
-}
 var  devil = {
   reduceRight: function (array, size) {
   }
 }
+
+
 var  devil = {
-  reject: function (array, size) {
-  }
-}
-var  devil = {
-  sample: function (array, size) {
-  }
-}
-var  devil = {
-  shuffle: function (array, size) {
-  }
-}
-var  devil = {
-  size: function (array, size) {
-  }
-}
-var  devil = {
-  some: function (array, size) {
-  }
-}
-var  devil = {
-  isBoolean: function (array, size) {
-  }
+
 }
 var  devil = {
   isEmpty: function (array, size) {
+    
   }
 }
 var  devil = {
