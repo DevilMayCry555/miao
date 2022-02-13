@@ -1,5 +1,5 @@
 var devilmaycry555 = {
-  // 数组每size个分一组O
+  //O数组每size个分一组
   chunk: function (array, size) {
     var l = array.length
     var newone = []
@@ -14,7 +14,7 @@ var devilmaycry555 = {
     }
     return newone
   },
-  // 去除无意义项O
+  //O去除无意义项
   compact: function (array) {
     var a = []
     for (var n of array) {
@@ -22,7 +22,28 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 丢掉前n项O
+  //从array里挑出与value不同的项，组成一个新数组
+  difference: function (array, value) {
+    return this.differenceBy(array, value, i => i)
+  },
+  differenceBy: function (array, value, method) {
+    method = this.iteratee(method)
+    return array.filter(function (n) {
+      for (var val of value) {
+        if (mothod(val) == mothod(n)) return false;
+      }
+      return true
+    })
+  },
+  differenceWith: function (array, value, comparator) {
+    return array.filter(function (n) {
+      for (var val of value) {
+        if (comparator(val, n)) return false;
+      }
+      return true
+    })
+  },
+  //O丢掉前n项
   drop: function (array, n = 1) {
     var l = array.length
     if (n >= l) return [];
@@ -32,21 +53,41 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 从后往前丢O
+  //O从后往前丢
   dropRight: function (array, n = 1) {
     var l = array.length
     if (n >= l) return [];
-    var a = []
-    for (i = 0; i < l - n; i++){
-      a.push(array[i])
+    var a = array
+    for (i = 0; i < n; i++){
+      a.pop()
     }
     return a
   },
-  dropRightWhile: function (array, size) {
+  //从后往前丢，直到遇到false
+  dropRightWhile: function (array, predicate) {
+    predicate = this.iteratee(predicate)
+    var a = array
+    while (true) {
+      if (predicate(a[a.length-1])) {
+        a.pop()
+      } else {
+        return a
+      }
+    }
   },
-  dropWhile: function (array, size) {
+  //从前往后丢，直到遇到false
+  dropWhile: function (array, predicate) {
+    predicate = this.iteratee(predicate)
+    var a = array
+    while (true) {
+      if (predicate(a[0])) {
+        a.shift()
+      } else {
+        return a
+      }
+    }
   },
-  // 数组从start到end都用value表示O
+  //O数组从start到end都用value表示
   fill: function (array, value, start = 0, end = array.length) {
     for (i = start; i < end; i++){
       array[i] = value
@@ -58,7 +99,7 @@ var devilmaycry555 = {
     return Object.prototype.toString.call(x).slice(8, -1);
   },
   //比较两个值是否完全一致，例如数组，数字，对象，字符串
-  //深度对比
+  //O深度对比
   isEqual: function (value, other) {
     if (value === other) {
       return true
@@ -85,7 +126,7 @@ var devilmaycry555 = {
   //对于给定的对象和来源做一个部分深度对比，若给定的对象所有的属性值，
   //均能匹配上来源里面的一组，返回真，否则返回假
   //对于空数组或者空对象源，匹配任何属性值
-  //为单向的包含关系
+  //O为单向的包含关系
   isMatch: function (object, source) {
     if (object === source) {
       return true
@@ -106,7 +147,7 @@ var devilmaycry555 = {
     }
     return false
   },
-  //返回收到的第一个参数
+  //O返回收到的第一个参数
   identity: function (value) {
     return arguments[0];
   },
@@ -123,23 +164,26 @@ var devilmaycry555 = {
     if (this.typeSee(func) == 'String') {
       return this.property(func)
     }
+    if (this.typeSee(func) == 'Function') {
+      return this.identity(func)
+    }
   },
   //返回一个接参函数 与参数对象做深度对比，若参数对象与source的属性值相同，则返回true
   matches: function (source) {
     return function (element) {
-      if (this.isMatch(element, source) == false) return false;
+      if (devilmaycry555.isMatch(element, source) == false) return false;
       return true
     }
   },
   //
   matchesProperty: function (path, srcValue) {
     return function (element) {
-      var father = this.property(path)(element)
-      if (this.isMatch(father, srcValue) == false) return false;
+      var father = devilmaycry555.property(path)(element)
+      if (devilmaycry555.isMatch(father, srcValue) == false) return false;
       return true
     }
   },
-  //根据路径返回value
+  //O根据路径返回value
   property: function (path) {
     if (typeof path == 'string') {
       path = path.split('.')
@@ -151,46 +195,28 @@ var devilmaycry555 = {
       return element
     }
   },
-  findIndex: function (array, predicate, fromIndex) {
-    for (i = fromIndex; i < array.length; i++) {
-      if (typeof predicate == 'function') {
-        if(predicate(array[i])) return i
-      } else if (Array.isArray(predicate)) {
-        if (array[i][predicate[0]] == predicate[1]) return i;
-      } else if (typeof predicate == 'object') {
-        var every = true
-        for (var key in predicate) {
-          if(array[i][key] !== predicate[key]) every = false
-        }
-        if (every) return i;
-      } else if(typeof predicate == 'string'){
-        if (array[i][predicate]) return i;
-      } else {
-        if (array[i] == predicate) return i;
-      }
+  findIndex: function (array, predicate, fromIndex = 0) {
+    predicate = this.iteratee(predicate)
+    for (i = fromIndex; i < array.length; i++){
+      if (predicate(array[i]) == true) return i;
     }
     return -1
   },
   //O
   findLastIndex: function (array, predicate, fromIndex = array.length - 1) {
-    for (i = fromIndex; i >= 0; i--) {
-      if (typeof predicate == 'function') {
-        if(predicate(array[i])) return i
-      } else if (Array.isArray(predicate)) {
-        if (array[i][predicate[0]] == predicate[1]) return i;
-      } else if (typeof predicate == 'object') {
-        var every = true
-        for (var key in predicate) {
-          if(array[i][key] !== predicate[key]) every = false
-        }
-        if (every) return i;
-      } else if(typeof predicate == 'string'){
-        if (array[i][predicate]) return i;
-      } else {
-        if (array[i] == predicate) return i;
-      }
+    predicate = this.iteratee(predicate)
+    for (i = fromIndex; i >= 0; i--){
+      if (predicate(array[i]) == true) return i;
     }
     return -1
+  },
+  //筛选语句可能是value，index/key，collection
+  //从fromindex开始，找到符合的即返回，找不到则返回undefined
+  find: function (collection, predicate, fromIndex = 0) {
+    for (i = fromIndex; i < collection.length; i++){
+      if (predicate(collection[i]) == true) return collection[i];
+    }
+    return undefined
   },
   forEach: function (array, loop) {
     for (i = 0; i < array.length; i++){
@@ -238,7 +264,7 @@ var devilmaycry555 = {
     }
     return current
   },
-  // 数组内部层级减一O
+  // O数组内部层级减一
   // var a = []
   // this.forEach(array, function (n) {
   //   a = a.concat(n)
@@ -250,11 +276,11 @@ var devilmaycry555 = {
   flatten: function (array) {
     return this.flattenDepth(array, 1);
   },
-  // 数组内部层级递减到底O
+  //O数组内部层级递减到底
   flattenDeep: function (array) {
     return this.flattenDepth(array, Infinity);
   },
-  //数组按给定次数削减层数O
+  //O数组按给定次数削减层数
   //递归    与数组方法array.flat()实现方式一样
   //n = 1时等价于flatten，n = inifinity时，等价于flattenDeep
   flattenDepth: function (array, n = 1) {
@@ -269,7 +295,7 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 将数组形式的对象转成真正的对象形式O
+  //O将数组形式的对象转成真正的对象形式
   fromPairs: function (array) {
     var a = {}
     for (var n of array) {
@@ -277,7 +303,7 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 将数组里面的第一个元素提取出来O
+  //O将数组里面的第一个元素提取出来
   head: function (array) {
     if (array[0] == undefined) return undefined;
     if (array[0].length == undefined) return array[0];
@@ -285,16 +311,39 @@ var devilmaycry555 = {
   },
   // 获取寻找值的index
   IndexOf: function (array, value, fromIndex = 0) {
+    if (fromIndex < 0) {
+      fromIndex += array.length
+    }
     for (i = fromIndex; i < array.length; i++){
       if (array[i] == value) return i;
     }
+    return -1
   },
-  // 去掉数组的尾项O
+  //O去掉数组的尾项
   initial: function (array) {
     if (array.length >= 1) array.length -= 1;
     return array
   },
-  // 用所选符号将数组拼接成字符串O
+  //求交集，根据第一个数组返回结果
+  //找不到就返回[]
+  intersection: function (arrays) {
+    var a = arguments[0]
+    for (i = 1; i < arguments.length; i++){
+      var f = arguments[i].filter(function (n) {
+        for (var val of a) {
+          if (n == val) {
+            return true
+          } else {
+            return false
+          }
+        }
+      })
+      a = f
+      if (a.length == 0) return a;
+    }
+    return a
+  },
+  //O用所选符号将数组拼接成字符串
   join: function (array, separator = ',') {
     var a = array[0]
     for (i = 1; i < array.length; i++){
@@ -302,20 +351,20 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 获取数组的最后一个元素O
+  //O获取数组的最后一个元素
   last: function (array) {
     var l = array.length
     if (array[l - 1].length == undefined) return array[l - 1];
     if (array[l-1].length >= 1) return this.last(array[l - 1]);
   },
-  // 倒序找到所选的值的indexO
+  //O倒序找到所选的值的index
   lastIndexOf: function (array, value, fromIndex = array.length - 1) {
     for (i = fromIndex; i >= 0; i--){
       if (array[i] == value) return i;
     }
     return -1
   },
-  // 数组反转O
+  //O数组反转
   reverse: function (array) {
     var l = array.length - 1
     for (i = 0; i*2 < l; i++){
@@ -325,7 +374,7 @@ var devilmaycry555 = {
     }
     return array
   },
-  // 去掉重复值O
+  //O去掉重复值
   uniq: function (array) {
     var a = []
     var map = {}
@@ -339,7 +388,7 @@ var devilmaycry555 = {
   },
   uniqBy: function (array, size) {
   },
-  // 去掉数组中所输入的值O
+  //O去掉数组中所输入的值
   without: function (array, ...values) {
     var a = []
     for (var n of array) {
@@ -351,7 +400,7 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 数组里面子数组相同index的值放入一个新数组，所有新数组组合成新的母项O
+  //O数组里面子数组相同index的值放入一个新数组，所有新数组组合成新的母项
   zip: function (...array) {
     var a = []
     for (i = 0; i < array[0].length; i++){
@@ -363,7 +412,7 @@ var devilmaycry555 = {
     }
     return a
   },
-  // 根据条件将数组分类计数O
+  //O根据条件将数组分类计数
   countBy: function (array, iteratee) {
     var counted = {}
     array.forEach(function (ary) {
@@ -380,7 +429,7 @@ var devilmaycry555 = {
     })
     return counted
   },
-  // 给定的条件在数组里各个元素都满足，才返回真O
+  //O给定的条件在数组里各个元素都满足，才返回真
   every: function (collection, predicate) {
     for (var n of collection) {
       if (Array.isArray(predicate)) {
@@ -490,7 +539,7 @@ var devilmaycry555 = {
       return passed
     }
   },
-  //返回一个随机子项
+  //O返回一个随机子项
   sample: function (array) {
     var l = array.length
     var r = Math.floor(Math.random() * l)
@@ -509,7 +558,7 @@ var devilmaycry555 = {
     }
     return ary
   },
-  //返回类长度O
+  //O返回类长度
   size: function (collection) {
     if (typeof collection == 'object') {
       var count = 0
@@ -524,71 +573,4 @@ var devilmaycry555 = {
   isBoolean: function (value) {
   },
 
-}
-
-var  devil = {
-  reduceRight: function (array, size) {
-  }
-}
-
-
-var  devil = {
-
-}
-var  devil = {
-  isEmpty: function (array, size) {
-    
-  }
-}
-var  devil = {
-  isEqual: function (array, size) {
-  }
-}
-var  devil = {
-  isNaN: function (array, size) {
-  }
-}
-var  devil = {
-  isNil: function (array, size) {
-  }
-}
-var  devil = {
-  isNull: function (array, size) {
-  }
-}
-var  devil = {
-  isNumber: function (array, size) {
-  }
-}
-var  devil = {
-  toArray: function (array, size) {
-  }
-}
-var  devil = {
-  ceil: function (array, size) {
-  }
-}
-var  devil = {
-  max: function (array, size) {
-  }
-}
-var  devil = {
-  maxBy: function (array, size) {
-  }
-}
-var  devil = {
-  sumBy: function (array, size) {
-  }
-}
-var  devil = {
-  repeat: function (array, size) {
-  }
-}
-var  devil = {
-  range: function (array, size) {
-  }
-}
-var  devil = {
-  cloneDeep: function (array, size) {
-  }
 }
