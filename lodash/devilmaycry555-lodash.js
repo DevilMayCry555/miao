@@ -53,35 +53,6 @@ var devilmaycry555 = {
     }
     return array
   },
-  //返回收到的第一个参数
-  identity: function (value) {
-    return arguments[0];
-  },
-  //创建一个函数，用创建的函数的参数调用func
-  //若func为属性名，返回所给元素的属性值
-  //若func为数组或者对象，若所给元素含有func相同的属性返回真，否则返回假
-  iteratee: function (func) { 
-    return function (element) {
-      if (typeof func == 'String') {
-        return element.func
-      }
-      if (typeof func == 'Object') {
-        for (var key in func) {
-          if (!this.isMatch(element)) return false;
-        }
-        return true
-      }
-      if (Array.isArray(func)) {
-        var key = func[0]
-        var val = func[1]
-        if (element[key] == val) {
-          return true
-        } else {
-          return false
-        }
-      }
-    }
-  },
   //返回首字母大写的类型的英文字符串
   typeSee: function (x) {
     return Object.prototype.toString.call(x).slice(8, -1);
@@ -97,45 +68,76 @@ var devilmaycry555 = {
         for (i = 0; i < value.length; i++){
           if (this.isEqual(value[i], other[i]) == false) return false;
         }
+        return true
       }
       if (this.typeSee(value) == 'Object') {
         for (var keyValue in value) {
           if (this.isEqual(value[keyValue], other[keyValue]) == false) return false;
         }
         for (var keyOther in other) {
-          if (!keyOther in value) return false;
+          if (keyOther in value == false) return false;
         }
+        return true
       }
-      return true
     }
     return false
   },
   //对于给定的对象和来源做一个部分深度对比，若给定的对象所有的属性值，
   //均能匹配上来源里面的一组，返回真，否则返回假
-  //对于空数组或者空对象源，不会匹配任何属性值
+  //对于空数组或者空对象源，匹配任何属性值
+  //为单向的包含关系
   isMatch: function (object, source) {
-    for (var key in source) {
-      for (var obj in object) {
-        if (typeof object[obj] == 'object') {
-          if (this.isMatch(object[obj], source) == true) return true;
+    if (value === other) {
+      return true
+    }
+    if (this.typeSee(object) == this.typeSee(source)) {
+      if (this.typeSee(object) == 'Array' && object.length >= source.length) {
+        for (i = 0; i < source.length; i++){
+          if (this.isMatch(object[i], source[i]) == false) return false;
         }
+        return true
       }
-      if (typeof object[key] == 'object') {
-        if (this.isMatch(object[key], source) == true) return true;
-      } else {
-        if (object[key] == source[key]) {
-          return true
+      if (this.typeSee(object) == 'Object') {
+        for (var keySource in source) {
+          if (this.isMatch(object[keySource], source[keySource]) == false) return false;
         }
+        return true
       }
     }
     return false
   },
+  //返回收到的第一个参数
+  identity: function (value) {
+    return arguments[0];
+  },
+  //创建一个函数，用创建的函数的参数调用func
+  //若func为属性名，返回所给元素的属性值
+  //若func为数组或者对象，若所给元素含有func相同的属性返回真，否则返回假
+  iteratee: function (func) { 
+    if (this.typeSee(func) == 'Object') {
+      return this.matches(func)
+    }
+    if (this.typeSee(func) == 'Array') {
+      return this.matchesProperty(func[0],func[1])
+    }
+    if (this.typeSee(func) == 'String') {
+      return this.property(func)
+    }
+  },
+  //返回一个接参函数 与参数对象做深度对比，若参数对象与source的属性值相同，则返回true
   matches: function (source) {
-    return this.iteratee(source);
+    return function (element) {
+      if (this.isMatch(element, source) == false) return false;
+      return true
+    }
   },
   //
   matchesProperty: function (path, srcValue) {
-    return this.iteratee([path, srcValue]);
+    return function (element) {
+      var father = this.property(path)(element)
+      if (this.isMatch(father, srcValue) == false) return false;
+      return true
+    }
   },
   //根据路径返回value
   property: function (path) {
