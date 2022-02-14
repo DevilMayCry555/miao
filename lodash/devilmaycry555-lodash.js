@@ -34,10 +34,9 @@ var devilmaycry555 = {
     } else {
       method = this.iteratee(method)
     }
-    var values = arguments.slice(1, -1)
-    for (var i = 0; i < values.length; i++){
+    for (var i = 1; i < arguments.length - 1; i++){
       array = array.filter(function (n) {
-        for (var val of values[i]) {
+        for (var val of arguments[i]) {
           if (method(val) == method(n)) return false;
         }
         return true
@@ -105,107 +104,6 @@ var devilmaycry555 = {
     }
     return array
   },
-  //返回首字母大写的类型的英文字符串
-  typeSee: function (x) {
-    return Object.prototype.toString.call(x).slice(8, -1);
-  },
-  //比较两个值是否完全一致，例如数组，数字，对象，字符串
-  //O深度对比
-  isEqual: function (value, other) {
-    if (value === other) {
-      return true
-    }
-    if (this.typeSee(value) == this.typeSee(other)) {
-      if (this.typeSee(value) == 'Array' && value.length == other.length) {
-        for (var i = 0; i < value.length; i++){
-          if (this.isEqual(value[i], other[i]) == false) return false;
-        }
-        return true
-      }
-      if (this.typeSee(value) == 'Object') {
-        for (var keyValue in value) {
-          if (this.isEqual(value[keyValue], other[keyValue]) == false) return false;
-        }
-        for (var keyOther in other) {
-          if (keyOther in value == false) return false;
-        }
-        return true
-      }
-    }
-    return false
-  },
-  //对于给定的对象和来源做一个部分深度对比，若给定的对象所有的属性值，
-  //均能匹配上来源里面的一组，返回真，否则返回假
-  //对于空数组或者空对象源，匹配任何属性值
-  //O为单向的包含关系
-  isMatch: function (object, source) {
-    if (object === source) {
-      return true
-    }
-    if (this.typeSee(object) == this.typeSee(source)) {
-      if (this.typeSee(object) == 'Array' && object.length >= source.length) {
-        for (var i = 0; i < source.length; i++){
-          if (this.isMatch(object[i], source[i]) == false) return false;
-        }
-        return true
-      }
-      if (this.typeSee(object) == 'Object') {
-        for (var keySource in source) {
-          if (this.isMatch(object[keySource], source[keySource]) == false) return false;
-        }
-        return true
-      }
-    }
-    return false
-  },
-  //O返回收到的第一个参数
-  identity: function (value) {
-    return arguments[0];
-  },
-  //创建一个函数，用创建的函数的参数调用func
-  //若func为属性名，返回所给元素的属性值
-  //若func为数组或者对象，若所给元素含有func相同的属性返回真，否则返回假
-  iteratee: function (func) { 
-    if (this.typeSee(func) == 'Object') {
-      return this.matches(func)
-    }
-    if (this.typeSee(func) == 'Array') {
-      return this.matchesProperty(func[0],func[1])
-    }
-    if (this.typeSee(func) == 'String') {
-      return this.property(func)
-    }
-    if (this.typeSee(func) == 'Function') {
-      return this.identity(func)
-    }
-  },
-  //O返回一个接参函数 与参数对象做深度对比，若参数对象与source的属性值相同，则返回true
-  matches: function (source) {
-    return function (element) {
-      if (devilmaycry555.isMatch(element, source) == false) return false;
-      return true
-    }
-  },
-  //
-  matchesProperty: function (path, srcValue) {
-    return function (element) {
-      var father = devilmaycry555.property(path)(element)
-      if (devilmaycry555.isMatch(father, srcValue) == false) return false;
-      return true
-    }
-  },
-  //O根据路径返回value
-  property: function (path) {
-    if (typeof path == 'string') {
-      path = path.split('.')
-    }
-    return function (element) {
-      for (var i = 0; i < path.length; i++){
-        element = element[path[i]]
-      }
-      return element
-    }
-  },
   //??([{"user":"barney","active":false},{"user":"fred","active":false},{"user":"pebbles","active":true}],["active",false])
   findIndex: function (array, predicate, fromIndex = 0) {
     predicate = this.iteratee(predicate)
@@ -221,60 +119,6 @@ var devilmaycry555 = {
       if (predicate(array[i])) return i;
     }
     return -1
-  },
-  //筛选语句可能是value，index/key，collection
-  //O从fromindex开始，找到符合的即返回，找不到则返回undefined
-  find: function (collection, predicate, fromIndex = 0) {
-    for (var i = fromIndex; i < collection.length; i++){
-      if (predicate(collection[i]) == true) return collection[i];
-    }
-    return undefined
-  },
-  forEach: function (array, loop) {
-    for (var i = 0; i < array.length; i++){
-      loop(array[i])
-    }
-  },
-  map: function (array, transform) {
-    var mapped = []
-    for (var i = 0; i < array.length; i++){
-      mapped.push(transform(array[i]))
-    }
-    return mapped
-  },
-  filter: function (array, test) {
-    if (typeof test == 'function') {
-      var passed = []
-      for (var i = 0; i < array.length; i++){
-        if (test(array[i])) passed.push(array[i]);
-      }
-      return passed
-    }
-    if (typeof test == 'object') {
-      var passed = []
-      for (var i = 0; i < array.length; i++){
-        var allin = true
-        for (var key in test) {
-          if (!key in array[i] || test[key] !== array[i][key]) allin = false;
-        }
-        if (allin) passed.push(array[i]);
-      }
-      return passed
-    }
-  },
-  //O
-  reduce: function (ary_obj, combine, start = 0) {
-    var current = start
-    if (Array.isArray(ary_obj)) {
-      for (var i = 0; i < ary_obj.length; i++){
-        current = combine(current, ary_obj[i])
-      }
-    } else if (typeof ary_obj == 'object') {
-      for (var k in ary_obj) {
-        current = combine(current, ary_obj[k], k)
-      }
-    }
-    return current
   },
   // O数组内部层级减一
   // var a = []
@@ -383,6 +227,7 @@ var devilmaycry555 = {
       return array[array.length + n]
     }
   },
+  //O以第一个数组为基，与后续作比较，将相同元素剔除
   pull: function (array, values) {
     for (var i = 1; i < arguments.length; i++){
       this.remove(array, n => n == arguments[i])
@@ -433,9 +278,8 @@ var devilmaycry555 = {
   unionBy: function (arrays,iteratee) {
     var iter = arguments[arguments.length - 1]
     var me = arguments[0]
-    var other = [...arguments].slice(1,-1)
-    for (var n of other) {
-      me.concat(this.differenceBy(n, me, iter))
+    for (var i = 1; i < arguments.length - 1; i++) {
+      me.concat(this.differenceBy(arguments[i], me, iter))
     }
     return me
   },
@@ -456,9 +300,9 @@ var devilmaycry555 = {
     return a
   },
   //根据第一个数组，相同代号归到一个新数组里
-  zip: function (arrays) {
-    return arrays.map(function (_, colIndex) {
-      return arguments.map(function (row) {
+  zip: function (...arrays) {
+    return arrays[0].map(function (_, colIndex) {
+      return arrays.map(function (row) {
         return row[colIndex]
       })
     })
@@ -482,22 +326,23 @@ var devilmaycry555 = {
     var res = []
     for (var j = 0; j < arrays.length; j++){
       for (var i = 0; i < arrays.length; i++){
-        this.pull(arrays[j], ...arrays[i])
+        if (j !== i) this.pull(arrays[j], ...arrays[i]);
       }
       res = res.concat(arrays[j])
     }
     return res
   },
+
+
+
+
   //O根据条件将数组分类计数
   countBy: function (array, iteratee) {
     var counted = {}
+    var iter = this.iteratee(iteratee)
     array.forEach(function (ary) {
-      if (typeof iteratee == 'function') {
-        var silters = iteratee(ary)
-      } else if (typeof iteratee == 'string') {
-        var silters = ary[iteratee]
-      }
-      if (!counted[silters]) {
+      var silters = iter(ary)
+      if (counted[silters] == null) {
         counted[silters] = 1
       } else {
         counted[silters] ++
@@ -505,41 +350,93 @@ var devilmaycry555 = {
     })
     return counted
   },
+  //O
+  groupBy: function (array, iteratee) {
+    var grouped = {}
+    var iter = this.iteratee(iteratee)
+    array.forEach(function (ary) {
+      var silters = iter(ary)
+      if (grouped[silters] == null) {
+        grouped[silters] = [ary]
+      } else {
+        grouped[silters].push(ary)
+      }
+    })
+    return grouped
+  },
+  //O
+  keyBy: function (array, iteratee) {
+    return this.groupBy(array, iteratee);
+  },
   //O给定的条件在数组里各个元素都满足，才返回真
   every: function (collection, predicate) {
+    var iter = this.iteratee(predicate)
     for (var n of collection) {
-      if (Array.isArray(predicate)) {
-        if (n[predicate[0]] !== predicate[1]) return false;
-      } else if (typeof predicate == 'object') {
-        for (var key in n) {
-          if (!key in predicate || n[key] !== predicate[key]) return false;  
-        }
-      } else if (typeof predicate == 'string') {
-        if (!n[predicate]) return false;
-      } else {
-        if (typeof n !== predicate) return false;
-      }
+      if (iter(n) == false) return false;
     }
     return true
   },
   // 想对的some方法，是任何一个元素能满足就返回真
   some: function (collection, predicate) {
+    var iter = this.iteratee(predicate)
     for (var n of collection) {
-      if (Array.isArray(predicate)) {
-        if (n[predicate[0]] == predicate[1]) return true;
-      } else if (typeof predicate == 'object') {
-        var pass = true
-        for (var key in n) {
-          if (!key in predicate || n[key] !== predicate[key]) pass = false;  
-        }
-        if (pass) return true;
-      } else if (typeof predicate == 'string') {
-        if (n[predicate]) return true;
-      } else {
-        if (typeof n == predicate) return true;
-      }
+      if (iter(n) == true) return true;
     }
     return false
+  },
+  //筛选语句可能是value，index/key，collection
+  //O从fromindex开始，找到符合的即返回，找不到则返回undefined
+  find: function (collection, predicate, fromIndex = 0) {
+    for (var i = fromIndex; i < collection.length; i++){
+      if (predicate(collection[i]) == true) return collection[i];
+    }
+    return undefined
+  },
+  forEach: function (array, loop) {
+    for (var i = 0; i < array.length; i++){
+      loop(array[i])
+    }
+  },
+  map: function (array, transform) {
+    var mapped = []
+    for (var i = 0; i < array.length; i++){
+      mapped.push(transform(array[i]))
+    }
+    return mapped
+  },
+  filter: function (array, test) {
+    if (typeof test == 'function') {
+      var passed = []
+      for (var i = 0; i < array.length; i++){
+        if (test(array[i])) passed.push(array[i]);
+      }
+      return passed
+    }
+    if (typeof test == 'object') {
+      var passed = []
+      for (var i = 0; i < array.length; i++){
+        var allin = true
+        for (var key in test) {
+          if (!key in array[i] || test[key] !== array[i][key]) allin = false;
+        }
+        if (allin) passed.push(array[i]);
+      }
+      return passed
+    }
+  },
+  //O
+  reduce: function (ary_obj, combine, start = 0) {
+    var current = start
+    if (Array.isArray(ary_obj)) {
+      for (var i = 0; i < ary_obj.length; i++){
+        current = combine(current, ary_obj[i])
+      }
+    } else if (typeof ary_obj == 'object') {
+      for (var k in ary_obj) {
+        current = combine(current, ary_obj[k], k)
+      }
+    }
+    return current
   },
   //O
   find: function (array, predicate, fromIndex = 0) {
@@ -561,36 +458,6 @@ var devilmaycry555 = {
       }
     }
     return undefined
-  },
-  //O
-  groupBy: function (array, iteratee) {
-    var grouped = {}
-    array.forEach(function (ary) {
-      if (typeof iteratee == 'function') {
-        var silters = iteratee(ary)
-      } else if (typeof iteratee == 'string') {
-        var silters = ary[iteratee]
-      }
-      if (!grouped[silters]) {
-        grouped[silters] = [ary]
-      } else {
-        grouped[silters].push(ary)
-      }
-    })
-    return grouped
-  },
-  //O
-  keyBy: function (array, iteratee) {
-    var keyed = {}
-    array.forEach(function (ary) {
-      if (typeof iteratee == 'function') {
-        var silters = iteratee(ary)
-      } else if (typeof iteratee == 'string') {
-        var silters = ary[iteratee]
-      }
-        keyed[silters] = ary
-    })
-    return keyed
   },
   partition: function (array, predicate) {
   },
@@ -648,5 +515,105 @@ var devilmaycry555 = {
   },
   isBoolean: function (value) {
   },
-
+  //返回首字母大写的类型的英文字符串
+  typeSee: function (x) {
+    return Object.prototype.toString.call(x).slice(8, -1);
+  },
+  //比较两个值是否完全一致，例如数组，数字，对象，字符串
+  //O深度对比
+  isEqual: function (value, other) {
+    if (value === other) {
+      return true
+    }
+    if (this.typeSee(value) == this.typeSee(other)) {
+      if (this.typeSee(value) == 'Array' && value.length == other.length) {
+        for (var i = 0; i < value.length; i++){
+          if (this.isEqual(value[i], other[i]) == false) return false;
+        }
+        return true
+      }
+      if (this.typeSee(value) == 'Object') {
+        for (var keyValue in value) {
+          if (this.isEqual(value[keyValue], other[keyValue]) == false) return false;
+        }
+        for (var keyOther in other) {
+          if (keyOther in value == false) return false;
+        }
+        return true
+      }
+    }
+    return false
+  },
+  //对于给定的对象和来源做一个部分深度对比，若给定的对象所有的属性值，
+  //均能匹配上来源里面的一组，返回真，否则返回假
+  //对于空数组或者空对象源，匹配任何属性值
+  //O为单向的包含关系
+  isMatch: function (object, source) {
+    if (object === source) {
+      return true
+    }
+    if (this.typeSee(object) == this.typeSee(source)) {
+      if (this.typeSee(object) == 'Array' && object.length >= source.length) {
+        for (var i = 0; i < source.length; i++){
+          if (this.isMatch(object[i], source[i]) == false) return false;
+        }
+        return true
+      }
+      if (this.typeSee(object) == 'Object') {
+        for (var keySource in source) {
+          if (this.isMatch(object[keySource], source[keySource]) == false) return false;
+        }
+        return true
+      }
+    }
+    return false
+  },
+  //O返回收到的第一个参数
+  identity: function (value) {
+    return arguments[0];
+  },
+  //创建一个函数，用创建的函数的参数调用func
+  //若func为属性名，返回所给元素的属性值
+  //若func为数组或者对象，若所给元素含有func相同的属性返回真，否则返回假
+  iteratee: function (func) { 
+    if (this.typeSee(func) == 'Object') {
+      return this.matches(func)
+    }
+    if (this.typeSee(func) == 'Array') {
+      return this.matchesProperty(func[0],func[1])
+    }
+    if (this.typeSee(func) == 'String') {
+      return this.property(func)
+    }
+    if (this.typeSee(func) == 'Function') {
+      return this.identity(func)
+    }
+  },
+  //O返回一个接参函数 与参数对象做深度对比，若参数对象与source的属性值相同，则返回true
+  matches: function (source) {
+    return function (element) {
+      if (devilmaycry555.isMatch(element, source) == false) return false;
+      return true
+    }
+  },
+  //
+  matchesProperty: function (path, srcValue) {
+    return function (element) {
+      var father = devilmaycry555.property(path)(element)
+      if (devilmaycry555.isMatch(father, srcValue) == false) return false;
+      return true
+    }
+  },
+  //O根据路径返回value
+  property: function (path) {
+    if (typeof path == 'string') {
+      path = path.split('.')
+    }
+    return function (element) {
+      for (var i = 0; i < path.length; i++){
+        element = element[path[i]]
+      }
+      return element
+    }
+  },
 }
