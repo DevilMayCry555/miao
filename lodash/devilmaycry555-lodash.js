@@ -24,16 +24,27 @@ var devilmaycry555 = {
   },
   //从array里挑出与value不同的项，组成一个新数组
   difference: function (array, value) {
-    return this.differenceBy(array, value, i => i)
+    return this.differenceBy(...arguments, this.identity)
   },
-  differenceBy: function (array, value, method) {
-    method = this.iteratee(method)
-    return array.filter(function (n) {
-      for (var val of value) {
-        if (method(val) == method(n)) return false;
-      }
-      return true
-    })
+  differenceBy: function (array, value, m) {
+    var method = arguments[arguments.length - 1]
+    //如果最后一个参数不是函数，则默认一个穿自己的函数
+    if (this.typeSee(method) == 'Array') {
+      method = this.identity
+    } else {
+      method = this.iteratee(method)
+    }
+    var values = arguments.slice(1, -1)
+    for (var i = 0; i < values.length; i++){
+      array = array.filter(function (n) {
+        for (var val of values[i]) {
+          if (method(val) == method(n)) return false;
+        }
+        return true
+      })
+      if (array.length == 0) return array;
+    }
+    return array
   },
   differenceWith: function (array, value, comparator) {
     return array.filter(function (n) {
@@ -374,27 +385,19 @@ var devilmaycry555 = {
   },
   pull: function (array, values) {
     for (var i = 1; i < arguments.length; i++){
-      this.remove(array, function (n) {
-        return n === arguments[i]
-      })
-    }
-    return array
-  },
-  pullAll: function (array, values) {
-    for (var i = 0; i < values.length; i++){
-      this.remove(array, function (n) {
-        return n === values[i]
-      })
+      this.remove(array, n => n == arguments[i])
     }
     return array
   },
   //将数组中符合条件的移入新数组并返回，且原数组不再含有这些项
   remove: function (array, predicate) {
     predicate = this.iteratee(predicate)
-    var a = array.slice()
     var res = []
-    for (var i = 0; i < a.length; i++){
-      if (predicate(a[i])) res.push(array.splice(i, 1));
+    for (var i = 0; i < array.length; i++){
+      if (predicate(array[i])) {
+        res = res.concat(array.splice(i, 1))
+        i--
+      }
     }
     return res
   },
@@ -414,7 +417,7 @@ var devilmaycry555 = {
     var left = 0
     var right = array.length - 1
     while (right - left > 1) {
-      var mid = Math.ceil(right + left)
+      var mid = Math.ceil((right + left)/2)
       if (array[mid] < value) {
         left = mid
       } else {
@@ -424,30 +427,44 @@ var devilmaycry555 = {
     return right
   },
   //以第一个数组为基本，一次跟后面数组比较，将自己没有的数push进来
-  union: function (arrays) {
+  union: function (...arrays) {
+    return this.unionBy(...arguments, i => i);
+  },
+  unionBy: function (arrays,iteratee) {
+    var iter = arguments[arguments.length - 1]
     var me = arguments[0]
-    var other = arguments.slice(1)
+    var other = [...arguments].slice(1,-1)
     for (var n of other) {
-      me.concat(this.difference(me, n))
+      me.concat(this.differenceBy(n, me, iter))
     }
     return me
   },
-  uniqBy: function (arrays, iter) {
-    
-  },
   //O去掉重复值
   uniq: function (array) {
+    return this.uniqBy(array, this.identity);
+  },
+  uniqBy: function (array, iter) {
+    iter = this.iteratee(iter)
     var a = []
     var map = {}
     for (var n of array) {
-      if (!map[n]) {
-        map[n] = 1
+      if (!map[iter(n)]) {
+        map[iter(n)] = 1
         a.push(n)
       }
     }
     return a
   },
-  uniqBy: function (array, size) {
+  //根据第一个数组，相同代号归到一个新数组里
+  zip: function (arrays) {
+    return arrays.map(function (_, colIndex) {
+      return arguments.map(function (row) {
+        return row[colIndex]
+      })
+    })
+  },
+  unzip: function (array) {
+    return this.zip(...array)
   },
   //O去掉数组中所输入的值
   without: function (array, ...values) {
@@ -461,17 +478,15 @@ var devilmaycry555 = {
     }
     return a
   },
-  //O数组里面子数组相同index的值放入一个新数组，所有新数组组合成新的母项
-  zip: function (...array) {
-    var a = []
-    for (var i = 0; i < array[0].length; i++){
-      var m = []
-      for (var s of array) {
-        m.push(s[i])
+  xor: function (...arrays) {
+    var res = []
+    for (var j = 0; j < arrays.length; j++){
+      for (var i = 0; i < arrays.length; i++){
+        this.pull(arrays[j], ...arrays[i])
       }
-      a.push(m)
+      res = res.concat(arrays[j])
     }
-    return a
+    return res
   },
   //O根据条件将数组分类计数
   countBy: function (array, iteratee) {
