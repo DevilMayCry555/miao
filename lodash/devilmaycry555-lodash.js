@@ -22,6 +22,9 @@ var devilmaycry555 = {
     }
     return a
   },
+  concat(array, [values]) {
+    
+  },
   //从array里挑出与value不同的项，组成一个新数组
   difference: function (array, value) {
     return this.differenceBy(...arguments, this.identity)
@@ -395,17 +398,6 @@ var devilmaycry555 = {
     }
     return false
   },
-  filter: function (collection, predicate) {
-    var temp = collection
-    predicate = this.iteratee(predicate)
-    for (var i = 0; i < temp.length; i++){
-      if (predicate(temp[i])) {
-        temp.splice(i, 1)
-        i--
-      }
-    }
-    return temp
-  },
   //筛选语句可能是value，index/key，collection
   //O从fromindex开始，找到符合的即返回，找不到则返回undefined
   find: function (collection, predicate, fromIndex = 0) {
@@ -426,6 +418,18 @@ var devilmaycry555 = {
         loop(collection[key], key, collection);
       }
     }
+    return collection
+  },
+  filter: function (collection, predicate) {
+    var temp = collection
+    predicate = this.iteratee(predicate)
+    for (var i = 0; i < temp.length; i++){
+      if (!predicate(temp[i])) {
+        temp.splice(i, 1)
+        i--
+      }
+    }
+    return temp
   },
   map: function (collection, transform) {
     var mapped = collection
@@ -466,31 +470,45 @@ var devilmaycry555 = {
     }
     return current
   },
-  partition: function (array, predicate) {
+  //对于predicate，返回真的一组，false的一组
+  partition: function (collection, predicate) {
+    predicate = this.iteratee(predicate)
+    var truely = []
+    var falsy = []
+    if (this.typeSee(collection) == 'Array') {
+      for (var i = 0; i < collection.length; i++){
+        if (predicate(collection[i])) {
+          truely.push(collection[i])
+        } else {
+          falsy.push(collection[i])
+        }
+      }
+    }
+    if (this.typeSee(collection) == 'Object') {
+      for (var key in collection) {
+        if (predicate(collection[key])) {
+          truely.push(collection[key])
+        } else {
+          falsy.push(collection[key])
+        }
+      }
+    }
+    return [truely,falsy]
   },
   //反选
-  reject: function (array, test) {
-    if (typeof test == 'function') {
-      var passed = []
-      for (var i = 0; i < array.length; i++){
-        if (!test(array[i])) passed.push(array[i]);
+  reject: function (collection, predicate) {
+    var temp = collection
+    predicate = this.iteratee(predicate)
+    for (var i = 0; i < temp.length; i++){
+      if (predicate(temp[i])) {
+        temp.splice(i, 1)
+        i--
       }
-      return passed
     }
-    if (typeof test == 'object') {
-      var passed = []
-      for (i = 0; i < array.length; i++){
-        var allin = true
-        for (var key in test) {
-          if (!key in array[i] || test[key] !== array[i][key]) allin = false;
-        }
-        if (!allin) passed.push(array[i]);
-      }
-      return passed
-    }
+    return temp
   },
   //O返回一个随机子项
-  sample: function (array) {
+  sample: function (collection) {
     var l = array.length
     var r = Math.floor(Math.random() * l)
     return array[r]
@@ -520,12 +538,41 @@ var devilmaycry555 = {
       return collection.length
     }
   },
-  isBoolean: function (value) {
+  //稳定排序，依次按iters进行排序
+  sortBy: function (collection, ...iteratees) {
+    return 1
   },
-  //返回首字母大写的类型的英文字符串
-  typeSee: function (x) {
-    return Object.prototype.toString.call(x).slice(8, -1);
+
+
+
+
+  //Function
+  defer: function (func, ...args) {
+    
   },
+  delay: function (func, wait, ...args) {
+    
+  },
+  negate(predicate) {
+    
+  },
+  once(func) {
+    
+  },
+  spread(func, [start = 0]) {
+    
+  },
+  curry(func, [arity = func.length]) {
+    
+  },
+  memoize(func, [resolver]) {
+    
+  },
+
+
+
+
+  //lang
   //比较两个值是否完全一致，例如数组，数字，对象，字符串
   //O深度对比
   isEqual: function (value, other) {
@@ -575,6 +622,147 @@ var devilmaycry555 = {
     }
     return false
   },
+  isRegExp: function (value) {
+    
+  },
+  toArray(value) {
+    
+  },
+  cloneDeep(value) {
+    
+  },
+
+  //Math
+  maxBy(array, iteratee = this.identity) {
+    
+  },
+  sumBy(array, iteratee = this.identity) {
+    
+  },
+
+  //Number
+  clamp(number, [lower], upper) {
+    
+  },
+  inRange(number, [start = 0], end) {
+    
+  },
+  random([lower = 0], [upper = 1], [floating]) {
+    
+  },
+
+
+  //Object
+  assignIn(object, [sources]) {
+    
+  },
+  defaults(object, [sources]) {
+    
+  },
+  findKey(object, [predicate = _.identity]) {
+    
+  },
+  forIn(object, [iteratee = _.identity]) {
+    
+  },
+  forInRight(object, [iteratee = _.identity]) {
+    
+  },
+  forOwn(object, [iteratee = _.identity]) {
+    
+  },
+  forOwnRight(object, [iteratee = _.identity]) {
+    
+  },
+  functions(object) {
+    
+  },
+  get(object, path, [defaultValue]) {
+    
+  },
+  has(object, path) {
+    
+  },
+  invert(object) {
+    
+  },
+  invoke(object, path, [args]) {
+    
+  },
+  keys(object) {
+    
+  },
+  mapKeys(object, [iteratee = _.identity]) {
+    
+  },
+  mapValues(object, [iteratee = _.identity]) {
+    
+  },
+  merge(object, [sources]) {
+    
+  },
+  omit(object, [paths]) {
+    
+  },
+  pick(object, [paths]) {
+    
+  },
+  result(object, path, [defaultValue]) {
+    
+  },
+  set(object, path, value) {
+    
+  },
+  toPairs(object) {
+    
+  },
+  values(object) {
+    
+  },
+
+  //String
+  escape([string = '']) {
+    
+  },
+  pad([string = ''], [length = 0], [chars = ' ']) {
+    
+  },
+  padEnd([string = ''], [length = 0], [chars = ' ']) {
+    
+  },
+  padStart([string = ''], [length = 0], [chars = ' ']) {
+    
+  },
+  repeat([string = ''], [n = 1]) {
+    
+  },
+  unescape([string = '']) {
+    
+  },
+
+  //Util
+  bindAll(object, methodNames) {
+    
+  },
+  range([start = 0], end, [step = 1]) {
+    
+  },
+  mixin([object = lodash], source, [options = {}]) {
+    
+  },
+  times(n, [iteratee = _.identity]) {
+    
+  },
+  uniqueId([prefix = '']) {
+    
+  },
+  constant(value) {
+    
+  },
+  //返回首字母大写的类型的英文字符串
+  typeSee: function (x) {
+    return Object.prototype.toString.call(x).slice(8, -1);
+  },
   //O返回收到的第一个参数
   identity: function (value) {
     return arguments[0];
@@ -622,5 +810,8 @@ var devilmaycry555 = {
       }
       return element
     }
+  },
+  propertyOf(object) {
+    
   },
 }
