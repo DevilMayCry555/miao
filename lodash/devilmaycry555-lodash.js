@@ -31,12 +31,13 @@ var devilmaycry555 = {
     //如果最后一个参数不是函数，则默认一个穿自己的函数
     if (this.typeSee(method) == 'Array') {
       method = this.identity
+      var l = arguments.length
     } else {
       method = this.iteratee(method)
+      var l = arguments.length - 1
     }
-    for (var i = 1; i < arguments.length - 1; i++){
+    for (var i = 1; i < l; i++){
       var val = arguments[i]
-      //用filter筛选数组
       array = array.filter(function (n) {
         for (var j = 0; j < val.length; j++) {
           if (method(val[j]) == method(n)) return false;
@@ -327,7 +328,7 @@ var devilmaycry555 = {
   xor: function (...arrays) {
     var res = []
     for (var j = 0; j < arrays.length; j++){
-      var self = arrays[j]
+      var self = arrays[j].slice()
       for (var i = j+1; i < arrays.length; i++){
         this.pull(self, ...arrays[i]);
         this.pull(arrays[i], ...arrays[j]);
@@ -370,7 +371,13 @@ var devilmaycry555 = {
   },
   //O
   keyBy: function (array, iteratee) {
-    return this.groupBy(array, iteratee);
+    var keyed = {}
+    var iter = this.iteratee(iteratee)
+    array.forEach(function (ary) {
+      var silters = iter(ary)
+      keyed[silters] = ary
+    })
+    return keyed
   },
   //O给定的条件在数组里各个元素都满足，才返回真
   every: function (collection, predicate) {
@@ -441,27 +448,6 @@ var devilmaycry555 = {
       }
     }
     return current
-  },
-  //O
-  find: function (array, predicate, fromIndex = 0) {
-    for (i = fromIndex; i < array.length; i++) {
-      if (typeof predicate == 'function') {
-        if(predicate(array[i])) return array[i]
-      } else if (Array.isArray(predicate)) {
-        if (array[i][predicate[0]] == predicate[1]) return array[i];
-      } else if (typeof predicate == 'object') {
-        var every = true
-        for (var key in predicate) {
-          if(array[i][key] !== predicate[key]) every = false
-        }
-        if (every) return array[i];
-      } else if(typeof predicate == 'string'){
-        if (array[i][predicate]) return array[i];
-      } else {
-        if (array[i] == predicate) return array[i];
-      }
-    }
-    return undefined
   },
   partition: function (array, predicate) {
   },
