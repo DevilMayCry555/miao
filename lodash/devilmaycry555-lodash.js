@@ -35,9 +35,11 @@ var devilmaycry555 = {
       method = this.iteratee(method)
     }
     for (var i = 1; i < arguments.length - 1; i++){
+      var val = arguments[i]
+      //用filter筛选数组
       array = array.filter(function (n) {
-        for (var val of arguments[i]) {
-          if (method(val) == method(n)) return false;
+        for (var j = 0; j < val.length; j++) {
+          if (method(val[j]) == method(n)) return false;
         }
         return true
       })
@@ -325,10 +327,12 @@ var devilmaycry555 = {
   xor: function (...arrays) {
     var res = []
     for (var j = 0; j < arrays.length; j++){
-      for (var i = 0; i < arrays.length; i++){
-        if (j !== i) this.pull(arrays[j], ...arrays[i]);
+      var self = arrays[j]
+      for (var i = j+1; i < arrays.length; i++){
+        this.pull(self, ...arrays[i]);
+        this.pull(arrays[i], ...arrays[j]);
       }
-      res = res.concat(arrays[j])
+      res = res.concat(self)
     }
     return res
   },
