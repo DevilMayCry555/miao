@@ -276,13 +276,13 @@ var devilmaycry555 = {
   },
   //以第一个数组为基本，一次跟后面数组比较，将自己没有的数push进来
   union: function (...arrays) {
-    return this.unionBy(...arguments, i => i);
+    return this.unionBy(...arguments, this.identity);
   },
   unionBy: function (arrays,iteratee) {
     var iter = arguments[arguments.length - 1]
-    var me = arguments[0]
+    var me = arrays
     for (var i = 1; i < arguments.length - 1; i++) {
-      me.concat(this.differenceBy(arguments[i], me, iter))
+      me = me.concat(this.differenceBy(arguments[i], me, iter))
     }
     return me
   },
@@ -395,45 +395,62 @@ var devilmaycry555 = {
     }
     return false
   },
+  filter: function (collection, predicate) {
+    var temp = collection
+    predicate = this.iteratee(predicate)
+    for (var i = 0; i < temp.length; i++){
+      if (predicate(temp[i])) {
+        temp.splice(i, 1)
+        i--
+      }
+    }
+    return temp
+  },
   //筛选语句可能是value，index/key，collection
   //O从fromindex开始，找到符合的即返回，找不到则返回undefined
   find: function (collection, predicate, fromIndex = 0) {
+    predicate = this.iteratee(predicate)
     for (var i = fromIndex; i < collection.length; i++){
-      if (predicate(collection[i]) == true) return collection[i];
+      if (predicate(collection[i])) return collection[i];
     }
     return undefined
   },
-  forEach: function (array, loop) {
-    for (var i = 0; i < array.length; i++){
-      loop(array[i])
+  forEach: function (collection, loop) {
+    if (this.typeSee(collection) == 'Array') {
+      for (var i = 0; i < collection.length; i++){
+        loop(collection[i], i, collection);
+      }
+    }
+    if (this.typeSee(collection) == 'Object') {
+      for (var key in collection) {
+        loop(collection[key], key, collection);
+      }
     }
   },
-  map: function (array, transform) {
-    var mapped = []
-    for (var i = 0; i < array.length; i++){
-      mapped.push(transform(array[i]))
+  map: function (collection, transform) {
+    var mapped = collection
+    transform = this.iteratee(transform)
+    if (this.typeSee(mapped) == 'Array') {
+      for (var i = 0; i < mapped.length; i++){
+        mapped[i] = transform(mapped[i],i,mapped)
+      }
+      return mapped
     }
-    return mapped
+    if (this.typeSee(mapped) == 'Object') {
+      var res = []
+      for (var key in mapped){
+        res.push(transform(mapped[key],key,mapped))
+      }
+      return res
+    }
   },
-  filter: function (array, test) {
-    if (typeof test == 'function') {
-      var passed = []
-      for (var i = 0; i < array.length; i++){
-        if (test(array[i])) passed.push(array[i]);
-      }
-      return passed
-    }
-    if (typeof test == 'object') {
-      var passed = []
-      for (var i = 0; i < array.length; i++){
-        var allin = true
-        for (var key in test) {
-          if (!key in array[i] || test[key] !== array[i][key]) allin = false;
-        }
-        if (allin) passed.push(array[i]);
-      }
-      return passed
-    }
+  flatMap: function (collection, transform) {
+    var needflat = this.map(collection, transform)
+    return this.flatten(needflat)
+  },
+  flatMapDepth: function (collection, transform, depth = 1) {
+    var needflat = this.map(collection, transform);
+    return this.flattenDepth(needflat, depth);
   },
   //O
   reduce: function (ary_obj, combine, start = 0) {
