@@ -1,4 +1,5 @@
 var devilmaycry555 = {
+  //array
   //O数组每size个分一组
   chunk: function (array, size) {
     var l = array.length
@@ -193,15 +194,15 @@ var devilmaycry555 = {
     for (var i = 1; i < arguments.length; i++){
       var f = arguments[i].filter(function (n) {
         for (var val of a) {
-          if (n == val) {
+          if (n === val) {
             return true
           } else {
             return false
           }
         }
       })
-      a = f
-      if (a.length == 0) return a;
+      a = f //每次对比完 将对比后的结果赋值给a 继续对比 持续对比
+      if (a.length == 0) return a; //长度为0，提前结束
     }
     return a
   },
@@ -343,7 +344,7 @@ var devilmaycry555 = {
 
 
 
-
+  //collection
   //O根据条件将数组分类计数
   countBy: function (array, iteratee) {
     var counted = {}
@@ -547,6 +548,23 @@ var devilmaycry555 = {
 
 
   //Function
+  //可以将函数的this绑定为thisArg对象，不绑则为null
+  //func参数的绑定，可以跳着绑定
+  //返回一个新函数
+  bind(func, thisArg, ...partials) {
+    return function (...args) {
+      var i = 0
+      var fixedArgs = partials.slice()
+      for (var n of fixedArgs) {
+        if (n == window) {
+          n = args[i++]
+        }
+      }
+      fixedArgs = fixedArgs.concat(args.slice(i))
+      // return func.call(thisArg, ...fixedArgs)
+      return func.apply(thisArg, fixedArgs) //apply 需要传数组
+    }
+  },
   defer: function (func, ...args) {
     
   },
@@ -632,6 +650,8 @@ var devilmaycry555 = {
     
   },
 
+
+
   //Math
   maxBy(array, iteratee = this.identity) {
     
@@ -639,6 +659,8 @@ var devilmaycry555 = {
   sumBy(array, iteratee = this.identity) {
     
   },
+
+
 
   //Number
   clamp(number, [lower], upper) {
@@ -650,6 +672,7 @@ var devilmaycry555 = {
   random([lower = 0], [upper = 1], [floating]) {
     
   },
+
 
 
   //Object
@@ -677,8 +700,21 @@ var devilmaycry555 = {
   functions(object) {
     
   },
-  get(object, path, [defaultValue]) {
-    
+  //通过路径获取属性值，若值为undefined则返回默认值
+  //路径的写法  'a[0].b.c'
+  get(object, path, defaultValue = undefined) {
+    var b
+    if (this.typeSee(path) == 'String') {
+      b = this.toPath(path)
+    } else {
+      b = path
+    }
+    var a = object
+    for (var i = 0; i < b.length; i++){
+      a = a[ b[i] ]
+      if (a == undefined) return defaultValue;
+    }
+    return a
   },
   has(object, path) {
     
@@ -720,6 +756,8 @@ var devilmaycry555 = {
     
   },
 
+
+
   //String
   escape([string = '']) {
     
@@ -740,6 +778,8 @@ var devilmaycry555 = {
     
   },
 
+
+
   //Util
   bindAll(object, methodNames) {
     
@@ -758,6 +798,15 @@ var devilmaycry555 = {
   },
   constant(value) {
     
+  },
+  toPath(value) {
+    var res = []
+    var re = /\w+/g
+    var match
+    while (match = re.exec(value)) {
+      res.push(match[0])
+    }
+    return res
   },
   //返回首字母大写的类型的英文字符串
   typeSee: function (x) {
@@ -784,7 +833,8 @@ var devilmaycry555 = {
       return this.identity(func)
     }
   },
-  //O返回一个接参函数 与参数对象做深度对比，若参数对象与source的属性值相同，则返回true
+  //O返回一个接参函数 与参数对象做深度对比
+  //若参数对象与source的属性值相同，则返回true
   matches: function (source) {
     return function (element) {
       if (devilmaycry555.isMatch(element, source) == false) return false;
@@ -799,16 +849,10 @@ var devilmaycry555 = {
       return true
     }
   },
-  //O根据路径返回value
+  //O根据路径返回value  路径格式为a.b.c
   property: function (path) {
-    if (typeof path == 'string') {
-      path = path.split('.')
-    }
     return function (element) {
-      for (var i = 0; i < path.length; i++){
-        element = element[path[i]]
-      }
-      return element
+      return devilmaycry555.get(element, path)
     }
   },
   propertyOf(object) {

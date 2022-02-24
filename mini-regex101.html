@@ -377,7 +377,9 @@
       res += text.slice(startIdx)
       TestString.innerHTML = res
       var timeEnd = Date.now()
-      times.innerHTML = `<span style="background-color:#4E8475; color: #fff">${matchcount-1} matches (${(timeEnd - timestart).toFixed(2)}ms)</span>`
+      if(matchcount-1>0){
+        times.innerHTML = `<span style="background-color:#4E8475; color: #fff">${matchcount-1} matches (${(timeEnd - timestart).toFixed(2)}ms)</span>`
+      }
       return 
     }
 
