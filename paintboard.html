@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+    }
+    .paint{
+      width: 1000px;
+      border: 2px solid black;
+    }
+    .paint svg{
+      display: block;
+    }
+    #help{
+      display: flex;
+    }
+    #help > div{
+      border: 1px solid black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+    .set{
+      width: 120px;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      align-content: space-around;
+      gap: 2px;
+      height: 90px;
+    }
+    .set span{
+      width: 25px;
+      height: 25px;
+      border: 1px solid;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+<body>
+  <div id="help">
+    <div id="tool">
+      <button id="save">保存</button>
+      <button id="back">撤销</button>
+      <button id="reset">重置</button> 
+      工具
+    </div>
+    <div id="poly">
+      <div class="set" id="polyset">
+        <span title="line" style="background: url(polygon.png) -14px -8px no-repeat;"></span>
+        <span title="Bézier" style="background: url(polygon.png) -46px -8px no-repeat;"></span>
+        <span title="rect" style="background: url(polygon.png) -115px -8px no-repeat;"></span>
+        <span title="circle" style="background: url(polygon.png) -80px -8px no-repeat;"></span>
+        <span title="polygon" style="background: url(polygon.png) -180px -8px no-repeat;"></span>
+      </div>
+      形状
+    </div>
+    <div id="size">
+      <input type="range" min="1" max="12">
+      大小
+    </div>
+    <div id="color">
+      <div class="set" id="colorset">
+        <span title="#000000" style="background-color: #000000; width: 40px; height: 40px;"></span>
+        <span title="#FFFFFF" style="background-color: #FFFFFF; width: 40px; height: 40px;"></span>
+        <span title="#FF0000" style="background-color: #FF0000"></span>
+        <span title="#FFA500" style="background-color: #FFA500"></span>
+        <span title="#FFFF00" style="background-color: #FFFF00"></span>
+        <span title="#008000" style="background-color: #008000"></span>
+        <span title="#00FFFF" style="background-color: #00FFFF"></span>
+        <span title="#0000FF" style="background-color: #0000FF"></span>
+      </div>
+      <input type="color">
+      颜色
+    </div>
+  </div>
+  <div class="paint">
+    <svg version="1.1"
+       width="1000" height="700"
+       xmlns="http://www.w3.org/2000/svg">
+    </svg>
+</div>
+
+  <script>
+    var node, pos, x0, y0
+    var svg = document.querySelector('.paint svg')
+    var color = document.querySelector('#color input')
+    var size = document.querySelector('#size input')
+    var shapes = 'line'
+    var Ccount = 0//计算贝塞尔曲线
+    var Carray = []
+    var Chead,Ctail
+    var Pcount = 0//多边形点记录
+    var points = []
+    var Px,Py
+    //取色器
+    var colorselect = document.querySelector('#colorset')
+    colorselect.addEventListener('mousedown', function(e){
+      if(e.target.tagName == 'SPAN'){
+        color.value = e.target.title
+      }
+    })
+    //形状选择
+    var polyselect = document.querySelector('#polyset')
+    polyselect.addEventListener('mousedown', function(e){
+      if(e.target.tagName == 'SPAN'){
+        shapes = e.target.title
+      }
+    })
+
+
+    svg.addEventListener('mousedown', function(e){
+      //console.log(e)
+      //画点
+      if(e.which == 1){
+        pos = relativeXY(svg)//起始位置
+        x0 = pos.x
+        y0 = pos.y
+
+        if(shapes == 'line'){
+          node = elt('path', {
+            d: `M${x0} ${y0} L${x0} ${y0} `,
+            fill: 'transparent',//无填充
+            stroke: `${color.value}`,//线条描边
+            'stroke-linecap': 'round',
+            'stroke-width': size.value,//线条粗细
+          })
+        }
+        if(shapes == 'rect'){
+          node = elt('rect', {
+            x: `${x0}`,
+            y: `${y0}`,
+            fill: 'transparent',//无填充
+            stroke: `${color.value}`,//线条描边
+            'stroke-linecap': 'round',
+            'stroke-width': size.value,//线条粗细
+          })
+        }
+        if(shapes == 'circle'){
+          node = elt('circle', {
+            cx: `${x0}`,//圆心水平位置
+            cy: `${y0}`,//圆心垂直位置
+            fill: 'transparent',//无填充
+            stroke: `${color.value}`,//线条描边
+            'stroke-linecap': 'round',
+            'stroke-width': size.value,//线条粗细
+          })
+        }
+        if(shapes == 'Bézier'){
+          if(Ccount == 0){ //新建节点
+            node = elt('path', {
+              d: `M${x0} ${y0} `,
+              fill: 'transparent',//无填充
+              stroke: `${color.value}`,//线条描边
+              'stroke-linecap': 'round',
+              'stroke-width': size.value,//线条粗细
+            })
+            Carray.push(`M${x0} ${y0} `)
+          }else{
+            if(Ccount == 1){
+              Carray.push(`Q`)
+            }
+            Carray.push(`${x0} ${y0}`)
+            if(Ccount == 1){//此时数组中有首，尾，Q，现在开始第一个点
+              var middle = Carray.slice(2).join(' ')//从C开始
+              node.setAttribute('d', Chead + middle + Ctail)
+            }
+            if(Ccount == 2){//此时数组中有首，尾，C，现在开始第一个点
+              Carray[2] = 'C'
+              var middle = Carray.slice(2).join(' ')//从C开始
+              node.setAttribute('d', Chead + middle + Ctail)
+            }
+          }
+          Ccount++
+        }
+        if(shapes == 'polygon'){
+          if(Pcount == 0){
+            Px = x0
+            Py = y0
+            node = elt('path', {
+              d: `M${x0} ${y0}`,
+              fill: 'transparent',//无填充
+              stroke: `${color.value}`,//线条描边
+              'stroke-linecap': 'round',
+              'stroke-width': size.value,//线条粗细
+            })
+            points.push(`M${x0} ${y0}`)
+          }else{
+            points.push(`${x0} ${y0}`)
+            node.setAttribute('d', points.join(' '))
+          }
+          Pcount++
+        }
+
+        svg.appendChild(node)
+        window.addEventListener('mousemove', move)//需要检测画笔移除范围
+        e.preventDefault()
+      }
+    })
+    function move(e){
+      if(e.which == 0){
+        window.removeEventListener('mousemove', move)
+        return 
+      }
+      pos = relativeXY(svg)//获取实时位置
+
+      if(shapes == 'line'){
+        var d = node.getAttribute('d')
+        d += `L${pos.x} ${pos.y} `
+        node.setAttribute('d', d)
+      }
+      if(shapes == 'rect'){
+        var w = pos.x - x0
+        if(w < 0){
+          node.setAttribute('x', pos.x)
+          w = x0 - pos.x
+        }else{
+          node.setAttribute('x', x0)
+          w = pos.x - x0
+        }
+        var h = pos.y - y0
+        if(h < 0){
+          node.setAttribute('y', pos.y)
+          h = y0 - pos.y
+        }else{
+          node.setAttribute('y', y0)
+          h = pos.y - y0
+        }
+        node.setAttribute('width', w + '')
+        node.setAttribute('height', h + '')
+      }
+      if(shapes == 'circle'){
+        var w = pos.x - x0 > 0 ? pos.x - x0 : -(pos.x - x0)
+        var h = pos.y - y0 > 0 ? pos.y - y0 : -(pos.y - y0)
+        node.setAttribute('cx', (pos.x + x0)/2 + '')
+        node.setAttribute('cy', (pos.y + y0)/2 + '')
+        var r = Math.min(w, h)/2
+        node.setAttribute('r', r + '')
+      }
+      if(shapes == 'Bézier'){
+        if(Ccount == 1){//需要定终点，画一条线段
+          Chead = Carray[0]
+          Ctail = ` ${pos.x} ${pos.y} `
+          var current = Chead + ' ' + Ctail
+          if(Carray.length > 1){
+            Carray.pop()
+          }
+          Carray.push(Ctail)
+          node.setAttribute('d', current)
+        }
+        if(Ccount == 2){//此时数组中有首，尾，Q，现在开始第一个点
+          if(Carray.length > 3){
+            Carray.pop()
+          }
+          Carray.push(`${pos.x} ${pos.y}`)
+          var middle = Carray.slice(2).join(' ')//从C开始
+          node.setAttribute('d', Chead + middle + Ctail)
+        }
+        if(Ccount == 3){//此时数组中有首，尾，C，现在开始第一个点
+          Carray[2] = 'C'
+          if(Carray.length > 4){
+            Carray.pop()
+          }
+          Carray.push(`${pos.x} ${pos.y}`)
+          var middle = Carray.slice(2).join(' ')//从C开始
+          node.setAttribute('d', Chead + middle + Ctail)
+        }
+      }
+      if(shapes == 'polygon'){
+        if(points.length > Pcount){
+          points.pop()
+        }
+        points.push(`${pos.x} ${pos.y}`)
+        node.setAttribute('d', points.join(' '))
+      }
+    }
+
+    svg.addEventListener('mouseup', function(e){
+      if(e.which == 1){
+        if(shapes == 'Bézier'){
+          if(Ccount == 3){
+            Ccount = 0
+            Carray = []
+          }
+        }
+        if(shapes == 'polygon'){
+          pos = relativeXY(svg)
+          if(Math.abs(pos.x - Px) < 5 && Math.abs(pos.y - Py) < 5){
+            Pcount = 0
+            points = []
+          }
+        }
+      }
+    })
+    
+    back.addEventListener('click', function(e){
+      svg.removeChild(svg.lastChild)
+    })
+    reset.addEventListener('click', function(e){
+      var children = svg.children
+      for(var i = children.length - 1; i >= 0; i--){
+        svg.removeChild(children[i])
+      }
+      Pcount = 0
+      Ccount = 0
+      points = []
+      Carray = []
+    })
+
+
+    function elt(name, attr, ...children){
+      var ele = document.createElementNS('http://www.w3.org/2000/svg', name)
+      for(var key in attr){
+        ele.setAttribute(key, attr[key])
+      }
+      return ele
+    }
+    function relativeXY(node){//鼠标相对框体的相对位置
+      var Pos = node.getBoundingClientRect()
+      return {
+        x: window.event.clientX - Pos.x,
+        y: window.event.clientY - Pos.y,
+      }
+    }
+  </script>
+</body>
+</html>
