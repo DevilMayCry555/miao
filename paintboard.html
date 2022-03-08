@@ -34,12 +34,19 @@
       flex-wrap: wrap;
       flex-direction: column;
       align-content: space-around;
+      justify-content: space-around;
       gap: 2px;
       height: 90px;
     }
     .set span{
       width: 25px;
       height: 25px;
+      border: 1px solid;
+      border-radius: 999px;
+    }
+    #polyset span{
+      width: 35px;
+      height: 35px;
       border: 1px solid;
       border-radius: 999px;
     }
@@ -55,11 +62,11 @@
     </div>
     <div id="poly">
       <div class="set" id="polyset">
-        <span title="line" style="background: url(polygon.png) -14px -8px no-repeat;"></span>
-        <span title="Bézier" style="background: url(polygon.png) -46px -8px no-repeat;"></span>
-        <span title="rect" style="background: url(polygon.png) -115px -8px no-repeat;"></span>
-        <span title="circle" style="background: url(polygon.png) -80px -8px no-repeat;"></span>
-        <span title="polygon" style="background: url(polygon.png) -180px -8px no-repeat;"></span>
+        <span title="line" style="background: url(polygon.png) -13px -5px no-repeat; outline: solid red;"></span>
+        <span title="Bézier" style="background: url(polygon.png) -46px -5px no-repeat;"></span>
+        <span title="rect" style="background: url(polygon.png) -112px -5px no-repeat;"></span>
+        <span title="circle" style="background: url(polygon.png) -78px -5px no-repeat;"></span>
+        <span title="polygon" style="background: url(polygon.png) -179px -5px no-repeat;"></span>
       </div>
       形状
     </div>
@@ -76,10 +83,13 @@
         <span title="#FFFF00" style="background-color: #FFFF00"></span>
         <span title="#008000" style="background-color: #008000"></span>
         <span title="#00FFFF" style="background-color: #00FFFF"></span>
-        <span title="#0000FF" style="background-color: #0000FF"></span>
+        <span title="#ff000000" style="background-color: #ff000000; text-align: center; user-select: none;">透</span>
       </div>
-      <input type="color">
-      颜色
+      <input type="color" value="#000000">
+      <div>
+        <button class="stroke" title="#000000" style="outline: solid #000000; background-color: rgba(0,0,0,0.18);">轮廓色</button>
+        <button class="fill" title="#ff000000" style="outline: solid #ff000000; background-color: transparent;">填充色</button>
+      </div>
     </div>
   </div>
   <div class="paint">
@@ -92,7 +102,9 @@
   <script>
     var node, pos, x0, y0
     var svg = document.querySelector('.paint svg')
-    var color = document.querySelector('#color input')
+    var strokeColorSelect = document.querySelector('#color button.stroke')
+    var fillColorSelect = document.querySelector('#color button.fill')
+    var color = strokeColorSelect
     var size = document.querySelector('#size input')
     var shapes = 'line'
     var Ccount = 0//计算贝塞尔曲线
@@ -101,18 +113,41 @@
     var Pcount = 0//多边形点记录
     var points = []
     var Px,Py
+    //颜色选定
+    strokeColorSelect.addEventListener('click', function(e){
+      color = strokeColorSelect
+      strokeColorSelect.style.backgroundColor = 'transparent'
+      fillColorSelect.style.backgroundColor = 'transparent'
+      strokeColorSelect.style.backgroundColor = 'rgba(0,0,0,0.18)'
+    })
+    fillColorSelect.addEventListener('click', function(e){
+      color = fillColorSelect
+      strokeColorSelect.style.backgroundColor = 'transparent'
+      fillColorSelect.style.backgroundColor = 'transparent'
+      fillColorSelect.style.backgroundColor = 'rgba(0,0,0,0.18)'
+    })
     //取色器
-    var colorselect = document.querySelector('#colorset')
-    colorselect.addEventListener('mousedown', function(e){
+    var colorselect = document.querySelector('#color')
+    colorselect.addEventListener('click', function(e){
       if(e.target.tagName == 'SPAN'){
-        color.value = e.target.title
+        color.title = e.target.title
       }
+      color.style.outline = `2px solid ${color.title}`
+    })
+    colorselect.addEventListener('change', function(e){
+      if(e.target.tagName == 'INPUT'){
+        color.title = e.target.value
+      }
+      color.style.outline = `2px solid ${color.title}`
     })
     //形状选择
     var polyselect = document.querySelector('#polyset')
+    var polyselects = document.querySelectorAll('#polyset span')
     polyselect.addEventListener('mousedown', function(e){
       if(e.target.tagName == 'SPAN'){
         shapes = e.target.title
+        polyselects.forEach(n => n.style.outline = 'none')
+        e.target.style.outline = 'solid red'
       }
     })
 
@@ -128,8 +163,8 @@
         if(shapes == 'line'){
           node = elt('path', {
             d: `M${x0} ${y0} L${x0} ${y0} `,
-            fill: 'transparent',//无填充
-            stroke: `${color.value}`,//线条描边
+            fill: `${fillColorSelect.title}`,//无填充
+            stroke: `${strokeColorSelect.title}`,//线条描边
             'stroke-linecap': 'round',
             'stroke-width': size.value,//线条粗细
           })
@@ -138,8 +173,8 @@
           node = elt('rect', {
             x: `${x0}`,
             y: `${y0}`,
-            fill: 'transparent',//无填充
-            stroke: `${color.value}`,//线条描边
+            fill: `${fillColorSelect.title}`,//无填充
+            stroke: `${strokeColorSelect.title}`,//线条描边
             'stroke-linecap': 'round',
             'stroke-width': size.value,//线条粗细
           })
@@ -148,8 +183,8 @@
           node = elt('circle', {
             cx: `${x0}`,//圆心水平位置
             cy: `${y0}`,//圆心垂直位置
-            fill: 'transparent',//无填充
-            stroke: `${color.value}`,//线条描边
+            fill: `${fillColorSelect.title}`,//无填充
+            stroke: `${strokeColorSelect.title}`,//线条描边
             'stroke-linecap': 'round',
             'stroke-width': size.value,//线条粗细
           })
@@ -158,8 +193,8 @@
           if(Ccount == 0){ //新建节点
             node = elt('path', {
               d: `M${x0} ${y0} `,
-              fill: 'transparent',//无填充
-              stroke: `${color.value}`,//线条描边
+              fill: `${fillColorSelect.title}`,//无填充
+              stroke: `${strokeColorSelect.title}`,//线条描边
               'stroke-linecap': 'round',
               'stroke-width': size.value,//线条粗细
             })
@@ -187,8 +222,8 @@
             Py = y0
             node = elt('path', {
               d: `M${x0} ${y0}`,
-              fill: 'transparent',//无填充
-              stroke: `${color.value}`,//线条描边
+              fill: `${fillColorSelect.title}`,//无填充
+              stroke: `${strokeColorSelect.title}`,//线条描边
               'stroke-linecap': 'round',
               'stroke-width': size.value,//线条粗细
             })
