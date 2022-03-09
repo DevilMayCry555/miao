@@ -301,7 +301,7 @@
       <input type="checkbox" name="" id="ONOFFexplantion" hidden>
       <label for="ONOFFexplantion">EXPLANATION</label>
       <div id="explanation">
-        <pre id="EXPLANATION" style="font-size: 20px;">技术原因，请将文本直接粘贴到输入框</pre>
+        <pre id="EXPLANATION" style="font-size: 20px;">可实时输入</pre>
       </div>
       <input type="checkbox" name="" id="ONOFFmatch" hidden>
       <label for="ONOFFmatch">MATCH  INFORMATION</label>
@@ -425,6 +425,22 @@
 
     run()
     getflags()
+
+    var pre = document.querySelector('#TestString')
+    var selection, lastTextNode, range
+    pre.addEventListener('input', function(e){
+      selection = getSelection()
+      lastTextNode = pre.lastChild
+      while(lastTextNode.nodeType !== Node.TEXT_NODE){
+        lastTextNode = lastTextNode.lastChild
+      }
+      range = document.createRange()
+      range.selectNodeContents(lastTextNode)
+      range.setStart(lastTextNode, lastTextNode.length)
+      range.collapse(true)
+      selection.removeAllRanges()
+      selection.addRange(range)
+    })
   </script>
 </body>
 </html>
