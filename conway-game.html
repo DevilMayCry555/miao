@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #conway{
+      width: 800px;
+    }
+  </style>
+</head>
+<body>
+  <ol>
+    <li>邻居 少于2个/多于三个  死亡</li>
+    <li>邻居 2-3个 活着</li>
+    <li>有3个邻居的死细胞 复活</li>
+    <li>培养基上下、边界相通</li>
+  </ol>
+  <button id="add">随机添加</button>
+  <button id="next">单次演变</button>
+  <button id="noStop" style="width: 100px;">连续演变</button>
+  <span>演变间隔(ms)：</span><input type="text" name="" id="revolution" style="width: 100px;" value="200">
+  <span>宽度：</span><input type="range" min="10" max="60" name="" id="row" value="40"><span>高度：</span><input type="range" min="10" max="40" name="" id="col" value="25">
+  <hr>
+  存活总数：<input type="text" name="" id="alive" disabled value="0">单次复生数：<input type="text" name="" id="reborn" disabled value="0">单次死亡数：<input type="text" name="" id="dead" disabled value="0">
+  <div id="conway"></div>
+  
+  <script>
+    //创建培养基
+    var cellWidth = document.querySelector('#row')
+    var cellHeight = document.querySelector('#col')
+    var conway = document.querySelector('#conway')
+    var cells//细胞集合
+    var whole//细胞总数
+    function appendCell(width = Number(cellWidth.value), height = Number(cellHeight.value)){
+      whole = width * height
+      Array.from(conway.children).forEach(n => conway.removeChild(n))
+      var medium = document.createElement('div')
+      for(var i = 0; i < height; i++){
+        for(var j = 0; j < width; j++){
+          var single = document.createElement('input')
+          single.type = 'checkbox'
+          medium.appendChild(single)
+        }
+        medium.appendChild(document.createElement('br'))
+      }
+      cells = medium.querySelectorAll('input')
+      conway.appendChild(medium)
+    }
+    appendCell()
+    cellWidth.addEventListener('input', function(e){
+      appendCell()
+      dead.value = 0 + ''
+      reborn.value = 0 + ''
+      alive.value = 0 + ''
+    })
+    cellHeight.addEventListener('input', function(e){
+      appendCell()
+      dead.value = 0 + ''
+      reborn.value = 0 + ''
+      alive.value = 0 + ''
+    })
+    //任意添加活细胞
+    var addRandom = document.querySelector('#add')
+    addRandom.addEventListener('click', function(e){
+      var sample = Math.floor(whole / 20) //每次数量是总体的1/20
+      var set = new Set()
+      var aliveNum = Number(alive.value)
+      while(set.size < sample){
+        set.add(Math.floor(Math.random() * whole))
+      }
+      for(var idx of set){
+        if(!cells[idx].checked){
+          cells[idx].checked = true
+          aliveNum++
+        }
+      }
+      alive.value = aliveNum + ''
+    })
+    //设置演变动作
+    var next = document.querySelector('#next')
+    var status = 0//按钮状态
+    var noStop = document.querySelector('#noStop')
+    var timeS = document.querySelector('#revolution')
+    var stop = null
+    noStop.addEventListener('click', function(e){
+      if(status == 0) {
+        noStop.textContent = '暂停'
+        stop = window.setInterval('next.click()', parseInt(timeS.value))
+        status = 1
+      }else if(status == 1){
+        noStop.textContent = '连续演变'
+        window.clearInterval(stop)
+        status = 0
+      }
+    })
+    //单次演变
+    next.addEventListener('click', function(e){
+      var current = []
+      var deadNum = 0
+      var rebornNum = 0
+      var aliveNum = Number(alive.value)
+      for(var i = 0; i < whole; i++){
+        var count = around(i)
+        var amount = count.map(idx => cells[idx]).filter(n => n.checked).length
+        if(cells[i].checked){ //活细胞两种
+          if (amount == 2 || amount == 3){
+            current.push(true)
+          }else{
+            deadNum++
+            aliveNum--
+            current.push(false)
+          }
+        }else{ //死细胞一种
+          if(amount == 3){
+            rebornNum++
+            aliveNum++
+            current.push(true)
+          }else{
+            current.push(false)
+          }
+        }
+      }
+      for(var i = 0 ; i < current.length; i++){
+        cells[i].checked = current[i]
+      }
+      dead.value = deadNum + ''
+      reborn.value = rebornNum + ''
+      alive.value = aliveNum + ''
+    })
+    function around(index){
+      var ary = []
+      var width = Number(cellWidth.value)
+      var temp = index - width
+      for(var n = 0 ; n < 3; n++){
+        var a = temp
+        //上下边界
+        if(a < 0){
+          a += whole
+        }else if(a >= whole){
+          a -= whole
+        }
+        //左右边界
+        if(a % width == 0){
+          ary.push(a + width - 1)
+        }else {
+          ary.push(a - 1)
+        }
+        if(a != index) ary.push(a);//排除自己
+        if (a % width == width - 1){
+          ary.push(a - width + 1)
+        }else{
+          ary.push(a + 1)
+        }
+        temp += width
+      }
+      return ary
+    }
+  </script>
+</body>
+</html>
