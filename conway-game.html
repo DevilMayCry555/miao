@@ -6,9 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    #conway{
-      width: 800px;
-    }
   </style>
 </head>
 <body>
@@ -36,6 +33,8 @@
     var whole//细胞总数
     function appendCell(width = Number(cellWidth.value), height = Number(cellHeight.value)){
       whole = width * height
+      cellWidth.title = cellWidth.value + ''
+      cellHeight.title = cellHeight.value + ''
       Array.from(conway.children).forEach(n => conway.removeChild(n))
       var medium = document.createElement('div')
       for(var i = 0; i < height; i++){
@@ -61,6 +60,16 @@
       dead.value = 0 + ''
       reborn.value = 0 + ''
       alive.value = 0 + ''
+    })
+    //人工增加或减少细胞
+    conway.addEventListener('click', function(e){
+      if(e.target.tagName == 'INPUT'){
+        if(e.target.checked){
+          alive.value = Number(alive.value) + 1 + ''
+        }else{
+          alive.value = Number(alive.value) - 1 + ''
+        }
+      }
     })
     //任意添加活细胞
     var addRandom = document.querySelector('#add')
