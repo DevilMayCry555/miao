@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html{
+      height: 100%;
+      background: url(http://i.52desktop.cn:81/upimg/allimg/20120507/201257144812265778012.jpg) no-repeat;
+      background-size: cover;
+    }
+    body{
+      margin: 0;
+    }
+    div.pull{
+      background-color: #E6B905;
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid;
+    }
+    label.title{
+      text-align: center;
+      font-size: 20px;
+    }
+    label.title:hover span.add,
+    label.title:hover span.delete{
+      visibility: visible;
+    }
+    span.add{
+      float: left;
+      cursor: pointer;
+      user-select: none;
+      visibility: hidden;
+    }
+    span.add:hover{
+      background-color: #fff;
+    }
+    span.delete{
+      float: right;
+      cursor: pointer;
+      user-select: none;
+      visibility: hidden;
+    }
+    span.delete:hover{
+      background-color: red;
+    }
+    textarea{
+      background-color: #333333;
+      color: #fff;
+      border: none;
+      outline: none;
+      flex: 1 1 auto;
+    }
+    div.bottom{
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      background-color: rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+    #notesMenu{
+      list-style: none;
+      padding: 0;
+      width: 150px;
+      background-color: #fff;
+      line-height: 2;
+      user-select: none;
+      border: 1px solid;
+      position: absolute;
+      display: none;
+    }
+    #notesMenu li{
+      padding-left: 5px;
+    }
+    #notesMenu li:hover{
+      background-color: lightblue;
+      color: #fff;
+    }
+    #clock{
+      width: 300px;
+      position: fixed;
+      top: 5%;
+      left: 50%;
+      transform: translate(-50%,0);
+      color: #fff;
+    }
+    .time{
+      float: left;
+      font-size: 4em;
+    }
+    .date{
+      font-size: 1em;
+      float: right;
+      clear: both;
+    }
+  </style>
+</head>
+<body>
+  <div id="clock">
+    <span class="time"></span>
+    <span class="date"></span>
+  </div>
+  <ul id="notesMenu">
+    <li title="red">red</li>
+    <li title="orange">orange</li>
+    <li title="blue">blue</li>
+    <li title="pink">pink</li>
+    <li title="rgba(0,0,0,0.4)">helf-transparent</li>
+  </ul>
+  <div class="bottom">
+    <button id="newNote">New</button>
+  </div>
+    <!-- 
+    localStorage对象可存储一些实时状态，但是基于浏览器的，换浏览器数据就没了
+    通用样式都由CSS来构建
+    需要存储的信息
+      span.name.textContent
+      position clientX clientY
+      textarea.value 
+      background-color
+    -->
+  <script>
+    //时钟样式
+    var miniTime = document.querySelector('span.time')
+    var miniDate = document.querySelector('span.date')
+    function miniClock(time){
+      var a = new Date()
+      var aTime = a.toLocaleTimeString().split(':')
+      miniTime.textContent = `${aTime[0]} : ${aTime[1]}`
+      miniDate.textContent = `${a.toLocaleDateString()} 星期${weekday(a.getDay())}`
+      requestAnimationFrame(miniClock)
+    }
+    requestAnimationFrame(miniClock)
+    function weekday(num){
+      if(num == 1) return '一';
+      if(num == 2) return '二';
+      if(num == 3) return '三';
+      if(num == 4) return '四';
+      if(num == 5) return '五';
+      if(num == 6) return '六';
+      if(num == 0) return '日';
+    }
+
+    //初始化
+    // var notes = { 'position' : [],'content': [],'bc': []  }
+    // localStorage.setItem('notes', JSON.stringify(notes))
+    var notes = JSON.parse(localStorage.getItem('notes')) || 
+    { 'position' : [],
+      'content': [],
+      'bc': [] }
+    
+    var zdx = 1
+    var amount = notes['position'].length
+    if(amount > 0){
+      newNote.textContent = 'Clear'
+      for(var i = 0; i < amount; i++){
+        var res = addNote(i)
+        res.style.top = notes['position'][i][0]
+        res.style.left = notes['position'][i][1]
+        res.style.zIndex = Number(notes['position'][i][2])
+        if(notes['bc'][i]) res.style.backgroundColor = notes['bc'][i];
+        zdx = Math.max(zdx, res.style.zIndex)        //让全局的zdx监控全场最大值
+        var tc = res.querySelector('textarea')
+        tc.value = notes['content'][i]
+        document.body.append(res)
+      }
+    }else{
+      newNote.textContent = 'New'
+    }
+    //保存记录
+    function noteStorage(){
+      localStorage.setItem('notes', JSON.stringify(notes))
+    }
+
+
+
+    //mouse 映射
+    //拖拽效果
+    var startx 
+    var starty
+    var nodeX
+    var nodeY
+    var frame
+    var currentNotesIdx
+    var rightKeyTarget
+    var magnet = 50//磁力
+    window.addEventListener('mousedown', function(e){
+      if(e.buttons == 1){
+        frame = e.target.closest('.pull') //找到符合条件最近的父元素，包含自身，没有则返回空
+        //鼠标是否在框体内
+        if(frame){
+          //zindex
+          currentNotesIdx = parseInt(frame.classList[1])
+          frame.style.zIndex = ++zdx
+        }
+  
+        //对标题栏拖拽
+        if(e.target.matches('.title')){
+          //鼠标的起始位置
+          startx = e.clientX
+          starty = e.clientY
+          //框体的起始位置
+          nodeX = parseInt(frame.style.left)
+          nodeY = parseInt(frame.style.top)
+  
+          window.addEventListener('mousemove', puller)
+          e.preventDefault()
+        }
+      }
+      if(e.buttons == 2){
+        rightKeyTarget = e.target.closest('.pull')
+      }
+    })
+    //右键自定义菜单
+    window.addEventListener('contextmenu', function(e){
+      if(rightKeyTarget != null){
+        if(e.clientX + 153 >= innerWidth){
+          notesMenu.style.left = ''
+          notesMenu.style.right = innerWidth - e.clientX + 'px'
+        }else{
+          notesMenu.style.right = ''
+          notesMenu.style.left = e.clientX + 'px'
+        }
+        if(e.clientY + 162 >= innerHeight){
+          notesMenu.style.top = ''
+          notesMenu.style.bottom = innerHeight - e.clientY + 'px'
+        }else{
+          notesMenu.style.bottom = ''
+          notesMenu.style.top = e.clientY + 'px'
+        }
+        notesMenu.style.display = 'block'
+        notesMenu.style.zIndex = 2147483647
+        e.preventDefault()
+      }
+    })
+    //点击事件
+    window.addEventListener('click', function(e){ //click事件只针对左键
+      //创建祖先
+      if(e.target.id == 'newNote'){
+        if(newNote.textContent == 'New'){
+          var 祖先 = addNote(amount++)
+          祖先.style.top = '0px'
+          祖先.style.left = '0px'
+          祖先.style.zIndex = 1
+          notes['position'].push([祖先.style.top, 祖先.style.left, 祖先.style.zIndex])
+          notes['content'].push('')
+          document.body.append(祖先)
+          noteStorage()
+          newNote.textContent = 'clear'
+        }else{
+          if(confirm('确定要清空笔记吗')){
+            zdx = 1
+            amount = 0
+            var target = document.querySelectorAll('div.pull')
+            for(var single of target){
+              single.parentNode.removeChild(single)
+            }
+            notes = { 'position': [], 'content': [], 'bc': []}
+            noteStorage()
+            newNote.textContent = 'New'
+          }
+        }
+      }
+      //增加
+      if(e.target.className == 'add'){
+        var newOne = addNote(amount++)
+        var target = document.querySelectorAll('div.pull')
+        target = target[target.length - 1]
+        newOne.style.top = parseInt(target.style.top) + 20 + 'px'
+        newOne.style.left = parseInt(target.style.left) + 20 + 'px'
+        newOne.style.zIndex = ++zdx
+        notes['position'].push([newOne.style.top, newOne.style.left, newOne.style.zIndex])
+        notes['content'].push('')
+        document.body.append(newOne)
+        noteStorage()
+      }
+      //删除
+      if(e.target.className == 'delete'){
+        notes['position'].splice(currentNotesIdx, 1)
+        notes['content'].splice(currentNotesIdx, 1)
+        frame.parentNode.removeChild(frame)
+        noteStorage()
+      }
+      //设定颜色
+      if(e.target.tagName == 'LI'){
+        rightKeyTarget.style.backgroundColor = e.target.title
+        notes['bc'][parseInt(rightKeyTarget.classList[1])] = e.target.title
+        noteStorage()
+        notesMenu.style.display = 'none'
+      }
+    })
+    window.addEventListener('input', function(e){
+      if(e.target.tagName == 'TEXTAREA'){
+          notes['content'][currentNotesIdx] = e.target.value
+          noteStorage()
+      }
+    })
+    
+    function puller(e){
+      if(e.which == 0){//松手的时候notes储存位置
+        notes['position'][currentNotesIdx][0] = frame.style.top
+        notes['position'][currentNotesIdx][1] = frame.style.left
+        notes['position'][currentNotesIdx][2] = frame.style.zIndex
+        noteStorage()
+        window.removeEventListener('mousemove', puller)
+        return 
+      }
+      var dx = e.clientX - startx
+      var dy = e.clientY - starty
+      var left = nodeX + dx
+      var top = nodeY + dy
+
+      //磁性吸附
+      if(top < magnet){
+        top = 0
+      }else if(top > innerHeight - frame.offsetHeight - magnet){
+        top = innerHeight - frame.offsetHeight
+      }
+      if(left < magnet){
+        left = 0
+      }else if (left > innerWidth - frame.offsetWidth - magnet){
+        left = innerWidth - frame.offsetWidth
+      }
+
+      frame.style.top = top + 'px'
+      frame.style.left = left + 'px'
+    }
+
+
+
+
+    //添加note
+    function addNote(i){
+      var a = document.createElement('div')
+      a.className = 'pull'
+      a.classList.add(i + 'note')
+      var titleLabel = document.createElement('label')
+      titleLabel.className = 'title'
+      var add = document.createElement('span')
+      add.className = 'add'
+      add.textContent = '+'
+      titleLabel.append(add)
+      var del = document.createElement('span')
+      del.className = 'delete'
+      del.textContent = 'X'
+      titleLabel.append(del)
+      a.append(titleLabel)
+      var text = document.createElement('textarea')
+      text.cols = '30'
+      text.rows = '10'
+      a.append(text)
+      return a
+    }
+
+  </script>
+</body>
+</html>
