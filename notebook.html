@@ -7,8 +7,9 @@
   <title>Document</title>
   <style>
     html{
+      min-width: 600px;
       height: 100%;
-      background: url(http://i.52desktop.cn:81/upimg/allimg/20120507/201257144812265778012.jpg) no-repeat;
+      background: url(https://tva1.sinaimg.cn/large/0075TGutgy1gy68k8i3yzj32yo1o017p.jpg) no-repeat;
       background-size: cover;
     }
     body{
@@ -81,6 +82,7 @@
       background-color: lightblue;
       color: #fff;
     }
+    /* 迷你时钟 */
     #clock{
       width: 300px;
       position: fixed;
@@ -88,6 +90,10 @@
       left: 50%;
       transform: translate(-50%,0);
       color: #fff;
+      user-select: none;
+    }
+    #clock:hover{
+      background-color: rgba(0,0,0,0.2);
     }
     .time{
       float: left;
@@ -98,13 +104,111 @@
       float: right;
       clear: both;
     }
+    /* 搜索引擎 */
+    .baidu{
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%,0);
+      display: flex;
+      flex-direction: row;
+
+    }
+    .message{
+      flex: 1;
+      width: 400px;
+      outline: none;
+      line-height: 2;
+      border-style: solid;
+      border-width: 3px;
+      border-radius: 15px 0 0 15px;
+      text-indent: 10px;
+    }
+    input.hover{
+      border-color: rgb(78,110,242);
+    }
+    .submit{
+      text-align: center;
+      width: 90px;
+      background-color: rgb(78,110,242);
+      color: #fff;
+      border-radius: 0 15px 15px 0;
+      font-family: fantasy;
+      font-size: large;
+      user-select: none;
+      cursor: pointer;
+      border: none;
+    }
+    /* todo */
+    div.todo{
+      width: 400px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 10%;
+      left: 70%;
+      gap: 20px;
+    }
+    input.todo{
+      flex: 1;
+      border: none;
+      outline: none;
+      border-radius: 50px 0 0 50px;
+      text-indent: 10px;
+      line-height: 2em;
+      border: 8px solid;
+      border-right: 0px;
+    }
+    span.todo{
+      flex: 1;
+      display: flex;
+    }
+    span.todo::after{
+      flex: 0.15;
+      content: 'Enter';
+      line-height: 2em;
+      color: grey;
+      background-color: #fff;
+      border-radius: 0 50px 50px 0;
+      border: 8px solid black;
+      border-left: 0px;
+    }
+    div.todoList{
+      flex: 1;
+      border: 8px solid;
+      padding: 20px;
+      position: relative;
+      background-color: #fff;
+      border-radius: 5px;
+    }
+    div.todoList::after{
+      position: absolute;
+      top: -24px;
+      left: calc(50% - 20px);
+      content: ' ';
+      border: 20px solid;
+      background-color: #000;
+      border-radius: 50%;
+    }
   </style>
 </head>
 <body>
+  <!-- todo -->
+  <div class="todo">
+    <span class="todo"><input type="text" class="todo" id="todohaha" placeholder="请输入待办事项"></span>
+    <div class="todoList"></div>
+  </div>
+  <!-- 迷你时钟 -->
   <div id="clock">
     <span class="time"></span>
     <span class="date"></span>
   </div>
+  <!-- 搜索工具 -->
+  <form action="https://www.baidu.com/s" class='baidu' target="_blank">
+    <input type="text" name=wd class='message'>
+    <input type="submit" class='submit' target="_blank" value="度娘一下">
+  </form>
+  <!-- 右键菜单 -->
   <ul id="notesMenu">
     <li title="red">red</li>
     <li title="orange">orange</li>
@@ -112,6 +216,7 @@
     <li title="pink">pink</li>
     <li title="rgba(0,0,0,0.4)">helf-transparent</li>
   </ul>
+  <!-- 底边 -->
   <div class="bottom">
     <button id="newNote">New</button>
   </div>
@@ -125,6 +230,19 @@
       background-color
     -->
   <script>
+    //todo
+    todohaha.addEventListener('input', function(e){
+      console.log(e)
+    })
+    //搜索引擎
+    var quesInput = document.querySelector('.message')
+    quesInput.focus()
+    quesInput.addEventListener('focus', function(e){
+      quesInput.classList.add('hover')
+    })
+    quesInput.addEventListener('blur', function(e){
+      quesInput.classList.remove('hover')
+    })
     //时钟样式
     var miniTime = document.querySelector('span.time')
     var miniDate = document.querySelector('span.date')
