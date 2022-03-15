@@ -7,9 +7,8 @@
   <title>Document</title>
   <style>
     html{
-      min-width: 600px;
       height: 100%;
-      background: url(https://tva1.sinaimg.cn/large/0075TGutgy1gy68k8i3yzj32yo1o017p.jpg) no-repeat;
+      background: url(http://i.52desktop.cn:81/upimg/allimg/20120507/201257144812265778012.jpg) no-repeat;
       background-size: cover;
     }
     body{
@@ -84,9 +83,9 @@
     }
     /* 迷你时钟 */
     #clock{
-      width: 300px;
+      width: 350px;
       position: fixed;
-      top: 5%;
+      top: 0;
       left: 50%;
       transform: translate(-50%,0);
       color: #fff;
@@ -107,7 +106,7 @@
     /* 搜索引擎 */
     .baidu{
       position: fixed;
-      top: 30%;
+      top: 20%;
       left: 50%;
       transform: translate(-50%,0);
       display: flex;
@@ -118,7 +117,7 @@
       flex: 1;
       width: 400px;
       outline: none;
-      line-height: 2;
+      font-size: 2em;
       border-style: solid;
       border-width: 3px;
       border-radius: 15px 0 0 15px;
@@ -141,12 +140,13 @@
     }
     /* todo */
     div.todo{
-      width: 400px;
       display: flex;
+      width: 450px;
       flex-direction: column;
       position: fixed;
-      top: 10%;
-      left: 70%;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%,0);
       gap: 20px;
     }
     input.todo{
@@ -156,8 +156,8 @@
       border-radius: 50px 0 0 50px;
       text-indent: 10px;
       line-height: 2em;
-      border: 8px solid;
-      border-right: 0px;
+      border: 8px solid #000;
+      border-right: none;
     }
     span.todo{
       flex: 1;
@@ -165,38 +165,65 @@
     }
     span.todo::after{
       flex: 0.15;
+      transform: translate(-3px,0);
+      margin-left: -3px;
       content: 'Enter';
       line-height: 2em;
       color: grey;
       background-color: #fff;
       border-radius: 0 50px 50px 0;
-      border: 8px solid black;
-      border-left: 0px;
+      border: 8px solid #000;
+      border-left: none;
     }
     div.todoList{
       flex: 1;
-      border: 8px solid;
+      border: 8px solid #000;
       padding: 20px;
       position: relative;
+      display: flex;
+      flex-direction: column;
       background-color: #fff;
       border-radius: 5px;
     }
-    div.todoList::after{
+    div.todo span.clearList{
       position: absolute;
       top: -24px;
       left: calc(50% - 20px);
-      content: ' ';
-      border: 20px solid;
-      background-color: #000;
+      border: 20px solid #000;
       border-radius: 50%;
+      cursor: pointer;
+      font-size: 2em;
+    }
+    div.event{
+      flex: 1;
+      align-items: center;
+      line-height: 2em;
+      border-bottom: 4px solid;
+      display: flex;
+      flex-direction: row;
+      user-select: none;
+    }
+    div.event input ~ label{
+      flex: 1;
+      word-wrap: break-word;
+      width: 300px;
+      padding-right: 20px;
+    }
+    label:hover,
+    label:hover + span{
+      background-color: rgba(0,0,0,0.2);
+    }
+    div.event input:checked ~ label,
+    div.event input:checked ~ label + span{
+      text-decoration: line-through 3px;
     }
   </style>
 </head>
 <body>
   <!-- todo -->
   <div class="todo">
-    <span class="todo"><input type="text" class="todo" id="todohaha" placeholder="请输入待办事项"></span>
-    <div class="todoList"></div>
+    <span class="todo"><input type="text" class="todo" id="todohaha" placeholder="请输入待办事项，点击下方黑纽钉可清空已完成事项"></span>
+    <div class="todoList"><span class="clearList" title="清空已完成事项"></span></div>
   </div>
   <!-- 迷你时钟 -->
   <div id="clock">
@@ -205,7 +232,7 @@
   </div>
   <!-- 搜索工具 -->
   <form action="https://www.baidu.com/s" class='baidu' target="_blank">
-    <input type="text" name=wd class='message'>
+    <input type="text" name=wd class='message' autocomplete="off">
     <input type="submit" class='submit' target="_blank" value="度娘一下">
   </form>
   <!-- 右键菜单 -->
@@ -231,8 +258,88 @@
     -->
   <script>
     //todo
-    todohaha.addEventListener('input', function(e){
-      console.log(e)
+    function resetTodo(){
+      var tasks = list.querySelectorAll('div.event')
+      for(var i = tasks.length - 1; i >= 0; i--){
+          list.removeChild(tasks[i])
+        }
+      todoList = []
+      listStorage()
+    }
+    var todoList = JSON.parse(localStorage.getItem('todoList')) || []
+    function listStorage(){
+      localStorage.setItem('todoList', JSON.stringify(todoList))
+    }
+    var list = document.querySelector('div.todoList')
+    //初始化
+    if(todoList.length > 0){
+      var d = 0
+      var currentTime = Date.now()
+      for(var single of todoList){
+        var Id = currentTime + (d++) + ''
+        var event = document.createElement('div')
+        event.className = 'event'
+        var complete = document.createElement('input')
+        complete.type = 'checkbox'
+        complete.id = Id
+        complete.hidden = true
+        complete.checked = single[0]
+        event.append(complete)
+        var content = document.createElement('label')
+        content.htmlFor = Id
+        content.textContent = single[2]
+        event.append(content)
+        var time = document.createElement('span')
+        time.textContent = single[1]
+        event.append(time)
+        list.append(event)
+      }
+    }
+    window.addEventListener('keydown',function(e){
+      if(e.target.matches('#todohaha') && e.key == 'Enter'){
+        var a = new Date()
+        var Id = Date.now() + ''
+        var event = document.createElement('div')
+        event.className = 'event'
+        var complete = document.createElement('input')
+        complete.type = 'checkbox'
+        complete.id = Id
+        complete.hidden = true
+        event.append(complete)
+        var content = document.createElement('label')
+        content.htmlFor = Id
+        content.textContent = todohaha.value
+        event.append(content)
+        var time = document.createElement('span')
+        time.textContent = a.toLocaleDateString() + ' ' + a.toLocaleTimeString()
+        event.append(time)
+        list.append(event)
+        //记录存档
+        todoList.push([false, time.textContent, todohaha.value])//完成与否  事件为多少
+        listStorage()
+        todohaha.value = ''//重置输入框
+      }
+    })
+    //清空已完成任务
+    var clearList = list.querySelector('span.clearList')
+    clearList.addEventListener('click', function(e){
+      if(confirm('确定要清理掉已完成事项？')){
+        var tasks = list.querySelectorAll('div.event')
+        for(var i = tasks.length - 1; i >= 0; i--){
+          var check = tasks[i].querySelector('input')
+          if(check.checked){
+            todoList.splice(i,1)
+            list.removeChild(tasks[i])
+          }
+        }
+        listStorage()
+      }
+    })
+    list.addEventListener('click', function(e){
+      if(e.target.tagName == 'INPUT' || e.target.tagName == 'LABEL'){
+        todoList[Array.from(list.querySelectorAll('div.event')).indexOf(e.target.closest('div.event'))][0] = e.target.checked
+        listStorage()
+      }
     })
     //搜索引擎
     var quesInput = document.querySelector('.message')
@@ -246,14 +353,25 @@
     //时钟样式
     var miniTime = document.querySelector('span.time')
     var miniDate = document.querySelector('span.date')
-    function miniClock(time){
+    var a = new Date()
+    var aTime = a.toLocaleTimeString().split(':')
+    miniTime.textContent = `${aTime[0]} ; ${aTime[1]}`
+    miniTime.textContent = `${aTime[0]} , ${aTime[1]}`
+    miniDate.textContent = `${a.toLocaleDateString()} 星期${weekday(a.getDay())}`
+    var shrink = 0 
+    function miniClock(){
       var a = new Date()
       var aTime = a.toLocaleTimeString().split(':')
-      miniTime.textContent = `${aTime[0]} : ${aTime[1]}`
+      if(shrink == 0){
+        miniTime.textContent = `${aTime[0]} ; ${aTime[1]}`
+        shrink = 1
+      }else{
+        miniTime.textContent = `${aTime[0]} , ${aTime[1]}`
+        shrink = 0
+      }
       miniDate.textContent = `${a.toLocaleDateString()} 星期${weekday(a.getDay())}`
-      requestAnimationFrame(miniClock)
     }
-    requestAnimationFrame(miniClock)
+    window.setInterval(miniClock, 1000)
     function weekday(num){
       if(num == 1) return '一';
       if(num == 2) return '二';
@@ -265,8 +383,10 @@
     }
 
     //初始化
-    // var notes = { 'position' : [],'content': [],'bc': []  }
-    // localStorage.setItem('notes', JSON.stringify(notes))
+    function resetNotes(){
+      var notes = { 'position' : [],'content': [],'bc': []  }
+      noteStorage()
+    }
     var notes = JSON.parse(localStorage.getItem('notes')) || 
     { 'position' : [],
       'content': [],
