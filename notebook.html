@@ -273,10 +273,9 @@
     var list = document.querySelector('div.todoList')
     //初始化
     if(todoList.length > 0){
-      var d = 0
       var currentTime = Date.now()
       for(var single of todoList){
-        var Id = currentTime + (d++) + ''
+        var Id = (currentTime++)  + ''
         var event = document.createElement('div')
         event.className = 'event'
         var complete = document.createElement('input')
@@ -343,13 +342,13 @@
     })
     //搜索引擎
     var quesInput = document.querySelector('.message')
-    quesInput.focus()
     quesInput.addEventListener('focus', function(e){
       quesInput.classList.add('hover')
     })
     quesInput.addEventListener('blur', function(e){
       quesInput.classList.remove('hover')
     })
+    quesInput.focus()
     //时钟样式
     var miniTime = document.querySelector('span.time')
     var miniDate = document.querySelector('span.date')

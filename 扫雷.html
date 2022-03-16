@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    #saolei{
+      background-color: lightgrey;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+    }
+    div.label{
+      flex: 0 1 auto;
+    }
+    div.game{
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+    }
+    div.game div{
+      flex: 0 1 auto;
+      display: flex;
+      flex-direction: row;
+    }
+    /* 被覆盖的格子 */
+    button.rect{
+      color: transparent;
+      border: 3px outset #fff;
+      background-color: lightgrey;
+    }
+    /* 点开之后 */
+    button.click{
+      border: 3px outset transparent;
+      color: #000;
+    }
+    /* 难度选择 */
+    span.mode{
+      display: flex;
+      gap: 10px;
+    }
+    span.mode input:checked + label{
+      outline: 1px solid;
+      background-color: #000;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <ol>
+    <li>游戏名：扫雷</li>
+    <li>开局会点开一个区域，供玩家参考</li>
+    <li>初级：8 × 8，10颗地雷</li>
+    <li>中级：16 × 16，40颗地雷</li>
+    <li>高级：30 × 16，99颗地雷</li>
+  </ol>
+  <span class="mode">难度选择: 
+    <input type="radio" name="difficulty" value="8x8" id="low" hidden checked><label for="low">初级</label> 
+    <input type="radio" name="difficulty" value="16x16" id="middle" hidden><label for="middle">中级</label> 
+    <input type="radio" name="difficulty" value="30x16" id="high" hidden><label for="high">高级</label> 
+  </span>
+  <div id="saolei">
+    <div class="label"></div>
+    <div class="game"></div>
+  </div>
+  <script>
+    var game = document.querySelector('div.game')
+    var bombs
+    function layout(){
+      var mode = Array.from(document.querySelector('span.mode').querySelectorAll('input')).filter(n => n.checked)[0].value.split('x')
+      var width = Number(mode[0])
+      var height = Number(mode[1])
+      Array.from(game.children).forEach(n => game.removeChild(n))
+      for(var i = 0; i < height; i++){
+        var medium = document.createElement('div')
+        for(var j = 0; j < width; j++){
+          var single = document.createElement('button')
+          single.className = 'rect'
+          medium.appendChild(single)
+        }
+        game.appendChild(medium)
+      }
+      bombs = game.querySelectorAll('button')
+    }
+    layout()
+    
+    
+  </script>
+</body>
+</html>

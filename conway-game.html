@@ -6,22 +6,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
+    body{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    div.count{
+      display: flex;
+      justify-content: center;
+    }
+    div.count input{
+      width: 60px;
+    }
+    #conway{
+      display: flex;
+      flex-direction: column;
+      border: 3px solid;
+    }
+    #conway div{
+      display: flex;
+      flex-direction: row;
+    }
+    #conway div input{
+      margin: 0;
+    }
   </style>
 </head>
 <body>
   <ol>
-    <li>邻居 少于2个/多于三个  死亡</li>
-    <li>邻居 2-3个 活着</li>
-    <li>有3个邻居的死细胞 复活</li>
-    <li>培养基上下、边界相通</li>
+    <li>游戏名：康威生命游戏</li>
+    <li>存货标准V---周围8个邻居的活细胞数量</li>
+    <li>对于活细胞 -- 若V介于2-3之间(包含) -- 下一轮会继续存活 -- 否则会死亡</li>
+    <li>对于死细胞 -- 若V==3 -- 则下一轮会被激活</li>
+    <li>培养基 -- 上下、左右 -- 边界相通</li>
   </ol>
-  <button id="add">随机添加</button>
+  <span><button id="add">随机添加</button>
   <button id="next">单次演变</button>
   <button id="noStop" style="width: 100px;">连续演变</button>
-  <span>演变间隔(ms)：</span><input type="text" name="" id="revolution" style="width: 100px;" value="200">
-  <span>宽度：</span><input type="range" min="10" max="60" name="" id="row" value="40"><span>高度：</span><input type="range" min="10" max="40" name="" id="col" value="25">
-  <hr>
-  存活总数：<input type="text" name="" id="alive" disabled value="0">单次复生数：<input type="text" name="" id="reborn" disabled value="0">单次死亡数：<input type="text" name="" id="dead" disabled value="0">
+  <span>演变间隔(ms)：</span><input type="text" name="" id="revolution" style="width: 100px;" value="200"></span>
+  <span><span>宽度：</span><input type="range" min="10" max="60" name="" id="row" value="20"><span>高度：</span><input type="range" min="10" max="40" name="" id="col" value="20"></span>
+  <div class="count">存活总数：<input type="text" name="" id="alive" disabled value="0">单次复生数：<input type="text" name="" id="reborn" disabled value="0">单次死亡数：<input type="text" name="" id="dead" disabled value="0"></div>
   <div id="conway"></div>
   
   <script>
@@ -36,17 +61,16 @@
       cellWidth.title = cellWidth.value + ''
       cellHeight.title = cellHeight.value + ''
       Array.from(conway.children).forEach(n => conway.removeChild(n))
-      var medium = document.createElement('div')
       for(var i = 0; i < height; i++){
+        var medium = document.createElement('div')
         for(var j = 0; j < width; j++){
           var single = document.createElement('input')
           single.type = 'checkbox'
           medium.appendChild(single)
         }
-        medium.appendChild(document.createElement('br'))
+        conway.appendChild(medium)
       }
-      cells = medium.querySelectorAll('input')
-      conway.appendChild(medium)
+      cells = conway.querySelectorAll('input')
     }
     appendCell()
     cellWidth.addEventListener('input', function(e){
