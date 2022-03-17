@@ -17,9 +17,17 @@
       border-radius: 5px;
       display: flex;
       flex-direction: column;
+      padding: 5px;
+      gap: 5px;
     }
-    div.label{
+    div.face{
       flex: 0 1 auto;
+      display: flex;
+      justify-content: center;
+    }
+    button.face{
+      font-size: 2em;
+      padding: 0;
     }
     div.game{
       flex: 1 1 auto;
@@ -31,16 +39,38 @@
       display: flex;
       flex-direction: row;
     }
+    div.game button{
+      
+    }
+    /* 地雷格子 */
+    button.bomb{
+      width: 30px;
+      height: 30px;
+      border: 3px outset transparent;
+      background-color: rgba(255,0,0,0.4);
+      /* 文字居中 */
+      display: flex;
+      justify-content: center;
+    }
     /* 被覆盖的格子 */
     button.rect{
+      width: 30px;
+      height: 30px;
       color: transparent;
-      border: 3px outset #fff;
+      border: 3px outset;
+      border-radius: 0;
       background-color: lightgrey;
     }
     /* 点开之后 */
     button.click{
+      width: 30px;
+      height: 30px;
       border: 3px outset transparent;
+      background-color: lightgrey;
       color: #000;
+      /* 文字居中 */
+      display: flex;
+      justify-content: center;
     }
     /* 难度选择 */
     span.mode{
@@ -63,21 +93,24 @@
     <li>高级：30 × 16，99颗地雷</li>
   </ol>
   <span class="mode">难度选择: 
-    <input type="radio" name="difficulty" value="8x8" id="low" hidden checked><label for="low">初级</label> 
-    <input type="radio" name="difficulty" value="16x16" id="middle" hidden><label for="middle">中级</label> 
-    <input type="radio" name="difficulty" value="30x16" id="high" hidden><label for="high">高级</label> 
+    <input type="radio" name="difficulty" value="8x8x10" id="low" hidden checked><label for="low">初级</label> 
+    <input type="radio" name="difficulty" value="16x16x40" id="middle" hidden><label for="middle">中级</label> 
+    <input type="radio" name="difficulty" value="30x16x99" id="high" hidden><label for="high">高级</label> 
   </span>
   <div id="saolei">
-    <div class="label"></div>
+    <div class="face"><button class="face">😊</button></div>
     <div class="game"></div>
   </div>
   <script>
     var game = document.querySelector('div.game')
-    var bombs
+    var rects
+    var mode = Array.from(document.querySelector('span.mode').querySelectorAll('input')).filter(n => n.checked)[0].value.split('x')
+    var width
+    var height
     function layout(){
-      var mode = Array.from(document.querySelector('span.mode').querySelectorAll('input')).filter(n => n.checked)[0].value.split('x')
-      var width = Number(mode[0])
-      var height = Number(mode[1])
+      width = Number(mode[0])
+      height = Number(mode[1])
+      var bombs = Number(mode[2])
       Array.from(game.children).forEach(n => game.removeChild(n))
       for(var i = 0; i < height; i++){
         var medium = document.createElement('div')
@@ -88,11 +121,87 @@
         }
         game.appendChild(medium)
       }
-      bombs = game.querySelectorAll('button')
+      rects = game.querySelectorAll('button')
+      //添加炸弹
+      while(bombs > 0){
+        var idx = Math.floor(Math.random() * rects.length)
+        if(!rects[idx].matches('.bomb')){
+          rects[idx].classList.add('bomb')
+          rects[idx].textContent = '💣'
+          bombs--
+        }
+      }
     }
+    
+
+
+    //模式切换
+    document.querySelector('span.mode').addEventListener('click',function(e){
+      if(e.target.matches('input')){
+        mode = e.target.value.split('x')
+        layout()
+        helpOneStep()
+      }
+    })
+    var face = document.querySelector('button.face')
+    face.onclick = function(e){
+      if(face.textContent == '😔'){
+        face.textContent = '😊'
+        layout()
+        helpOneStep()
+      }
+    }
+    game.addEventListener('click', function(e){
+      if(e.target.matches('.rect')){
+        e.target.classList.remove('rect')
+        if(e.target.matches('.bomb')){  //点到炸弹，其余的炸弹显示出来
+          face.textContent = '😔'
+          Array.from(rects).filter(n => n.matches('.bomb')).forEach(n => n.classList.remove('rect'))
+          Array.from(rects).forEach(n => n.disabled = true)
+          return ;
+        }else{
+          recursion(e.target)
+        }
+      }
+    })
+    function recursion(node){
+      node.classList.add('click')
+      node.disabled = true
+      //获取周围格子
+      var index = Array.from(rects).indexOf(node)
+      var ary = []
+      var temp = index - width
+      for(var n = 0 ; n < 3; n++){
+        var a = temp
+        if(a >= 0 && a < rects.length){
+          if(a % width > 0) ary.push(rects[a-1]);
+          if(a != index) ary.push(rects[a]);
+          if(a % width < width-1) ary.push(rects[a+1]);
+        }
+        temp += width
+      }
+      //统计判断
+      var bombCounts = ary.filter(n => n.matches('.bomb')).length
+      if(bombCounts == 0){ //如果周围8格没有炸弹，内容为空，并递归这八个内还没有被点开的
+        for(var n of ary){
+          if(!n.matches('.click')) recursion(n);
+        }
+      }else{
+        node.textContent = bombCounts + ''
+      }
+      return ;
+    }
+    //先点开一个
+    function helpOneStep(){
+      Array.from(rects).find(n => !n.matches('.bomb')).click()
+    }
+
+
+
+
+
     layout()
-    
-    
+    helpOneStep()
   </script>
 </body>
 </html>

@@ -245,7 +245,9 @@
   </ul>
   <!-- 底边 -->
   <div class="bottom">
-    <button id="newNote">New</button>
+    <button id="newNote">New Note</button>
+    <button id="conway">康威生命游戏</button>
+    <button id="saolei">扫雷</button>
   </div>
     <!-- 
     localStorage对象可存储一些实时状态，但是基于浏览器的，换浏览器数据就没了
@@ -257,6 +259,19 @@
       background-color
     -->
   <script>
+    //小游戏
+    conway.onclick = function(e){
+      var a = document.createElement('a')
+      a.href = 'conway-game.html'
+      a.target = '_blank'
+      a.click()
+    }
+    saolei.onclick = function(e){
+      var a = document.createElement('a')
+      a.href = '扫雷.html'
+      a.target = '_blank'
+      a.click()
+    }
     //todo
     function resetTodo(){
       var tasks = list.querySelectorAll('div.event')
@@ -394,7 +409,7 @@
     var zdx = 1
     var amount = notes['position'].length
     if(amount > 0){
-      newNote.textContent = 'Clear'
+      newNote.textContent = 'Clear Notes'
       for(var i = 0; i < amount; i++){
         var res = addNote(i)
         res.style.top = notes['position'][i][0]
@@ -407,7 +422,7 @@
         document.body.append(res)
       }
     }else{
-      newNote.textContent = 'New'
+      newNote.textContent = 'New Note'
     }
     //保存记录
     function noteStorage(){
@@ -479,7 +494,7 @@
     window.addEventListener('click', function(e){ //click事件只针对左键
       //创建祖先
       if(e.target.id == 'newNote'){
-        if(newNote.textContent == 'New'){
+        if(newNote.textContent == 'New Note'){
           var 祖先 = addNote(amount++)
           祖先.style.top = '0px'
           祖先.style.left = '0px'
@@ -488,7 +503,7 @@
           notes['content'].push('')
           document.body.append(祖先)
           noteStorage()
-          newNote.textContent = 'clear'
+          newNote.textContent = 'Clear Notes'
         }else{
           if(confirm('确定要清空笔记吗')){
             zdx = 1
@@ -499,7 +514,7 @@
             }
             notes = { 'position': [], 'content': [], 'bc': []}
             noteStorage()
-            newNote.textContent = 'New'
+            newNote.textContent = 'New Note'
           }
         }
       }
