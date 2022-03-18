@@ -11,6 +11,7 @@
       flex-direction: column;
       align-items: center;
       gap: 10px;
+      background-color: 	#B5E6B5;
     }
     #saolei{
       background-color: lightgrey;
@@ -24,10 +25,12 @@
       flex: 0 1 auto;
       display: flex;
       justify-content: center;
+      border: 2px solid;
     }
     button.face{
       font-size: 2em;
       padding: 0;
+      border: none;
     }
     div.game{
       flex: 1 1 auto;
@@ -38,9 +41,6 @@
       flex: 0 1 auto;
       display: flex;
       flex-direction: row;
-    }
-    div.game button{
-      
     }
     /* 地雷格子 */
     button.bomb{
@@ -87,7 +87,7 @@
 <body>
   <ol>
     <li>游戏名：扫雷</li>
-    <li>开局会点开一个区域，供玩家参考</li>
+    <li>开局会解开一个区域，供玩家参考</li>
     <li>初级：8 × 8，10颗地雷</li>
     <li>中级：16 × 16，40颗地雷</li>
     <li>高级：30 × 16，99颗地雷</li>
@@ -147,9 +147,9 @@
     face.onclick = function(e){
       if(face.textContent == '😔'){
         face.textContent = '😊'
-        layout()
-        helpOneStep()
       }
+      layout()
+      helpOneStep()
     }
     game.addEventListener('click', function(e){
       if(e.target.matches('.rect')){
@@ -191,9 +191,11 @@
       }
       return ;
     }
-    //先点开一个
+    //先解开部分区域
     function helpOneStep(){
-      Array.from(rects).find(n => !n.matches('.bomb')).click()
+      Array.from(rects).find(n => !n.matches('.bomb') && !n.matches('.click')).click()
+      Array.from(rects).find(n => !n.matches('.bomb') && !n.matches('.click')).click()
+      Array.from(rects).find(n => !n.matches('.bomb') && !n.matches('.click')).click()
     }
 
 

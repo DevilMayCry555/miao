@@ -11,16 +11,19 @@
       flex-direction: column;
       align-items: center;
       gap: 10px;
+      background-color: rgb(227,237,205);
     }
     .paint{
       width: 1000px;
       border: 2px solid black;
+      background-color: #fff;
     }
     .paint svg{
       display: block;
     }
     #help{
       display: flex;
+      background-color: #fff;
     }
     #help > div{
       border: 1px solid black;
@@ -89,14 +92,14 @@
         <input type="color" value="#000000">
       </div>
       <div>
-        <button class="stroke" title="#000000" style="outline: solid #000000; background-color: rgba(0,0,0,0.18);">轮廓色</button>
-        <button class="fill" title="#ff000000" style="outline: solid #ff000000; background-color: transparent;">填充色</button>
+        <button class="stroke" title="#000000" style="border: 5px solid #000000; background-color: rgba(0,0,0,0.18);">轮廓色</button>
+        <button class="fill" title="#ff000000" style="border: 5px solid #ff000000; background-color: transparent;">填充色</button>
       </div>
     </div>
   </div>
   <div class="paint">
     <svg version="1.1"
-       width="1000" height="700"
+       width="1000" height="700" 
        xmlns="http://www.w3.org/2000/svg">
     </svg>
 </div>
@@ -134,13 +137,13 @@
       if(e.target.tagName == 'SPAN'){
         color.title = e.target.title
       }
-      color.style.outline = `2px solid ${color.title}`
+      color.style.border = `5px solid ${color.title}`
     })
     colorselect.addEventListener('change', function(e){
       if(e.target.tagName == 'INPUT'){
         color.title = e.target.value
       }
-      color.style.outline = `2px solid ${color.title}`
+      color.style.border = `5px solid ${color.title}`
     })
     //形状选择
     var polyselect = document.querySelector('#polyset')
