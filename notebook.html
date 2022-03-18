@@ -248,6 +248,7 @@
     <button id="newNote">New Note</button>
     <button id="conway">康威生命游戏</button>
     <button id="saolei">扫雷</button>
+    <button id="paint">简易画板</button>
   </div>
     <!-- 
     localStorage对象可存储一些实时状态，但是基于浏览器的，换浏览器数据就没了
@@ -269,6 +270,12 @@
     saolei.onclick = function(e){
       var a = document.createElement('a')
       a.href = '扫雷.html'
+      a.target = '_blank'
+      a.click()
+    }
+    paint.onclick = function(e){
+      var a = document.createElement('a')
+      a.href = 'paintboard.html'
       a.target = '_blank'
       a.click()
     }

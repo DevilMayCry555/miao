@@ -9,7 +9,8 @@
     body{
       display: flex;
       flex-direction: column;
-      align-content: center;
+      align-items: center;
+      gap: 10px;
     }
     .paint{
       width: 1000px;
@@ -27,9 +28,10 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-evenly;
+      gap: 10px;
     }
     .set{
-      width: 120px;
+      width: 200px;
       display: flex;
       flex-wrap: wrap;
       flex-direction: column;
@@ -84,8 +86,8 @@
         <span title="#008000" style="background-color: #008000"></span>
         <span title="#00FFFF" style="background-color: #00FFFF"></span>
         <span title="#ff000000" style="background-color: #ff000000; text-align: center; user-select: none;">透</span>
+        <input type="color" value="#000000">
       </div>
-      <input type="color" value="#000000">
       <div>
         <button class="stroke" title="#000000" style="outline: solid #000000; background-color: rgba(0,0,0,0.18);">轮廓色</button>
         <button class="fill" title="#ff000000" style="outline: solid #ff000000; background-color: transparent;">填充色</button>
