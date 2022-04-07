@@ -380,6 +380,9 @@
       for(var key in attr){
         ele.setAttribute(key, attr[key])
       }
+      for(var n of children){
+        ele.appendChild(n)
+      }
       return ele
     }
     function relativeXY(node){//鼠标相对框体的相对位置

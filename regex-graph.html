@@ -1,0 +1,748 @@
+<style>
+  body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+  }
+  svg{
+    border: 1px solid;
+  }
+  input{
+    width: 800px;
+    height: 40px;
+  }
+</style>
+<!-- 
+  正则解析器
+  b  单个字符
+  b+ 量词   b+? 非贪婪
+  [] 类  [^2-5]最复杂的形式
+  \ 转义符
+  大类  \d \w \s \b
+  表示转义符 \\
+  () 捕获分组
+  (?) 0宽断言 四种情况
+  具名分组 (?<name>)
+    非捕获分组(?:)
+ -->
+  <h2>正则表达式--铁路图转换</h2>
+  <input type="text" class="reg" oninput="createTreeGragh(regTree())" value="aaad*[qwer](?<hezi>asd+)asd|(as+d)(?<=qw{1,2}e|as*d)[^qwe-z]*">
+  <svg version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
+  <script>
+  // var Char = { //单个字母或者数字
+  //   type: 'Character',
+  //   start: 0,
+  //   end: 0,
+
+  //   value: str.slice(i,i+1),//str.slice(start, end)
+  // }
+  // var Quantity = { //+ * ? {1,2}
+  //   type: 'Quantity',
+  //   start: 0,
+  //   end: 0,
+  //   raw: '', //str.slice(start, end)
+
+  //   element: {}, //量词对象应该为相邻的上一个对象
+  //   min: 1,
+  //   max: Infinity,
+  //   greedy: false, //是否贪婪
+  // }
+  // var Class = { //[]
+  //   type: 'charClass',
+  //   start: 0,
+  //   end: 0,
+  //   raw: '', //str.slice(start, end)
+
+  //   element: [], //内部为charNode集合
+  //   reverse: false, //开头有无^，是否取反
+  //   classRange
+  // }
+  // var classRange = {  // [a-g]
+  //   type: 'Range',
+  //   start: 0,
+  //   end: 0,
+  //   raw: '', //str.slice(start, end)
+
+  //   from: {
+  //     type: 'Character',
+  //     value: 0,
+  //   },
+  //   to: {
+  //     type: 'Character',
+  //     value: 0,
+  //   },
+  // }
+  // var Escapes = { // 转义符
+  //   type : 'Escapes',
+  //   start: 0,
+  //   end: 0,
+  //   raw: '', //str.slice(start, end)
+
+  //   value: '\\d',
+  // }
+  // var captureGroup = { // ()分组
+  //   type: 'captureGroup',
+  //   start: 0,
+  //   end: 0,
+  //   raw: '', //str.slice(start, end)
+
+  //   branches: [
+  //     {
+  //       type: 'branches',
+  //       element: [],
+  //     }
+  //   ], //若干条分支
+  //   isAssertion: false, //是否为断言，四种
+  //   lookahead: false, //预测or回顾
+  //   positive: false, //正or负
+  //   name: 'weqwe', //具名分组
+  //   index: 1, //从1开始
+  // }
+  // 先不考虑非贪婪匹配
+  var i
+  var groupIdx
+  var str
+  var regContent = document.querySelector('input.reg')
+  function regTree(){ //构建正则语法树就是循环调用  解析分支的函数
+    groupIdx = 1
+    str = regContent.value
+    i = 0
+    try{
+      var test = new RegExp(`${str}`)
+    } catch(e){
+      throw e
+    }
+    var parts = {
+      type: 'tree',
+      branches: [],
+    }
+    while(i < str.length){
+      parts.branches.push( regBranch() )
+    }
+    return parts
+  }
+  function reg(){ //接受分支函数持续调用
+      if(str[i] == '['){
+        return regClass()
+      } else if(str[i] == '|'){
+        return regBranch()
+      } else if(str[i] == '('){
+        return regGroup()
+      }else{
+        return regChar()
+      }
+  }
+  function regChar(){
+    var node = {
+      type: 'Character',
+      start: i,
+      end: 0,
+      raw: '',
+      value: '',
+    }
+    //转义符
+    if(str[i] == '\\'){
+      i++
+      node.type = 'Escapes'
+      if(str[i] == 'd'){
+        node.value = 'number'
+      }else if(str[i] == 'w'){
+        node.value = 'number/word'
+      }else if(str[i] == 's'){
+        node.value = 'whitespace'
+      }else if(str[i] == 'b'){
+        node.value = 'boundary'
+      }else{
+        node.value = str[i]
+      }
+    }else{
+      node.value = str[i]
+    }
+    i++
+    node.end = i
+    node.raw = str.slice(node.start, node.end)
+    return node
+  }
+  function regQuantifer(Quantity){
+    var node = {
+      type: 'Quantifer',
+      start: Quantity.start,
+      end: 0,
+      raw: '',
+      element: Quantity,
+      min: 0,
+      max: 0,
+    }
+    if(str[i] == '{'){
+      if(str[i+2] == ','){
+        if(str[i+1] >= '0' && str[i+1] >= '9'){
+          node.min = parseInt(str[i+1])
+          if(str[i+3] == '}'){
+            node.max = Infinity
+            i = i+3
+          }else if(str[i+4] == '}'){
+            if(str[i+3] >= '0' && str[i+3] >= '9'){
+              node.max = parseInt(str[i+3])
+              i = i+4
+            }
+          }
+        }
+      }
+
+    } else if(str[i] == '+'){
+      node.min = 1
+      node.max = Infinity
+    } else if(str[i] == '*'){
+      node.min = 0
+      node.max = Infinity
+    } else if(str[i] == '?'){
+      node.min = 0
+      node.max = 1
+    }
+    i++
+    node.end = i
+    node.raw = str.slice(node.start, node.end)
+    return node
+  }
+  function regClass(){ //[qweA-Zqwe]
+    var node = {
+      type: 'charClass',
+      start: i,
+      end: 0,
+      raw: '',
+      element: [],
+      reverse: false,
+    }
+    i++
+    if(str[i] == '^'){
+      node.reverse = true
+      i++
+    }
+    while(str[i] != ']' && i < str.length){
+      if(str[i] == '-'){
+        node.element.pop()
+        node.element.push(regClassRange())
+      }else{
+        node.element.push(regChar())
+      }
+    }
+    i++ //skip ]
+    node.end = i
+    node.raw = str.slice(node.start, node.end)
+    return node
+  }
+  function regClassRange(){
+    var node = {
+      type: 'classRange',
+      start: i-1,
+      end: i+2,
+      raw: '',
+      from: {
+        type: 'Character',
+        value: str[i-1],
+      },
+      to: {
+        type: 'Character',
+        value: str[i+1],
+      },
+    }
+    i = node.end
+    node.raw = str.slice(node.start, node.end)
+    return node
+  }
+  function regBranch(){ // |
+    var node = {
+      type: 'Branch',
+      start: i,
+      end: 0,
+      raw: '',
+      element: [],
+    }
+    while(str[i] != '|' && str[i] != ')' && i < str.length){
+      if(str[i] == '{' || str[i] == '+' || str[i] == '*' || str[i] == '?'){
+        var Quantity = node.element.pop()
+        node.element.push(regQuantifer(Quantity))
+      }else{
+        node.element.push(reg() )
+      }
+    }
+    node.end = i
+    if(str[i] == '|') i++;
+    node.raw = str.slice(node.start, node.end)
+    return node
+  }
+  function regGroup(){ // ()
+    var node = {
+      type: 'Group',
+      start: i,
+      end: 0,
+      raw: '',
+
+      branches:[],
+      isAssertion: false, //是否为断言，四种
+      lookahead: true, //预测or回顾
+      positive: true, //正or负
+      name: '', //具名分组
+      index: groupIdx++, //从1开始
+    }
+    i++ //skip (
+    if(str[i] == '?'){ //是否为断言 (?<=sadsads)
+      node.isAssertion = true
+      i++
+      if(str[i] == '<'){
+        node.lookahead = false
+        i++
+        if(str[i] == '!'){
+          node.positive = false
+        }else if(str[i] == '='){
+          node.positive = true
+        }else{ //是否为具名分组
+          while(str[i] != '>'){
+            node.name += str[i]
+            i++
+          }
+        }
+      }else if(str[i] == '='){
+        node.lookahead = true
+        node.positive = true
+      }else if(str[i] == '!'){
+        node.lookahead = true
+        node.positive = false
+      }
+      i++//skip !/=/>
+    }
+
+    while(str[i] != ')' && i < str.length){
+      node.branches.push(regBranch() )
+    }
+    i++//skip )
+    node.end = i
+    node.raw = str.slice(node.start, node.end)
+    return node
+  }
+
+
+
+
+  var svg = document.querySelector('svg')
+  var padding = 10
+  //elt函数
+  function elt(name, attr={}, ...children){
+    var el = document.createElementNS('http://www.w3.org/2000/svg', name)
+    for(var key in attr){
+      el.setAttribute(key, attr[key])
+    }
+    for(var n of children){
+      el.appendChild(n)
+    }
+    return el
+  }
+  function add(a,b){
+    return a+b
+  }
+  function max(a,b){
+    return Math.max(a,b)
+  }
+  function clearSvg(){
+    for(let n of svg){
+      svg.removeChild(n)
+    }
+  }
+  //画铁路图
+  //连续的characher合在一起
+  //tree的branches  group的branches  charClass的element  Branch内的element
+  function createRegGragh(node){
+    if(node.type == 'Character'){
+      return createCharGragh(node)
+    }else if(node.type == 'Quantifer'){
+      return createQuantiferGragh(node)
+    }else if(node.type == 'charClass'){
+      return createClassGragh(node)
+    }else if(node.type == 'Branch'){
+      return createBranchGragh(node)
+    }else if(node.type == 'Group'){
+      return createGroupGragh(node)
+    }else if(node.type == 'Escapes'){
+      return createEscapesGragh(node)
+    }else{
+      return createTreeGragh(node)
+    }
+  }
+  function createCharGragh(node){
+    var text = elt('text',{
+      'dominant-baseline': "text-before-edge",
+      'fill': 'black',
+    })
+    if(node.type == 'classRange'){
+      text.textContent = `${node.from.value} - ${node.to.value}`
+    }else{
+      text.textContent = node.value
+    }
+    svg.append(text)
+    text.style['transform'] = `translate(${padding + 'px'}, ${padding + 'px'})`
+    var box = text.getBBox()
+    var width = box.width + 2*padding
+    var height = box.height + 2*padding
+    var rect = elt('rect',{
+      'width': width + 'px',
+      'height': height + 'px',
+      'fill': 'lightgreen'
+    })
+    var g = elt('g',{}, rect, text)
+    svg.append(g)
+    return {  
+      g: g,
+      width: width,
+      height: height,
+    }
+  }
+  // createCharGragh(regTree('a').branches[0].element[0])
+  //charClass的element
+  function createClassGragh(node){
+    var els = node.element.map(createCharGragh) //创建好子节点
+    var width = els.map(n => n.width).reduce(max) + 2 * padding //新框体最大宽度
+    var height = els.map(n => n.height).reduce(add) + padding * (els.length + 1)
+    var rect = elt('rect',{
+      'width': width + 'px',
+      'height': height + 'px',
+      'fill': 'pink'
+    })
+    var y = padding
+    var g = elt('g', {}, rect)
+    for(var el of els){
+      el.g.style['transform'] = `translate(${(width - el.width) / 2 + 'px'}, ${y + 'px'})`
+      g.append(el.g)
+      y += el.height + padding
+    }
+    svg.append(g)
+    return {  
+      g: g,
+      width: width,
+      height: height,
+    }
+  }
+  // createClassGragh(regTree('[a-dzxc]').branches[0].element[0])
+  function createBranchGragh(node){
+    //每个分支是横向排列，中间留有空隙
+    var els = node.element.map(createRegGragh)
+    var width = els.map(n => n.width).reduce(add) + 2 * padding * (els.length + 1) //横向宽度之和再加上空隙
+    var height = els.map(n => n.height).reduce(max) + 2 * padding
+    var rect = elt('rect',{
+      'width': width + 'px',
+      'height': height + 'px',
+      'fill': 'none'
+    })
+    var line = elt('line', {
+      'x1': '0',
+      'y1' : `${height / 2}`,
+      'x2': `${width}`,
+      'y2' : `${height / 2}`,
+      stroke: 'black',
+      'stroke-width': '4',
+      fill: 'black',
+    })
+    var x = 2 * padding
+    var g = elt('g', {}, rect, line)
+    for(var el of els){
+      el.g.style['transform'] = `translate(${x + 'px'}, ${(height - el.height) / 2 + 'px'})`
+      g.append(el.g)
+      x += el.width + 2 * padding
+    }
+    svg.append(g)
+    return {  
+      g: g,
+      width: width,
+      height: height,
+    }
+  }
+  // createBranchGragh(regTree('ab[zxc]').branches[0])
+  function createTreeGragh(node){
+    for(let element of svg.children){
+      svg.removeChild(element)
+    }
+    var els = node.branches.map(createRegGragh)
+    var width = els.map(n => n.width).reduce(max) + 8 * padding//左右各4padding
+    var height = els.map(n => n.height).reduce(add) + padding * (els.length + 1)
+    var rect = elt('rect',{
+      'width': width + 'px',
+      'height': height + 'px',
+      'fill': 'none',
+    })
+    var y = padding
+    var g = elt('g', {}, rect)
+    for(var el of els){
+      el.g.style['transform'] = `translate(${(width - el.width) / 2 + 'px'}, ${y + 'px'})`
+      var line1 = elt('line',{
+        'x1': 4*padding +  '',
+        'y1' : `${y + el.height / 2}`,
+        'x2': `${(width - el.width) / 2}`,
+        'y2' : `${y + el.height / 2}`,
+        stroke: 'black',
+        'stroke-width': '4',
+        fill: 'black',
+      })
+      var line2 = elt('line',{
+        'x1': 4*padding + el.width +  '',
+        'y1' : `${y + el.height / 2}`,
+        'x2': `${width - 4*padding}`,
+        'y2' : `${y + el.height / 2}`,
+        stroke: 'black',
+        'stroke-width': '4',
+        fill: 'none',
+      })
+      var path1 = elt('path', {
+        d: `
+        M 0 ${height / 2}
+        C ${2*padding} ${height / 2}
+          ${2*padding} ${y + el.height / 2}
+          ${4*padding} ${y + el.height / 2}
+        `,
+        stroke: 'black',
+        'stroke-width': '4',
+        fill: 'none',
+      })
+      var path2 = elt('path', {
+        d: `
+        M ${width} ${height / 2}
+        C ${width - 2*padding} ${height / 2}
+          ${width - 2*padding} ${y + el.height / 2}
+          ${width - 4*padding} ${y + el.height / 2}
+        `,
+        stroke: 'black',
+        'stroke-width': '4',
+        fill: 'none',
+      })
+      g.append(path1)
+      g.append(path2)
+      g.append(line1)
+      g.append(line2)
+      g.append(el.g)
+      y += el.height + padding
+    }
+    svg.append(g)
+
+    //制作两侧
+    g.style['transform'] = `translate(${4 * padding + 'px'}, 0px)`
+    var point = elt('circle', {
+      cx: padding + '',
+      cy: height / 2 + '',
+      r: padding / 2 + '',
+      stroke: 'black',
+      'stroke-width': padding / 4 + '',
+      fill: 'grey',
+    })
+    svg.append(point)
+    var left = elt('line', {
+      'x1': padding*1.5  + '',
+      'y1' : `${height / 2}`,
+      'x2': `${4 * padding}`,
+      'y2' : `${height / 2}`,
+      stroke: 'black',
+      'stroke-width': '4',
+      fill: 'black',
+    })
+    svg.append(left)
+
+    var point2 = elt('circle', {
+      cx: width + 8*padding + '',
+      cy: height / 2 + '',
+      r: padding / 2 + '',
+      stroke: 'black',
+      'stroke-width': padding / 4 + '',
+      fill: 'grey',
+    })
+    svg.append(point2)
+    var right = elt('line', {
+      'x1': width + 4*padding +  '',
+      'y1' : `${height / 2}`,
+      'x2': `${width + 7.5*padding}`,
+      'y2' : `${height / 2}`,
+      stroke: 'black',
+      'stroke-width': '4',
+      fill: 'black',
+    })
+    svg.append(right)
+    svg.setAttribute('width', width + 9*padding+ '')
+    svg.setAttribute('height', height + '')
+    return {  
+      g: g,
+      width: width,
+      height: height,
+    }
+  }
+  // createTreeGragh( regTree('ab[zxc]|qwe') )
+  function createGroupGragh(node){
+    var els = node.branches.map(createRegGragh)
+    var width = els.map(n => n.width).reduce(max) + 8 * padding //左右各4padding
+    var height = els.map(n => n.height).reduce(add) + padding * (els.length + 1)
+    var rect = elt('rect',{
+      'width': width + 'px',
+      'height': height + 'px',
+      'fill': '#fff',
+      'stroke': 'black',
+      'stroke-width': '3',
+      'stroke-dasharray': "5 5",
+    })
+    
+    var g = elt('g', {}, rect)
+    var y = padding
+    for(var el of els){
+      el.g.style['transform'] = `translate(${(width - el.width) / 2 + 'px'}, ${y + 'px'})`
+      var line1 = elt('line',{
+        'x1': 4*padding +  '',
+        'y1' : `${y + el.height / 2}`,
+        'x2': `${(width - el.width) / 2}`,
+        'y2' : `${y + el.height / 2}`,
+        stroke: 'black',
+        'stroke-width': '4',
+        fill: 'black',
+      })
+      var line2 = elt('line',{
+        'x1': 4*padding + el.width +  '',
+        'y1' : `${y + el.height / 2}`,
+        'x2': `${width - 4*padding}`,
+        'y2' : `${y + el.height / 2}`,
+        stroke: 'black',
+        'stroke-width': '4',
+        fill: 'black',
+      })
+      var path1 = elt('path', {
+        d: `
+        M 0 ${height / 2}
+        C ${2*padding} ${height / 2}
+          ${2*padding} ${y + el.height / 2}
+          ${4*padding} ${y + el.height / 2}
+        `,
+        stroke: 'black',
+        'stroke-width': '4',
+        fill: 'none',
+      })
+      var path2 = elt('path', {
+        d: `
+        M ${width} ${height / 2}
+        C ${width - 2*padding} ${height / 2}
+          ${width - 2*padding} ${y + el.height / 2}
+          ${width - 4*padding} ${y + el.height / 2}
+        `,
+        stroke: 'black',
+        'stroke-width': '4',
+        fill: 'none',
+      })
+      g.append(path1)
+      g.append(path2)
+      g.append(line1)
+      g.append(line2)
+      g.append(el.g)
+      y += el.height + padding
+    }
+    var fill = elt('rect', {
+      'width': width + 'px',
+      'height': height + 5 * padding + 'px',
+      'fill': 'none',
+    })
+    var name = elt('text',{
+      'dominant-baseline': "text-before-edge",
+      'fill': 'black',
+    })
+    name.textContent = `Group${node.index}# ${node.name}`
+    var g2 = elt('g', {}, fill, name, g)
+    g.style['transform'] = `translate(0px, ${2.5*padding + 'px'})`
+    svg.append(g2)
+    var box = g2.getBBox()
+    return {  
+      g: g2,
+      width: box.width,
+      height: box.height,
+    }
+  }
+  // createTreeGragh( regTree('ab[zxc](q|w|easd)|(q|w)') )
+  function createQuantiferGragh(node){
+    var el = createRegGragh(node.element)
+    var width = el.width + 8 * padding //左右各4padding
+    var height = el.height + 8 * padding //左右各4padding
+    var rect = elt('rect',{
+      'width': width + 'px',
+      'height': height + 'px',
+      'fill': 'none',
+    })
+    var g = elt('g',{}, rect, el.g)
+    el.g.style['transform'] = `translate(${4*padding + 'px'}, ${4*padding + 'px'})`
+    var line1 = elt('path', {
+      d: 
+      `
+        M 0 ${height / 2}
+        a ${2*padding} ${2*padding} 0 0 0 ${2*padding} ${-2*padding}
+        V ${4*padding}
+        a ${2*padding} ${2*padding} 0 0 1 ${2*padding} ${-2*padding}
+        H ${width - 4*padding}
+        a ${2*padding} ${2*padding} 0 0 1 ${2*padding} ${2*padding}
+        V ${height / 2 - 2*padding}
+        a ${2*padding} ${2*padding} 0 0 0 ${2*padding} ${2*padding}
+
+        M ${width - 2*padding} ${4*padding}
+        l ${-5} ${-5}
+        M ${width - 2*padding} ${4*padding}
+        l ${5} ${-5}
+      `,
+        stroke: 'black',
+        'stroke-width': '2',
+        fill: 'none',
+    })
+    var line2 = elt('path', {
+      d: 
+      `
+        M ${4*padding} ${height / 2}
+        a ${2*padding} ${2*padding} 0 0 0 ${-2*padding} ${2*padding}
+        V ${height - 4*padding}
+        a ${2*padding} ${2*padding} 0 0 0 ${2*padding} ${2*padding}
+        H ${width - 4*padding}
+        a ${2*padding} ${2*padding} 0 0 0 ${2*padding} ${-2*padding}
+        V ${height / 2 + 2*padding}
+        a ${2*padding} ${2*padding} 0 0 0 ${-2*padding} ${-2*padding}
+
+        M ${width - 2*padding} ${height - 4*padding}
+        l ${-5} ${-5}
+        M ${width - 2*padding} ${height - 4*padding}
+        l ${5} ${-5}
+
+      `,
+        stroke: 'black',
+        'stroke-width': '2',
+        fill: 'none',
+    })
+    if(node.min == 0) g.append(line1);//最小值等于0说明可跳过
+    if(node.max > 1) g.append(line2);//最大值大于1说明可重复
+    svg.append(g)
+    return {  
+      g: g,
+      width: width,
+      height: height,
+    }
+  }
+  function createEscapesGragh(node){
+    var text = elt('text',{
+      'dominant-baseline': "text-before-edge",
+      'fill': 'white',
+    })
+    text.textContent = node.value
+    svg.append(text)
+    text.style['transform'] = `translate(${padding + 'px'}, ${padding + 'px'})`
+    var box = text.getBBox()
+    var width = box.width + 2*padding
+    var height = box.height + 2*padding
+    var rect = elt('rect',{
+      'width': width + 'px',
+      'height': height + 'px',
+      'fill': 'black'
+    })
+    var g = elt('g',{}, rect, text)
+    svg.append(g)
+    return {  
+      g: g,
+      width: width,
+      height: height,
+    }
+  }
+  createTreeGragh(regTree())
+</script>
