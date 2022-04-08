@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 50px;
+    gap: 10px;
   }
   svg{
     border: 1px solid;
@@ -27,6 +27,8 @@
     非捕获分组(?:)
  -->
   <h2>正则表达式--铁路图转换</h2>
+  <div>支持具名分组，不支持贪婪匹配</div>
+  <div>正选的class背景颜色为粉色，反选为亮蓝色</div>
   <input type="text" class="reg" oninput="createTreeGragh(regTree())" value="aaad*[qwer](?<hezi>asd+)asd|(as+d)(?<=qw{1,2}e|as*d)[^qwe-z]*">
   <svg version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
   <script>
@@ -176,13 +178,13 @@
     }
     if(str[i] == '{'){
       if(str[i+2] == ','){
-        if(str[i+1] >= '0' && str[i+1] >= '9'){
+        if(str[i+1] >= '0' && str[i+1] <= '9'){
           node.min = parseInt(str[i+1])
           if(str[i+3] == '}'){
             node.max = Infinity
             i = i+3
           }else if(str[i+4] == '}'){
-            if(str[i+3] >= '0' && str[i+3] >= '9'){
+            if(str[i+3] >= '0' && str[i+3] <= '9'){
               node.max = parseInt(str[i+3])
               i = i+4
             }
@@ -408,6 +410,9 @@
       'height': height + 'px',
       'fill': 'pink'
     })
+    if(node.reverse){//反选的情况
+      rect.setAttribute('fill', 'lightblue')
+    }
     var y = padding
     var g = elt('g', {}, rect)
     for(var el of els){
