@@ -90,7 +90,7 @@ svg{
  </div>
  <div class="display">
    <input type="text" class="reg"
-   value="aaad*[qwer](?<DevilMayCry555555555555555555555555555555555555>asd+)asd|(as+d)(?<=[qwer]{1,2}e|a[asd]*d)[^qwe-z]*|HelloWorld!\b">
+   value="^aaad*[qwer](?<DevilMayCry555555555555555555555555555555555555>asd+)asd$|(as+d)(?<=[qwer]{1,3}e|a[asd]*d)[^qwe-z]*|HelloWorld!\b">
     <div class="error"></div>
     <div class="button">
       <button onclick="display()">Display</button>
@@ -197,6 +197,10 @@ svg{
       parts.branches.push( regBranch() )
     }
     return parts
+
+
+
+
     function reg(){ //接受分支函数持续调用
         if(str[i] == '['){
           return regClass()
@@ -225,12 +229,18 @@ svg{
         }else if(str[i] == 'w'){
           node.value = 'number/word'
         }else if(str[i] == 's'){
-          node.value = 'whitespace'
+          node.value = 'whiteSpace'
         }else if(str[i] == 'b'){
           node.value = 'boundary'
         }else{
           node.value = str[i]
         }
+      }else if (str[i] == '^'){
+        node.type = 'Escapes'
+        node.value = 'Start'
+      }else if (str[i] == '$'){
+        node.type = 'Escapes'
+        node.value = 'End'
       }else{
         node.value = str[i]
       }
@@ -345,6 +355,27 @@ svg{
       node.end = i
       if(str[i] == '|') i++;
       node.raw = str.slice(node.start, node.end)
+
+      var element2 = []
+      var prevIsChar = false
+      for(var el of node.element){
+        if(el.type === 'Character'){
+          if(prevIsChar){
+            var longer = element2.pop()
+            longer.end = el.end
+            longer.raw = longer.raw + el.raw
+            longer.value = longer.value + el.value
+            element2.push(longer)
+          }else{
+            prevIsChar = true
+            element2.push(el)
+          }
+        }else{
+          prevIsChar = false
+          element2.push(el)
+        }
+      }
+      node.element = element2
       return node
     }
     function regGroup(){ // ()

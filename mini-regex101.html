@@ -311,7 +311,7 @@
   </style>
 </head>
 <body>
-  <script src="../jquery-3.6.0.min.js"></script>
+  <!-- <script src="../jquery-vue-react/jquery-3.6.0.min.js"></script> -->
   <div id="content">
     <div id="input">
       <!-- 正则表达式输入框 -->
@@ -500,6 +500,14 @@
 
     var pre = document.querySelector('#TestString')
     var selection, lastTextNode, range
+
+    pre.addEventListener('keydown', function(e){
+      console.log(e.code)
+      if(e.code === 'Enter'){
+        var newrow = document.createElement('div')
+        pre.appendChild(newrow)
+      }
+    })
     pre.addEventListener('input', function(e){
       selection = getSelection()
       lastTextNode = pre.lastChild
