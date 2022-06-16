@@ -123,15 +123,6 @@ label .words{
   border: 10px double black;
   background-clip: padding-box;
 }
-#flip{
-  background: url(https://github.com/YangLiu-stu/miao/blob/main/huahua.jpg?raw=true) no-repeat center/100%;
-  border: 10px double rgb(99,119,72);
-  background-clip: padding-box;
-  transform: rotatey(180deg);
-}
-#back:checked + div{
-  transform: rotatey(-180deg);
-}
 .kedu span{
   position: absolute;
   width: 8px;
@@ -212,7 +203,6 @@ icon.h{
   </style>
 </head>
 <body>
-  <input type="checkbox" id="back" hidden>
   <div>
   <label for="back" id="toki">
     <section class="number">
@@ -312,8 +302,6 @@ icon.h{
     </section>
     <span class="words">吾名花京院典明，为吾友阿布德尔雪耻，为身畔吾友波鲁那雷夫之妹之安息——我要你以死谢罪！</span>
     <span class="stand">Hierophant</span>
-  </label>
-  <label for="back" id="flip">
   </label>
     </div>
 </body>
