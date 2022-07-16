@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>regex101 by hezi</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    html,body,#content {
+      height: 100%;
+      margin: 0;
+    }
+    #content{
+      display: flex;
+    }
+    strong,em{
+      font-weight: normal;
+      font-size: 1em;
+      font-family: monospace,Arial, Helvetica, sans-serif;
+      font-style:normal;
+    }
+    em:nth-child(odd){
+      outline: black;
+    }
+    em:nth-child(even){
+      outline: red;
+    }
+    strong:empty::after,em:empty::after{
+      content: '';
+      width: 2px;
+      height: 1em;
+      border: 2px dotted red;
+    }
+    em:hover{
+      outline-style: auto;
+      position: relative;
+      z-index: 1;
+    }
+    #input {
+      flex: 0 1 auto;
+      display: flex;
+      flex-direction: column;
+      width: 60%;
+      /* height: 100%; */
+      position: relative;
+      overflow: hidden;
+    }
+    #RegInputFrame {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      position: relative;
+      background-color: rgb(229,229,229);
+    }
+    #RegInput {
+      flex: 1 1 auto;
+      font-size: 24px;
+      font-family: monospace,Arial, Helvetica, sans-serif;
+      padding-right: 100px;
+      margin: 5px 0px;
+    }
+    #TestStringFrame {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      background-color: rgb(229,229,229);
+      position: relative;
+    }
+    #TestString, #replacement {
+      flex: 1 1 auto;
+      resize: none;
+      font-size: 30px;
+      font-family: monospace,Arial, Helvetica, sans-serif;
+      letter-spacing: 2px;
+      word-spacing: 2px;
+      overflow: auto;
+      overflow-wrap: break-word;
+      white-space: pre-wrap;
+      border-radius: 5px;
+      padding: 5px;
+      margin: 0;
+      background-color: #fff;
+    }
+    #Substitution{
+      max-height: 380px;
+      flex : 0.8 1 auto;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      background-color: rgb(229,229,229);
+    }
+    #replacer{
+      flex: 0 1 auto;
+      font-size: 24px;
+      font-family: monospace,Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    #Regex-flags {
+      position: absolute;
+      top: 100%;
+      right: 10px;
+      display: none;
+      padding-left: 20px;
+      padding-right: 40px;
+      background-color: #fff;
+      overflow: auto;
+      box-shadow: 0 0px 5px black;
+      z-index: 10;
+    }
+    #Regex-flags label {
+      height: 60px;
+      width: 100%;
+      float: left;
+      clear: both;
+      position: relative;
+      user-select: none;
+    }
+    #Regex-flags label:hover{
+      background-color: grey;
+      cursor: pointer;
+    }
+    #Regex-flags label p {
+      font-size: 18px;
+      margin: 0;
+    }
+    #Regex-flags label span {
+      font-size: 14px;
+    }
+    #flags {
+      height: 24px;
+      font-size: 20px;
+      color: blue;
+      position: absolute;
+      bottom: 20px;
+      right: 50px;
+      cursor: pointer;
+      background-color: rgba(0,0,0,0.18);
+      user-select: none;
+    }
+    #flags::before{
+      content: '/';
+    }
+    #select:checked ~ #Regex-flags{
+      display: block;
+    }
+    label.g::after,
+    label.i::after,
+    label.m::after{
+      content: '';
+      position: absolute;
+      right: -20px;
+    }
+    #g:checked ~ #Regex-flags label.g::after,
+    #i:checked ~ #Regex-flags label.i::after,
+    #m:checked ~ #Regex-flags label.m::after{
+      content: '√';
+    }
+    #annotation{
+      flex: 0 1 auto;
+      /* height: 100%; */
+      /* width: calc(100% - 800px); */
+      width: 40%;
+      display: flex;
+      flex-direction: column;
+    }
+    #explanation,#matchInformation{
+      margin: 10px;
+      height: 40%;
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      background-color: #F7F7F7;
+      box-shadow: 0 0 2px grey;
+    }
+    #EXPLANATION, #MATCH{
+      flex: 1 1 auto;
+      font-size: 20px;
+      resize: none;
+      overflow: auto;
+      overflow-wrap: break-word;
+      white-space: pre-wrap;
+      margin: 0;
+      padding: 5px;
+      background-color: #fff;
+    }
+    #annotation label{
+      margin: 0px 10px;
+      line-height: 30px;
+      background-color: #fff;
+      border-bottom: 1px solid black;
+      user-select: none;
+    }
+    #annotation label::after{
+      content: '';
+      float: right;
+      margin-top: 10px;
+      margin-right: 10px;
+      width: 5px;
+      height: 5px;
+      transform: rotate(45deg);
+      border: 2px solid;
+      border-top: 0px;
+      border-left: 0px;
+    }
+    #ONOFFexplantion:checked + label::after,
+    #ONOFFmatch:checked + label::after{
+      border: 2px solid;
+      border-bottom: 0px;
+      border-right: 0px;
+    }
+    #ONOFFexplantion:checked ~ #explanation,
+    #ONOFFmatch:checked ~ #matchInformation{
+      display: none;
+    }
+    table{
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 20px;
+      box-shadow: 0 0 2px grey;
+    }
+    tr{
+      display: flex;
+      flex-direction: row;
+      /* width: 100%; */
+      line-height: 2em;
+    }
+    td:nth-child(1){
+      text-align: center;
+    }
+    td:nth-child(1),td:nth-child(2){
+      flex: 0 1 auto;
+      width: 100px;
+    }
+    td:nth-child(3){
+      flex: 1 1 auto;
+    }
+    tr:nth-child(odd){
+      background-color: #fff;
+    }
+    tr:nth-child(even){
+      background-color: rgba(110,110,110,0.18);
+    }
+    #times{
+      position: absolute;
+      height: 24px;
+      font-size: 18px;
+      user-select: none;
+      background-color: rgba(0,0,0,0.18);
+      top: -15px;
+      right: 10px;
+    }
+
+
+
+    span.group::before{
+      content: '(';
+      background-color: #C5E893;
+    }
+    span.group::after{
+      content: ')';
+      background-color: #C5E893;
+    }
+    span.tree{
+      font-size: 20px;
+      line-height: 2em;
+    }
+    span.tree::before{
+      content: '/ ';
+    }
+    span.tree::after{
+      content: ' /';
+    }
+    span.branch::before{
+      content: '|';
+      background-color: lightcoral;
+    }
+    span span.branch:first-child::before,
+    strong + span.branch::before{
+      content: '';
+      background-color: #fff;
+    }
+    
+    ul{
+      padding: 2px;
+      padding-left: 10px;
+      font-size: 15px;
+    }
+    /* span.pull-row{
+      position: absolute;
+      width: 5px;
+      background-color:red;
+      right: 0;
+      height: 100%;
+      cursor: ew-resize;
+    }
+    span.pull-col{
+      width: 100%;
+      position: absolute;
+      height: 5px;
+      bottom: 0;
+      background-color: red;
+      cursor: ns-resize;
+    } */
+  </style>
+</head>
+<body>
+  <!-- <script src="../jquery-vue-react/jquery-3.6.0.min.js"></script> -->
+  <div id="content">
+    <div id="input">
+      <!-- 正则表达式输入框 -->
+      <div id="RegInputFrame">
+        <label for="TestString">REGULAR  EXPRESSION</label>
+        <input type="text" name="" id="RegInput" 
+        placeholder="insert your regular expression here" oninput="run()" value="f+[zxc]*|a(sd)?(\d+|[qwe]|qwer{1,2})">
+        <!-- 运行时间 -->
+        <pre id="times"></pre>
+        <!-- flags-select -->
+        <input type="checkbox" name="" id="select" hidden>
+        <label for="select" id="flags"></label>
+        <!-- flags -->
+        <input type="checkbox" id="g" checked hidden onclick="run()">
+        <input type="checkbox" id="i" hidden onclick="run()">
+        <input type="checkbox" id="m" hidden onclick="run()">
+        <div id="Regex-flags">
+          <h3>REGEX FLAGS</h3>
+          <label for="g" class="g">
+            <p>global</p>
+            <span>Don't return after first match</span>
+          </label>
+          <label for="i" class="i">
+            <p>insensitive</p>
+            <span>Case insensitive match</span>
+          </label>
+          <label for="m" class="m">
+            <p>multi line</p>
+            <span>^ and $ match start/end of line</span>
+          </label>
+        </div>
+      </div>
+      <!-- 文本输入框 -->
+      <div id="TestStringFrame">
+        <label for="TestString">TEST  STRING</label>
+        <!-- 正则匹配框 -->
+        <pre id="TestString" oninput="run()" contenteditable="">fasd123fasdafasd fasd123qwe afasdqwea fasdqwer fadfaff</pre>
+        <!-- <span class="pull-col"></span> -->
+      </div>
+      <!-- 替换操作框 -->
+      <div id="Substitution">
+        <label for="replacer">SUBSTITUTION</label>
+        <input type="text" name="" id="replacer" oninput="run()"
+        placeholder="insert your replacement value here">
+        <pre id="replacement" style="background-color:rgba(0,0,0,0.18)"></pre>
+      </div>
+      <!-- <span class="pull-row"></span> -->
+    </div>
+    <!-- 右边栏 -->
+    <div id="annotation">
+      <input type="checkbox" name="" id="ONOFFexplantion" hidden>
+      <label for="ONOFFexplantion">EXPLANATION</label>
+      <div id="explanation">
+        <pre id="EXPLANATION"></pre>
+      </div>
+      <input type="checkbox" name="" id="ONOFFmatch" hidden>
+      <label for="ONOFFmatch">MATCH  INFORMATION</label>
+      <div id="matchInformation">
+        <pre id="MATCH"></pre>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+    //元素的id作为变量名
+    //正则 RegInput
+    //文本 TestString
+    //匹配结果 result
+    //flags显示 flags
+    function run(){
+      var timestart = Date.now()
+      var reStr = RegInput.value//获取正则表达式
+      var text = TestString.textContent//获取文本内容
+      if(reStr == '') {
+        TestString.innerHTML = text
+        replacement.innerHTML = text
+        times.innerHTML = `no match`
+        return 
+      }
+      var flags = getflags()
+      //检测所写的表达式是否符合语法
+      try{
+        var re = new RegExp(reStr, flags)
+      }catch(e){
+        if(e instanceof SyntaxError){
+          ReadableStreamDefaultController
+        }else{
+          throw e
+        }
+      }
+      //替换
+      var re_reg = new RegExp(reStr, flags)
+      var re_to = replacer.value
+      replacement.innerHTML = text.replace(re_reg, re_to)
+      //拼字符串返回结果
+      var startIdx = 0
+      var res = ''
+      var match
+      var matchcount = 1
+      MATCH.innerHTML = ''
+      //每次匹配：
+      //count++
+      //match[0]为每次的匹配项，[1-n]为
+      //indices内每项为 括号捕获项的  [起始index,终止index]
+      while(match = re.exec(text)){
+        res += text.slice(startIdx, match.index)
+        if(matchcount % 2 == 0){
+          var matchColor = 'rgba(213,235,255)'
+        }else{
+          var matchColor = 'rgba(159,207,255)'
+        }
+        var matchInf = `<table><tr><td style="text-decoration: underline solid ${matchColor} 5px;">Match ${matchcount}</td><td>${match.index}-${match.index + match[0].length}</td><td>${match[0]}</td></tr>`
+        var catched = groups(match[0], match.index, matchcount, match.indices, matchInf)
+        res += `<strong style=background-color:${matchColor} title="Match: ${matchcount}\nGroup: 0\nPos: ${match.index}-${match.index + match[0].length}" >${catched}</strong>`
+        matchcount++
+        startIdx = re.lastIndex
+        if(match[0] == ''){
+          re.lastIndex++
+        }
+        if(!re.global){
+          startIdx = match.index + match[0].length
+          break
+        }
+      }
+      res += text.slice(startIdx)
+      TestString.innerHTML = res
+      var timeEnd = Date.now()
+      if(matchcount-1>0){
+        times.innerHTML = `<span style="background-color:#4E8475; color: #fff">${matchcount-1} matches (${(timeEnd - timestart).toFixed(2)}ms)</span>`
+      }
+      rexExplanation()
+      return 
+    }
+
+
+    function getflags(){
+      var str = 'd'
+      if(g.checked) str += 'g';
+      if(m.checked) str += 'm';
+      if(i.checked) str += 'i';
+      flags.innerHTML = str
+      return str
+    }
+
+
+    function groups(str, index, matchcount, indices, Inf){
+      //若无捕获项，indices长度为1，即match[0]，直接返回即可
+      var l = indices.length - 1
+      if(l == 0) {
+        Inf += '</table>'
+        MATCH.innerHTML += Inf
+        return str;
+      }
+      //处理字符串
+      var strAry = str.split('')
+      strAry.push('')//末尾边界
+      var groupInf = ''
+      //倒序遍历indices除0以外的项
+      for(var i = l ; i > 0 ; i--){
+        if(indices[i]){
+          var left = indices[i][0] - index
+          var right = indices[i][1] - index
+          var Rc = Math.floor(i%10/10 * 500 + 80)
+          var Gc = Math.floor(i%10/10 * 256 + 100)
+          var Bc = Math.floor(i%10/10 * 500 + 150)
+          groupInf = `<tr><td style="text-decoration: underline solid rgba(${Rc},${Gc},${Bc}) 5px;">Group ${i}</td><td>${indices[i][0]}-${indices[i][1]}</td><td>${str.slice(left,right)}</td></tr>` + groupInf
+          if(right > left) { //非0宽
+            strAry[left] = `<em style="background-color:rgba(${Rc},${Gc},${Bc})" title="Match: ${matchcount}\nGroup: ${i}\nPos: ${indices[i][0]}-${indices[i][1]}" >` + strAry[left]
+            strAry[right-1] = strAry[right-1] + `</em>`;
+          }else{ //0宽
+            strAry[left] = `<em style="background-color:rgba(${Rc},${Gc},${Bc})" title="Match: ${matchcount}\nGroup: ${i}\nPos: ${indices[i][0]}-${indices[i][1]}" ></em>` + strAry[left];
+          }
+        }
+      }
+      var res = strAry.join('')
+      Inf += groupInf + '</table>'
+      MATCH.innerHTML += Inf
+      return res
+    }
+
+    run()
+    getflags()
+    rexExplanation()
+
+    var pre = document.querySelector('#TestString')
+    var selection, lastTextNode, range
+
+    pre.addEventListener('keydown', function(e){
+      console.log(e.code)
+      if(e.code === 'Enter'){
+        var newrow = document.createElement('div')
+        pre.appendChild(newrow)
+      }
+    })
+    pre.addEventListener('input', function(e){
+      selection = getSelection()
+      lastTextNode = pre.lastChild
+      while(lastTextNode.nodeType !== Node.TEXT_NODE){
+        lastTextNode = lastTextNode.lastChild
+      }
+      range = document.createRange()
+      range.selectNodeContents(lastTextNode)
+      range.setStart(lastTextNode, lastTextNode.length)
+      range.collapse(true)
+      selection.removeAllRanges()
+      selection.addRange(range)
+    })
+
+
+
+
+
+
+
+    //构建正则语法树就是循环调用  解析分支的函数
+    function regTree(string){ 
+      var i = 0
+      var groupIdx = 1
+      var str = string
+      try{
+        var test = new RegExp(`${str}`)
+      } catch(e){
+        throw e
+      }
+      var parts = {
+        type: 'tree',
+        branches: [],
+      }
+      while(i < str.length){
+        parts.branches.push( regBranch() )
+      }
+      return parts
+
+
+      function reg(){ //接受分支函数持续调用
+          if(str[i] == '['){
+            return regClass()
+          } else if(str[i] == '|'){
+            return regBranch()
+          } else if(str[i] == '('){
+            return regGroup()
+          }else{
+            return regChar()
+          }
+      }
+      function regChar(){
+        var node = {
+          type: 'Character',
+          start: i,
+          end: 0,
+          raw: '',
+          value: '',
+        }
+        //转义符
+        if(str[i] == '\\'){
+          i++
+          node.type = 'Escapes'
+          if(str[i] == 'd'){
+            node.value = 'number'
+          }else if(str[i] == 'w'){
+            node.value = 'number/word'
+          }else if(str[i] == 's'){
+            node.value = 'whitespace'
+          }else if(str[i] == 'b'){
+            node.value = 'boundary'
+          }else{
+            node.type = 'Character'
+            node.value = str[i]
+          }
+        }else{
+          node.value = str[i]
+        }
+        i++
+        node.end = i
+        node.raw = str.slice(node.start, node.end)
+        return node
+      }
+      function regQuantifer(Quantity){
+        var node = {
+          type: 'Quantifer',
+          start: Quantity.start,
+          end: 0,
+          raw: '',
+          element: Quantity,
+          min: 0,
+          max: 0,
+        }
+        if(str[i] == '{'){
+          if(str[i+2] == ','){
+            if(str[i+1] >= '0' && str[i+1] <= '9'){
+              node.min = parseInt(str[i+1])
+              if(str[i+3] == '}'){
+                node.max = Infinity
+                i = i+3
+              }else if(str[i+4] == '}'){
+                if(str[i+3] >= '0' && str[i+3] <= '9'){
+                  node.max = parseInt(str[i+3])
+                  i = i+4
+                }
+              }
+            }
+          }
+
+        } else if(str[i] == '+'){
+          node.min = 1
+          node.max = Infinity
+        } else if(str[i] == '*'){
+          node.min = 0
+          node.max = Infinity
+        } else if(str[i] == '?'){
+          node.min = 0
+          node.max = 1
+        }
+        i++
+        node.end = i
+        node.raw = str.slice(node.start, node.end)
+        return node
+      }
+      function regClass(){ //[qweA-Zqwe]
+        var node = {
+          type: 'charClass',
+          start: i,
+          end: 0,
+          raw: '',
+          element: [],
+          reverse: false,
+        }
+        i++
+        if(str[i] == '^'){
+          node.reverse = true
+          i++
+        }
+        while(str[i] != ']' && i < str.length){
+          if(str[i] == '-'){
+            node.element.pop()
+            node.element.push(regClassRange())
+          }else{
+            node.element.push(regChar())
+          }
+        }
+        i++ //skip ]
+        node.end = i
+        node.raw = str.slice(node.start, node.end)
+        return node
+      }
+      function regClassRange(){
+        var node = {
+          type: 'classRange',
+          start: i-1,
+          end: i+2,
+          raw: '',
+          from: {
+            type: 'Character',
+            value: str[i-1],
+          },
+          to: {
+            type: 'Character',
+            value: str[i+1],
+          },
+        }
+        i = node.end
+        node.raw = str.slice(node.start, node.end)
+        return node
+      }
+      function regBranch(){ // |
+        var node = {
+          type: 'Branch',
+          start: i,
+          end: 0,
+          raw: '',
+          element: [],
+        }
+        while(str[i] != '|' && str[i] != ')' && i < str.length){
+          if(str[i] == '{' || str[i] == '+' || str[i] == '*' || str[i] == '?'){
+            var Quantity = node.element.pop()
+            node.element.push(regQuantifer(Quantity))
+          }else{
+            node.element.push(reg() )
+          }
+        }
+        node.end = i
+        if(str[i] == '|') i++;
+        node.raw = str.slice(node.start, node.end)
+        return node
+      }
+      function regGroup(){ // ()
+        var node = {
+          type: 'Group',
+          start: i,
+          end: 0,
+          raw: '',
+
+          branches:[],
+          isAssertion: false, //是否为断言，四种
+          lookahead: true, //预测or回顾
+          positive: true, //正or负
+          name: '', //具名分组
+          index: groupIdx++, //从1开始
+        }
+        i++ //skip (
+        if(str[i] == '?'){ //是否为断言 (?<=sadsads)
+          node.isAssertion = true
+          i++
+          if(str[i] == '<'){
+            node.lookahead = false
+            i++
+            if(str[i] == '!'){
+              node.positive = false
+            }else if(str[i] == '='){
+              node.positive = true
+            }else{ //是否为具名分组
+              while(str[i] != '>'){
+                node.name += str[i]
+                i++
+              }
+            }
+          }else if(str[i] == '='){
+            node.lookahead = true
+            node.positive = true
+          }else if(str[i] == '!'){
+            node.lookahead = true
+            node.positive = false
+          }
+          i++//skip !/=/>
+        }
+
+        while(str[i] != ')' && i < str.length){
+          node.branches.push(regBranch() )
+        }
+        i++//skip )
+        node.end = i
+        node.raw = str.slice(node.start, node.end)
+        return node
+      }
+    }
+    
+
+
+
+  function rexExplanation(){
+    var converse = regTree(RegInput.value)
+    for(let n of EXPLANATION.children){
+      EXPLANATION.removeChild(n)
+    }
+    EXPLANATION.append(regExp(converse))
+
+    function regExp(node){
+      if(node.type == 'Character'){
+        return charExplanation(node)
+      }else if(node.type == 'Quantifer'){
+        return quantiferExplanation(node)
+      }else if(node.type == 'charClass'){
+        return classExplanation(node)
+      }else if(node.type == 'Branch'){
+        return branchExplanation(node)
+      }else if(node.type == 'Group'){
+        return groupExplanation(node)
+      }else if(node.type == 'Escapes'){
+        return charExplanation(node)
+      }else{
+        return treeExplanation(node)
+      }
+    }
+    //tree-branches-branch-element(class-element,group-branches)-char
+    function treeExplanation(node){
+      var ul = document.createElement('ul')
+      var raw = document.createElement('span')
+      raw.className = 'tree'
+      if(node.branches.length == 1){
+        node.branches.map(regExp).forEach(function(n){
+          ul.append(n.ul)
+          raw.append(n.raw.cloneNode(1))
+        })
+      }else{
+        var ary = node.branches.map(regExp)
+        for(var n = 0; n < ary.length; n++){
+          var ulBr = document.createElement('ul')
+          var exp = document.createElement('span')
+          ulBr.append(exp)
+          var strong = document.createElement('strong')
+          strong.style.fontWeight = 'bold'
+          strong.textContent = `No.${n + 1} Alternative `
+          exp.append(strong)
+          exp.append(ary[n].raw)
+          ulBr.append(ary[n].ul)
+          ul.append(ulBr)
+          raw.append(ary[n].raw.cloneNode(1))
+        }
+      }
+      ul.insertBefore(raw, ul.firstChild)
+      return ul
+    }
+    function charExplanation(node){
+      var ul = document.createElement('ul')
+      var raw = document.createElement('span')
+      raw.textContent = node.raw
+      ul.append(raw)
+      if(node.type == 'classRange'){
+        ul.textContent += ` matches a single character in the range between ${node.from.value} (index ${node.from.value.charCodeAt()}) and ${node.to.value} (index ${node.to.value.charCodeAt()})`
+      }else if(node.type == 'Escapes'){
+        ul.textContent += ` matches a ${node.value} character`
+      }else{
+        ul.textContent += ` matches the character ${node.value} with index ${node.value.charCodeAt()}`
+      }
+      return {
+        ul: ul,
+        raw: raw,
+      }
+    }
+
+    function classExplanation(node){
+      var ul = document.createElement('ul')
+      var exp = document.createElement('strong')
+      exp.style.fontWeight = 'bold'
+      exp.textContent = `Match a single character present in the list below `
+      var raw = document.createElement('span')
+      raw.textContent = node.raw
+      raw.style.backgroundColor = '#F0C99E'
+      ul.append(exp)
+      ul.append(raw)
+      node.element.map(charExplanation).forEach(function(n){
+        ul.append(n.ul)
+        n.raw.style.backgroundColor = '#F0C99E'
+      })
+      return {
+        ul: ul,
+        raw: raw,
+      }
+    }
+
+    function branchExplanation(node){
+      var ul = document.createElement('ul')
+      var raw = document.createElement('span')
+      raw.className = 'branch'
+      node.element.map(regExp).forEach(function(n){
+        ul.append(n.ul)
+        raw.append(n.raw.cloneNode(1))
+      })
+      return {
+        ul: ul,
+        raw: raw,
+      }
+    }
+    function groupExplanation(node){
+      var ul = document.createElement('ul')
+      var exp = document.createElement('span')
+      ul.append(exp)
+      var strong = document.createElement('strong')
+      strong.style.fontWeight = 'bold'
+      strong.textContent = `No.${node.index} Capturing Group `
+      exp.append(strong)
+      var raw = document.createElement('span')
+      raw.className = 'group'
+      if(node.branches.length == 1){
+        node.branches.map(regExp).forEach(function(n){
+          ul.append(n.ul)
+          raw.append(n.raw.cloneNode(1))
+        })
+      }else{
+        var ary = node.branches.map(regExp)
+        for(var n = 0; n < ary.length; n++){
+          var ulBr = document.createElement('ul')
+          var expBr = document.createElement('span')
+          ulBr.append(expBr)
+          var strong = document.createElement('strong')
+          strong.style.fontWeight = 'bold'
+          strong.textContent = `No.${n + 1} Alternative `
+          expBr.append(strong)
+          expBr.append(ary[n].raw)
+          ulBr.append(ary[n].ul)
+          ul.append(ulBr)
+          raw.append(ary[n].raw.cloneNode(1))
+        }
+      }
+      exp.append(raw)
+      return {
+        ul: ul,
+        raw: raw,
+      }
+    }
+    function quantiferExplanation(node){
+      var res = regExp(node.element)
+      var ul = document.createElement('ul')
+      var quantifer = document.createElement('span')
+      quantifer.style.backgroundColor = '#99BEFF'
+      var icon = node.raw.slice(-1)
+      if(icon == '}'){
+        quantifer.textContent = node.raw.slice(node.raw.indexOf('{'))
+      }else{
+        quantifer.textContent = icon
+      }
+      ul.append(quantifer)
+      if(icon == '+'){
+        ul.textContent += ' matches the previous token between one and unlimited times, as many times as possible.'
+      }else if(icon == '*'){
+        ul.textContent += ' matches the previous token between zero and unlimited times, as many times as possible.'
+      }else if(icon == '?'){
+        ul.textContent += ' matches the previous token between zero and one times, as many times as possible.'
+      }else{
+        ul.textContent += ` matches the previous token between ${node.min} and ${node.max} times, as many times as possible.`
+      }
+      var insertNode
+      if(res.ul.querySelector('span')){
+        insertNode = res.ul.querySelector('span').nextSibling
+      }else{
+        insertNode = res.ul.firstChild.nextSibling
+      }
+      res.ul.insertBefore(ul, insertNode)
+      var raw = document.createElement('span')
+      raw.className = 'quant'
+      raw.append(res.raw)
+      raw.append(quantifer.cloneNode(1))
+      
+      var a = res.ul.querySelector('strong')
+      if(a && a.parentNode.matches('span')){
+        a.parentNode.append(raw.cloneNode(1));
+      } else if(a){
+        a.append(raw.cloneNode(1));
+      }
+      return {
+        ul: res.ul,
+        raw: raw,
+      }
+    }
+  }
+  // var startY,startX
+  // window.addEventListener('mousedown', function(e){
+  //   // console.log(e.which)
+  //   if(e.which == 1){
+  //     if(e.target.matches('.pull-row')){
+  //       e.preventDefault()
+  //       startX = e.screenX
+  //       window.addEventListener('mousemove', function pullrow(e){
+  //         if(e.which == 0){
+  //           window.removeEventListener('mousemove', pullrow)
+  //         }
+  //         var rex = parseInt($('div#input').css('width'))
+  //         $('div#input').css('width', rex + e.screenX - startX + 'px')
+  //       })
+  //     }else if(e.target.matches('.pull-col')){
+  //       e.preventDefault()
+  //       startY = e.screenY
+  //       window.addEventListener('mousemove', function pullcol(e){
+  //         if(e.which == 0){
+  //           window.removeEventListener('mousemove', pullcol)
+  //         }
+  //         var rey = parseInt($('div#TestStringFrame').css('height'))
+  //         $('div#TestStringFrame').css('height', rey + e.screenY - startY + 'px')
+  //       })
+  //     }
+  //   }
+  // })
+  </script>
+</body>
+</html>
